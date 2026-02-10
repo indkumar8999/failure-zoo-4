@@ -1,0 +1,98 @@
+services:
+  app:
+    build: ./app
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: "postgresql+psycopg2://postgres:postgres@postgres:5432/postgres"
+      DOWNSTREAM_URL: "http://toxiproxy:8666"
+      MAX_DB_INFLIGHT: "10"
+      CHAOS_MEM_LIMIT_MB: "800"
+      CHAOS_FD_LIMIT: "5000"
+      ENABLE_STRACE: "1"
+      STRACE_FILTER: "%network,%file,%process,%desc,%signal"
+    volumes:
+      - ./data/app:/data
+    depends_on:
+      - postgres
+      - toxiproxy
+    restart: unless-stopped
+
+  downstream:
+    build: ./downstream
+    ports:
+      - "9000:9000"
+    restart: unless-stopped
+
+  toxiproxy:
+    image: ghcr.io/shopify/toxiproxy:latest
+    ports:
+      - "8474:8474"
+      - "8666:8666"
+    depends_on:
+      - downstream
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.49.1
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    ports:
+      - "9090:9090"
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=7d"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./data/prometheus:/prometheus
+    depends_on:
+      - app
+      - cadvisor
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:11.1.4
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - ./data/grafana:/var/lib/grafana
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+
+  chaos:
+    build: ./chaos
+    depends_on:
+      - app
+      - toxiproxy
+    profiles: ["tools"]
+    environment:
+      APP_BASE: "http://app:8000"
+      TOXI_BASE: "http://toxiproxy:8474"
