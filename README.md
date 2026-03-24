@@ -16,6 +16,9 @@ docker compose up -d --build
 ## URLs
 - App health: http://localhost:8000/health
 - App metrics: http://localhost:8000/metrics
+- SOM learner health: http://localhost:8100/health
+- SOM learner status: http://localhost:8100/status
+- SOM learner signal: http://localhost:8100/signal
 - Prometheus: http://localhost:9090
 - Grafana: http://localhost:3000 (admin/admin)
 - cAdvisor: http://localhost:8080
@@ -60,6 +63,8 @@ docker compose run --rm chaos reset
 - `./data/app/syscalls/trace.*` — syscall traces (epoch timestamps + duration)
 - `./data/app/events/chaos_events.jsonl` — chaos on/off labels (epoch timestamps)
 - `./data/app/logs/*` — app & strace logs
+- `./data/learner/model/som_model.npz` — persisted SOM model
+- `./data/learner/events/anomaly_events.jsonl` — SOM anomaly outputs
 - `./data/prometheus/` — Prometheus TSDB blocks
 - `./data/grafana/` — Grafana state
 - `./data/postgres/` — Postgres data

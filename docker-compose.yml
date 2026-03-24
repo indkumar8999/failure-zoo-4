@@ -22,6 +22,24 @@ services:
       - toxiproxy
     restart: unless-stopped
 
+  learner:
+    build: ./learner
+    ports:
+      - "8100:8100"
+    environment:
+      PROM_BASE: "http://prometheus:9090"
+      POLL_SEC: "2.0"
+      BOOTSTRAP_SAMPLES: "180"
+      SOM_ROWS: "20"
+      SOM_COLS: "20"
+      ANOMALY_QUANTILE: "0.99"
+    volumes:
+      - ./data/learner:/data
+    depends_on:
+      - app
+      - prometheus
+    restart: unless-stopped
+
   downstream:
     build: ./downstream
     ports:

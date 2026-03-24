@@ -10,3 +10,8 @@ scrape_configs:
   - job_name: "cadvisor"
     static_configs:
       - targets: ["cadvisor:8080"]
+
+  - job_name: "learner"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["learner:8100"]
