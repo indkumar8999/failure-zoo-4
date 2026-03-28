@@ -5,6 +5,7 @@ from typing import Optional, Dict, Any
 
 import dns.resolver
 import requests
+import numpy as np
 from fastapi import FastAPI, HTTPException
 from prometheus_client import Counter, Gauge, Histogram, generate_latest, CONTENT_TYPE_LATEST
 from starlette.responses import Response
@@ -65,6 +66,9 @@ db_gate = threading.BoundedSemaphore(MAX_DB_INFLIGHT)
 
 dns_server: Optional[str] = None
 
+# Normal behavior control flags
+normal_behavior_stop = threading.Event()
+
 
 def _now_epoch() -> float:
     return time.time()
@@ -89,11 +93,195 @@ def _set_chaos_metric(mode: str, enabled: bool, extra: Optional[Dict[str, Any]] 
     _write_event(ev)
 
 
+# ============================================================================
+# Normal Application Behavior: Background workers to simulate real workload
+# ============================================================================
+
+def _normal_behavior_matrix_computation():
+    """
+    Simulates CPU-intensive work: 100x100 random matrix multiplication every 5 seconds.
+    This is normal application load that tests should not interfere with.
+    """
+    import random
+    import numpy as np
+    
+    while not normal_behavior_stop.is_set():
+        try:
+            # Create two 100x100 random matrices
+            size = 100
+            matrix_a = np.random.rand(size, size)
+            matrix_b = np.random.rand(size, size)
+            
+            # Perform matrix multiplication (CPU-intensive)
+            result = np.dot(matrix_a, matrix_b)
+            
+            # Calculate mean to verify computation happened
+            mean_val = np.mean(result)
+            
+            _write_event({
+                "type": "normal_behavior",
+                "operation": "matrix_multiplication",
+                "size": size,
+                "result_mean": float(mean_val)
+            })
+            
+            # Wait 5 seconds before next computation
+            time.sleep(5)
+        except Exception as e:
+            _write_event({"type": "normal_behavior", "operation": "matrix_computation_error", "error": str(e)})
+            time.sleep(5)
+
+
+def _normal_behavior_file_operations():
+    """
+    Simulates file I/O: creates, writes, reads, and deletes files in /data/normal_files.
+    This is normal file system activity that should be measurable.
+    """
+    import random
+    import string
+    
+    work_dir = "/data/normal_files"
+    os.makedirs(work_dir, exist_ok=True)
+    
+    while not normal_behavior_stop.is_set():
+        try:
+            # Random file operations cycle
+            operation = random.choice(["create", "read", "delete"])
+            
+            if operation == "create":
+                # Create a file with random content
+                filename = os.path.join(work_dir, f"file_{int(time.time() * 1000000) % 10000}.txt")
+                content = "".join(random.choices(string.ascii_letters + string.digits, k=1000))
+                with open(filename, "w") as f:
+                    f.write(content)
+                _write_event({"type": "normal_behavior", "operation": "file_create", "path": filename})
+            
+            elif operation == "read":
+                # Read a random existing file
+                files = os.listdir(work_dir)
+                if files:
+                    filepath = os.path.join(work_dir, random.choice(files))
+                    try:
+                        with open(filepath, "r") as f:
+                            content = f.read()
+                        _write_event({"type": "normal_behavior", "operation": "file_read", "path": filepath, "size": len(content)})
+                    except Exception:
+                        pass
+            
+            elif operation == "delete":
+                # Delete a random file
+                files = os.listdir(work_dir)
+                if files:
+                    filepath = os.path.join(work_dir, random.choice(files))
+                    try:
+                        os.remove(filepath)
+                        _write_event({"type": "normal_behavior", "operation": "file_delete", "path": filepath})
+                    except Exception:
+                        pass
+            
+            # Sleep for 2 seconds before next operation
+            time.sleep(2)
+            
+            # Cleanup: remove old files to prevent accumulation
+            try:
+                files = os.listdir(work_dir)
+                if len(files) > 50:  # Keep max 50 files
+                    for f in sorted(files)[:-20]:
+                        try:
+                            os.remove(os.path.join(work_dir, f))
+                        except Exception:
+                            pass
+            except Exception:
+                pass
+                
+        except Exception as e:
+            _write_event({"type": "normal_behavior", "operation": "file_operations_error", "error": str(e)})
+            time.sleep(2)
+
+
+def _normal_behavior_web_requests():
+    """
+    Simulates external API calls: periodically fetches data from /work endpoint
+    and tracks response time. This simulates a service making HTTP requests.
+    """
+    session = requests.Session()
+    
+    while not normal_behavior_stop.is_set():
+        try:
+            # Make request to internal /work endpoint (simulates downstream API call)
+            start_time = time.time()
+            try:
+                response = session.get("http://localhost:8000/work", timeout=5)
+                elapsed_ms = (time.time() - start_time) * 1000
+                
+                _write_event({
+                    "type": "normal_behavior",
+                    "operation": "web_request",
+                    "endpoint": "/work",
+                    "status_code": response.status_code,
+                    "response_time_ms": elapsed_ms,
+                    "success": response.status_code == 200
+                })
+            except requests.Timeout:
+                elapsed_ms = (time.time() - start_time) * 1000
+                _write_event({
+                    "type": "normal_behavior",
+                    "operation": "web_request",
+                    "endpoint": "/work",
+                    "error": "timeout",
+                    "response_time_ms": elapsed_ms
+                })
+            except Exception as e:
+                elapsed_ms = (time.time() - start_time) * 1000
+                _write_event({
+                    "type": "normal_behavior",
+                    "operation": "web_request",
+                    "endpoint": "/work",
+                    "error": str(e),
+                    "response_time_ms": elapsed_ms
+                })
+            
+            # Wait 3 seconds before next request
+            time.sleep(3)
+            
+        except Exception as e:
+            _write_event({"type": "normal_behavior", "operation": "web_request_error", "error": str(e)})
+            time.sleep(3)
+
+
+def _start_normal_behavior():
+    """Start all normal behavior background threads on application startup."""
+    normal_behavior_stop.clear()
+    
+    # Start matrix computation worker
+    threading.Thread(
+        target=_normal_behavior_matrix_computation,
+        name="normal-matrix-worker",
+        daemon=True
+    ).start()
+    
+    # Start file operations worker
+    threading.Thread(
+        target=_normal_behavior_file_operations,
+        name="normal-files-worker",
+        daemon=True
+    ).start()
+    
+    # Start web request worker
+    threading.Thread(
+        target=_normal_behavior_web_requests,
+        name="normal-requests-worker",
+        daemon=True
+    ).start()
+    
+    _write_event({"type": "startup", "event": "normal_behavior_started"})
 
 
 def instrument(path: str):
     """Decorator to record request count + latency for a FastAPI handler."""
+    from functools import wraps
     def deco(func):
+        @wraps(func)
         def wrapper(*args, **kwargs):
             t0 = time.time()
             try:
@@ -410,6 +598,126 @@ def dns_test(name: str = "example.com"):
         raise HTTPException(502, f"DNS lookup failed: {e}")
 
 
+# Network chaos (via ToxiProxy)
+TOXI_URL = os.getenv("TOXI_URL", "http://toxiproxy:8474")
+
+
+def _toxi_request(method: str, path: str, payload: Optional[Dict[str, Any]] = None) -> Optional[Dict[str, Any]]:
+    """Make request to ToxiProxy API."""
+    url = f"{TOXI_URL}{path}"
+    try:
+        r = requests.request(method, url, json=payload, timeout=5)
+        r.raise_for_status()
+        if r.headers.get("content-type", "").startswith("application/json"):
+            return r.json()
+        return None
+    except Exception as e:
+        raise HTTPException(503, f"ToxiProxy error: {e}")
+
+
+def _ensure_proxy():
+    """Ensure the downstream proxy exists in ToxiProxy."""
+    try:
+        proxies = _toxi_request("GET", "/proxies") or {}
+        if "downstream" not in proxies:
+            _toxi_request("POST", "/proxies", {
+                "name": "downstream",
+                "listen": "0.0.0.0:8666",
+                "upstream": "downstream:9000"
+            })
+    except Exception:
+        pass  # Proxy may already exist
+
+
+def _add_toxic(name: str, toxic_type: str, attributes: Dict[str, Any], toxicity: float = 1.0):
+    """Add a toxic to the downstream proxy."""
+    _ensure_proxy()
+    _toxi_request("POST", "/proxies/downstream/toxics", {
+        "name": name,
+        "type": toxic_type,
+        "stream": "downstream",
+        "toxicity": toxicity,
+        "attributes": attributes,
+    })
+    _write_event({"type": "chaos", "mode": f"net_{toxic_type}", "enabled": True, "toxic": name, "attributes": attributes})
+
+
+def _clear_toxics():
+    """Clear all toxics from the downstream proxy."""
+    try:
+        _ensure_proxy()
+        # Get existing toxics
+        proxies = _toxi_request("GET", "/proxies") or {}
+        downstream = proxies.get("downstream", {})
+        toxics = downstream.get("toxics", [])
+        
+        # Delete each toxic individually
+        for toxic in toxics:
+            toxic_name = toxic.get("name", "")
+            if toxic_name:
+                try:
+                    _toxi_request("DELETE", f"/proxies/downstream/toxics/{toxic_name}")
+                except Exception:
+                    pass  # Ignore errors deleting individual toxics
+        
+        _write_event({"type": "chaos", "mode": "net_clear", "enabled": True})
+    except Exception as e:
+        raise HTTPException(503, f"Failed to clear toxics: {e}")
+
+
+@app.post("/chaos/net/latency")
+def chaos_net_latency(ms: int = 200):
+    """Add network latency to downstream connections."""
+    ms = max(0, min(ms, 10000))  # 0-10000 ms
+    _clear_toxics()
+    jitter = int(ms * 0.2)  # 20% jitter
+    _add_toxic("latency", "latency", {"latency": ms, "jitter": jitter})
+    return {"latency_ms": ms, "jitter_ms": jitter}
+
+
+@app.post("/chaos/net/bandwidth")
+def chaos_net_bandwidth(kbps: int = 64):
+    """Limit bandwidth to downstream connections."""
+    kbps = max(1, min(kbps, 100000))  # 1-100000 kbps
+    _clear_toxics()
+    _add_toxic("bandwidth", "bandwidth", {"rate": kbps})
+    return {"bandwidth_kbps": kbps}
+
+
+@app.post("/chaos/net/reset_peer")
+def chaos_net_reset_peer():
+    """Reset peer connections (close connections randomly)."""
+    _clear_toxics()
+    _add_toxic("reset", "reset_peer", {})
+    return {"reset_peer": True}
+
+
+@app.post("/chaos/net/clear")
+def chaos_net_clear():
+    """Clear all network toxics."""
+    _clear_toxics()
+    CHAOS.labels(mode="net_latency").set(0)
+    CHAOS.labels(mode="net_bandwidth").set(0)
+    CHAOS.labels(mode="net_reset_peer").set(0)
+    return {"cleared": True}
+
+
+@app.get("/chaos/net/status")
+def chaos_net_status():
+    """Get current network toxics status."""
+    try:
+        proxies = _toxi_request("GET", "/proxies") or {}
+        downstream = proxies.get("downstream", {})
+        toxics = downstream.get("toxics", [])
+        return {
+            "proxy_exists": "downstream" in proxies,
+            "toxics": toxics,
+            "count": len(toxics)
+        }
+    except Exception as e:
+        raise HTTPException(503, f"Failed to get status: {e}")
+
+
 @app.post("/chaos/reset")
 def chaos_reset():
     chaos_cpu_stop()
@@ -422,3 +730,14 @@ def chaos_reset():
     set_db_gate(10)
     _write_event({"type": "chaos", "mode": "reset", "enabled": True})
     return {"reset": True}
+
+
+# ============================================================================
+# Application Startup: Initialize normal behavior workers
+# ============================================================================
+
+@app.on_event("startup")
+def startup_event():
+    """Called when the FastAPI application starts."""
+    _start_normal_behavior()
+
