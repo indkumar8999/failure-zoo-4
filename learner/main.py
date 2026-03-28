@@ -26,15 +26,15 @@ MODEL_PATH = Path(os.getenv("MODEL_PATH", "/data/model/som_model.npz"))
 ANOMALY_LOG = Path(os.getenv("ANOMALY_LOG", "/data/events/anomaly_events.jsonl"))
 
 FEATURE_QUERIES: Dict[str, str] = {
-    "req_rate": "sum(rate(http_requests_total[1m]))",
-    "latency_p95": "histogram_quantile(0.95, sum by (le) (rate(http_request_latency_seconds_bucket[1m])))",
-    "db_inflight": "max(db_inflight)",
-    "leak_mb": "max(leak_mb)",
-    "open_fds_sim": "max(open_fds_simulated)",
-    "disk_fill_mb": "max(disk_fill_mb)",
-    "retry_rate": "sum(rate(retry_calls_total[1m]))",
-    "proc_mem_bytes": "max(process_resident_memory_bytes)",
-    "proc_open_fds": "max(process_open_fds)",
+    "process_resident_memory_bytes": "max(process_resident_memory_bytes{job=\"app\"})",
+    "process_virtual_memory_bytes": "max(process_virtual_memory_bytes{job=\"app\"})",
+    "python_gc_objects_collected_total": "sum(rate(python_gc_objects_collected_total{job=\"app\"}[1m]))",
+    "python_gc_objects_uncollectable_total": "sum(rate(python_gc_objects_uncollectable_total{job=\"app\"}[1m]))",
+    "python_gc_collections_total": "sum(rate(python_gc_collections_total{job=\"app\"}[1m]))",
+    "process_cpu_seconds_total": "sum(rate(process_cpu_seconds_total{job=\"app\"}[1m]))",
+    "process_open_fds": "max(process_open_fds{job=\"app\"})",
+    "process_max_fds": "max(process_max_fds{job=\"app\"})",
+    "process_start_time_seconds": "time() - max(process_start_time_seconds{job=\"app\"})",
 }
 CHAOS_QUERY = "sum(chaos_mode)"
 
