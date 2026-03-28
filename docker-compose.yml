@@ -30,8 +30,11 @@ services:
       PROM_BASE: "http://prometheus:9090"
       POLL_SEC: "2.0"
       BOOTSTRAP_SAMPLES: "180"
-      SOM_ROWS: "20"
-      SOM_COLS: "20"
+      SOM_ROWS: "32"
+      SOM_COLS: "32"
+      SOM_LR: "1.0"
+      SOM_SIGMA: "2.0"
+      NEIGHBORHOOD_RADIUS: "2.0"
       ANOMALY_QUANTILE: "0.99"
     volumes:
       - ./data/learner:/data

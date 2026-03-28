@@ -13,12 +13,14 @@ from prometheus_client import CONTENT_TYPE_LATEST, Gauge, generate_latest
 from starlette.responses import Response
 
 PROM_BASE = os.getenv("PROM_BASE", "http://prometheus:9090")
-POLL_SEC = float(os.getenv("POLL_SEC", "2.0"))
+POLL_SEC = float(os.getenv("POLL_SEC", "1.0"))
 BOOTSTRAP_SAMPLES = int(os.getenv("BOOTSTRAP_SAMPLES", "180"))
-GRID_ROWS = int(os.getenv("SOM_ROWS", "20"))
-GRID_COLS = int(os.getenv("SOM_COLS", "20"))
-LR = float(os.getenv("SOM_LR", "0.25"))
-SIGMA = float(os.getenv("SOM_SIGMA", "3.0"))
+GRID_ROWS = int(os.getenv("SOM_ROWS", "32"))
+GRID_COLS = int(os.getenv("SOM_COLS", "32"))
+LR = float(os.getenv("SOM_LR", "1.0"))
+SIGMA = float(os.getenv("SOM_SIGMA", "2.0"))
+NEIGHBORHOOD_RADIUS = float(os.getenv("NEIGHBORHOOD_RADIUS", "2.0"))
+SMOOTH_WINDOW = int(os.getenv("SMOOTH_WINDOW", "20"))
 THRESHOLD_Q = float(os.getenv("ANOMALY_QUANTILE", "0.99"))
 MODEL_PATH = Path(os.getenv("MODEL_PATH", "/data/model/som_model.npz"))
 ANOMALY_LOG = Path(os.getenv("ANOMALY_LOG", "/data/events/anomaly_events.jsonl"))
@@ -53,13 +55,23 @@ class Sample:
 
 
 class SOMModel:
-    def __init__(self, rows: int, cols: int, dim: int, lr: float, sigma: float):
+    def __init__(self, rows: int, cols: int, dim: int, lr: float, sigma: float, smooth_window: int = 5):
         self.rows = rows
         self.cols = cols
         self.dim = dim
         self.lr = lr
         self.sigma = sigma
-        self.weights = np.random.random((rows, cols, dim)).astype(np.float64)
+        # Keep weights in the same [0, 100] range as normalized input vectors.
+        self.weights = (np.random.random((rows, cols, dim)) * 100.0).astype(np.float64)
+        self.smooth_window = max(1, int(smooth_window))
+        # Windowed smoothing state for each neuron's weight vector.
+        self.smooth_history = np.zeros((rows, cols, self.smooth_window, dim), dtype=np.float64)
+        self.smooth_sum = self.weights.copy()
+        self.smooth_count = np.ones((rows, cols), dtype=np.int32)
+        self.smooth_pos = np.zeros((rows, cols), dtype=np.int32)
+        self.smooth_history[:, :, 0, :] = self.weights
+        if self.smooth_window > 1:
+            self.smooth_pos.fill(1)
         self.steps = 0
 
     def _bmu(self, x: np.ndarray) -> tuple[int, int, float]:
@@ -68,23 +80,55 @@ class SOMModel:
         r, c = divmod(idx, self.cols)
         return r, c, float(dists[r, c])
 
-    def _decayed(self) -> tuple[float, float]:
-        decay = 1.0 / (1.0 + self.steps / 3000.0)
-        return self.lr * decay, max(0.8, self.sigma * decay)
-
-    def train_step(self, x: np.ndarray) -> float:
+    def train_step(self, x: np.ndarray, radius: float = 2.0) -> float:
         r, c, dist = self._bmu(x)
-        lr, sigma = self._decayed()
+        # Fixed learning coefficient L(t) = 1
+        # Gaussian neighborhood influence based on lattice distance to BMU
         rr, cc = np.indices((self.rows, self.cols))
         d2 = (rr - r) ** 2 + (cc - c) ** 2
-        influence = np.exp(-d2 / (2.0 * sigma * sigma)).reshape(self.rows, self.cols, 1)
-        self.weights += influence * lr * (x.reshape(1, 1, self.dim) - self.weights)
+        # Select neurons within radius
+        mask = d2 <= (radius * radius)
+        # Gaussian influence: exp(-d^2 / (2 * radius^2))
+        influence = np.exp(-d2[mask] / (2.0 * radius * radius))
+        # First apply SOM update, then smooth with a fixed-size window over recent weights.
+        old_w = self.weights[mask]
+        raw_new = old_w + influence.reshape(-1, 1) * (x.reshape(1, self.dim) - old_w)
+        indices = np.argwhere(mask)
+        for i, (nr, nc) in enumerate(indices):
+            cnt = int(self.smooth_count[nr, nc])
+            pos = int(self.smooth_pos[nr, nc])
+
+            if cnt == self.smooth_window:
+                old_hist = self.smooth_history[nr, nc, pos]
+                self.smooth_sum[nr, nc] -= old_hist
+            else:
+                self.smooth_count[nr, nc] = cnt + 1
+
+            self.smooth_history[nr, nc, pos] = raw_new[i]
+            self.smooth_sum[nr, nc] += raw_new[i]
+            self.smooth_pos[nr, nc] = (pos + 1) % self.smooth_window
+
+            denom = float(self.smooth_count[nr, nc])
+            self.weights[nr, nc] = self.smooth_sum[nr, nc] / denom
         self.steps += 1
         return dist
 
     def score(self, x: np.ndarray) -> float:
         _, _, dist = self._bmu(x)
         return dist
+    
+    def area_score(self, bmu_r: int, bmu_c: int, radius: float) -> float:
+        """Calculate area of BMU from weight-space Manhattan distances."""
+        rr, cc = np.indices((self.rows, self.cols))
+        euclidean_dist_sq = (rr - bmu_r) ** 2 + (cc - bmu_c) ** 2
+        # Select neurons within radius
+        mask = euclidean_dist_sq <= (radius * radius)
+        # Manhattan distance is computed in feature space between neuron weights.
+        bmu_w = self.weights[bmu_r, bmu_c]
+        neighbor_w = self.weights[mask]
+        manhattan_dists = np.sum(np.abs(neighbor_w - bmu_w.reshape(1, self.dim)), axis=1)
+        area = float(np.sum(manhattan_dists))
+        return area
 
 
 class LearnerState:
@@ -129,31 +173,45 @@ def _collect_sample() -> Sample:
     return Sample(ts=time.time(), values=np.array(vals, dtype=np.float64), chaos_on=(chaos_count > 0.0))
 
 
-def _feature_scale(samples: np.ndarray) -> np.ndarray:
+def _feature_minmax(samples: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    minv = np.min(samples, axis=0)
     maxv = np.max(samples, axis=0)
-    maxv[maxv == 0.0] = 1.0
-    return maxv
+    span = maxv - minv
+    span[span == 0.0] = 1.0
+    return minv, span
 
 
-def _train_bootstrap(normal_samples: List[np.ndarray]) -> tuple[SOMModel, float, np.ndarray]:
+def _normalize_0_100(values: np.ndarray, minv: np.ndarray, span: np.ndarray, clip_hi: float = 100.0) -> np.ndarray:
+    return np.clip(((values - minv) / span) * 100.0, 0.0, clip_hi)
+
+
+def _train_bootstrap(normal_samples: List[np.ndarray]) -> tuple[SOMModel, float, np.ndarray, np.ndarray]:
     data = np.array(normal_samples, dtype=np.float64)
-    scale = _feature_scale(data)
-    norm = np.clip(data / scale, 0.0, 2.0)
+    minv, span = _feature_minmax(data)
+    norm = _normalize_0_100(data, minv, span)
 
-    model = SOMModel(GRID_ROWS, GRID_COLS, norm.shape[1], LR, SIGMA)
+    model = SOMModel(GRID_ROWS, GRID_COLS, norm.shape[1], LR, SIGMA, smooth_window=SMOOTH_WINDOW)
     rng = np.random.default_rng(42)
 
     epochs = 8
     for _ in range(epochs):
         for idx in rng.permutation(norm.shape[0]):
-            model.train_step(norm[idx])
+            model.train_step(norm[idx], radius=NEIGHBORHOOD_RADIUS)
 
-    dists = np.array([model.score(v) for v in norm], dtype=np.float64)
-    threshold = float(np.quantile(dists, THRESHOLD_Q))
-    return model, threshold, scale
+    # Calculate area for each neuron in the map
+    areas = []
+    for r in range(model.rows):
+        for c in range(model.cols):
+            area = model.area_score(r, c, NEIGHBORHOOD_RADIUS)
+            areas.append(area)
+    
+    # Threshold is 85th percentile of all neuron areas
+    areas_array = np.array(areas, dtype=np.float64)
+    threshold = float(np.percentile(areas_array, 85.0))
+    return model, threshold, minv, span
 
 
-def _persist_model(model: SOMModel, threshold: float, scale: np.ndarray) -> None:
+def _persist_model(model: SOMModel, threshold: float, scale_min: np.ndarray, scale_span: np.ndarray) -> None:
     MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(
         MODEL_PATH,
@@ -162,36 +220,67 @@ def _persist_model(model: SOMModel, threshold: float, scale: np.ndarray) -> None
         dim=model.dim,
         lr=model.lr,
         sigma=model.sigma,
+        smooth_window=model.smooth_window,
         steps=model.steps,
         threshold=threshold,
-        scale=scale,
+        scale_min=scale_min,
+        scale_span=scale_span,
         weights=model.weights,
+        smooth_sum=model.smooth_sum,
+        smooth_history=model.smooth_history,
+        smooth_count=model.smooth_count,
+        smooth_pos=model.smooth_pos,
         feature_names=np.array(state.feature_names, dtype=object),
     )
 
 
-def _load_model() -> tuple[Optional[SOMModel], float, Optional[np.ndarray]]:
+def _load_model() -> tuple[Optional[SOMModel], float, Optional[np.ndarray], Optional[np.ndarray]]:
     if not MODEL_PATH.exists():
-        return None, 0.0, None
+        return None, 0.0, None, None
     try:
         data = np.load(MODEL_PATH, allow_pickle=True)
         names = list(data["feature_names"]) if "feature_names" in data else state.feature_names
         if list(names) != state.feature_names:
-            return None, 0.0, None
+            return None, 0.0, None, None
+        smooth_window = int(data["smooth_window"]) if "smooth_window" in data else SMOOTH_WINDOW
         model = SOMModel(
             int(data["rows"]),
             int(data["cols"]),
             int(data["dim"]),
             float(data["lr"]),
             float(data["sigma"]),
+            smooth_window=smooth_window,
         )
         model.steps = int(data["steps"])
         model.weights = data["weights"].astype(np.float64)
+        if all(k in data for k in ["smooth_sum", "smooth_history", "smooth_count", "smooth_pos"]):
+            model.smooth_sum = data["smooth_sum"].astype(np.float64)
+            model.smooth_history = data["smooth_history"].astype(np.float64)
+            model.smooth_count = data["smooth_count"].astype(np.int32)
+            model.smooth_pos = data["smooth_pos"].astype(np.int32)
+        else:
+            # Backward compatibility for checkpoints without windowed smoothing state.
+            model.smooth_sum = model.weights.copy()
+            model.smooth_history = np.zeros((model.rows, model.cols, model.smooth_window, model.dim), dtype=np.float64)
+            model.smooth_history[:, :, 0, :] = model.weights
+            model.smooth_count = np.ones((model.rows, model.cols), dtype=np.int32)
+            model.smooth_pos = np.zeros((model.rows, model.cols), dtype=np.int32)
+            if model.smooth_window > 1:
+                model.smooth_pos.fill(1)
         threshold = float(data["threshold"])
-        scale = data["scale"].astype(np.float64)
-        return model, threshold, scale
+        if "scale_min" in data and "scale_span" in data:
+            scale_min = data["scale_min"].astype(np.float64)
+            scale_span = data["scale_span"].astype(np.float64)
+        elif "scale" in data:
+            # Backward compatibility with older checkpoints.
+            scale_min = np.zeros_like(data["scale"], dtype=np.float64)
+            scale_span = data["scale"].astype(np.float64)
+            scale_span[scale_span == 0.0] = 1.0
+        else:
+            return None, 0.0, None, None
+        return model, threshold, scale_min, scale_span
     except Exception:
-        return None, 0.0, None
+        return None, 0.0, None, None
 
 
 def _log_anomaly(event: dict) -> None:
@@ -201,11 +290,11 @@ def _log_anomaly(event: dict) -> None:
 
 
 def _worker_loop() -> None:
-    model, threshold, scale = _load_model()
+    model, threshold, scale_min, scale_span = _load_model()
     with state.lock:
         state.model = model
         state.threshold = threshold
-        state.trained = model is not None and scale is not None
+        state.trained = model is not None and scale_min is not None and scale_span is not None
     SOM_READY.set(1 if state.trained else 0)
     SOM_THRESHOLD.set(state.threshold)
 
@@ -220,12 +309,13 @@ def _worker_loop() -> None:
                     state.bootstrap_normal.append(sample.values)
                     SOM_TRAIN_SAMPLES.set(len(state.bootstrap_normal))
                 if len(state.bootstrap_normal) >= BOOTSTRAP_SAMPLES:
-                    trained_model, trained_threshold, trained_scale = _train_bootstrap(state.bootstrap_normal)
+                    trained_model, trained_threshold, trained_min, trained_span = _train_bootstrap(state.bootstrap_normal)
                     state.model = trained_model
                     state.threshold = trained_threshold
                     state.trained = True
-                    scale = trained_scale
-                    _persist_model(trained_model, trained_threshold, trained_scale)
+                    scale_min = trained_min
+                    scale_span = trained_span
+                    _persist_model(trained_model, trained_threshold, trained_min, trained_span)
                     SOM_READY.set(1)
                     SOM_THRESHOLD.set(trained_threshold)
                 state.last = {
@@ -238,13 +328,17 @@ def _worker_loop() -> None:
                 continue
 
             assert state.model is not None
-            assert scale is not None
-            x = np.clip(sample.values / scale, 0.0, 3.0)
-            score = state.model.score(x)
+            assert scale_min is not None
+            assert scale_span is not None
+            x = _normalize_0_100(sample.values, scale_min, scale_span)
+            # Find BMU for scoring
+            bmu_r, bmu_c, _ = state.model._bmu(x)
+            # Score is the area of the BMU neighborhood
+            score = state.model.area_score(bmu_r, bmu_c, NEIGHBORHOOD_RADIUS)
             is_anomaly = bool(score > state.threshold)
 
             if not sample.chaos_on:
-                state.model.train_step(x)
+                state.model.train_step(x, radius=NEIGHBORHOOD_RADIUS)
 
             SOM_LAST_SCORE.set(score)
             SOM_LAST_ANOMALY.set(1 if is_anomaly else 0)
@@ -275,7 +369,7 @@ def _worker_loop() -> None:
                 )
 
             if state.total_samples % 30 == 0:
-                _persist_model(state.model, state.threshold, scale)
+                _persist_model(state.model, state.threshold, scale_min, scale_span)
 
         time.sleep(POLL_SEC)
 
