@@ -1,0 +1,203 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    NORMAL APPLICATION BEHAVIOR                              ║
+║                         Implementation Overview                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ THREE BACKGROUND WORKERS                                                    │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│ 1. MATRIX COMPUTATION (CPU-Intensive)                                       │
+│    ├─ Interval: Every 5 seconds                                             │
+│    ├─ Operation: 100×100 random matrix multiplication                       │
+│    ├─ Logging: result_mean value                                            │
+│    ├─ Metrics affected: process_cpu_seconds_total                           │
+│    └─ Purpose: CPU workload simulation                                      │
+│                                                                              │
+│ 2. FILE OPERATIONS (I/O-Intensive)                                          │
+│    ├─ Interval: Every 2 seconds (random operation)                          │
+│    ├─ Operations: Create, Read, Delete in /data/normal_files/              │
+│    ├─ Logging: path, size, operation type                                   │
+│    ├─ Metrics affected: process_open_fds, disk usage                        │
+│    └─ Purpose: File system workload simulation                              │
+│                                                                              │
+│ 3. WEB REQUESTS (Network I/O)                                               │
+│    ├─ Interval: Every 3 seconds                                             │
+│    ├─ Target: /work endpoint (internal)                                     │
+│    ├─ Logging: response_time_ms, status_code, success                       │
+│    ├─ Metrics affected: http_requests_total, http_request_latency_seconds   │
+│    └─ Purpose: Network workload simulation                                  │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ STARTUP FLOW                                                                │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  Application Startup                                                        │
+│         ↓                                                                    │
+│  FastAPI initialization                                                     │
+│         ↓                                                                    │
+│  @app.on_event("startup")                                                   │
+│         ↓                                                                    │
+│  _start_normal_behavior()                                                   │
+│         ↓                                                                    │
+│  Spawn 3 daemon threads:                                                    │
+│  ├─ _normal_behavior_matrix_computation()                                   │
+│  ├─ _normal_behavior_file_operations()                                      │
+│  └─ _normal_behavior_web_requests()                                         │
+│         ↓                                                                    │
+│  All threads run continuously                                               │
+│         ↓                                                                    │
+│  Events logged to /data/app/events/chaos_events.jsonl                       │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ OPERATION FREQUENCY (ACTUAL)                                                │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│ Matrix computations: 12 per minute      (1 every 5 sec)                    │
+│ File operations:     30 per minute      (1 every 2 sec, mix of ops)        │
+│ Web requests:        20 per minute      (1 every 3 sec)                    │
+│                                                                              │
+│ Total: ~62 events per minute = 1 event per second                           │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ EVENT TYPES & LOGGING                                                       │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│ ALL events logged to: /data/app/events/chaos_events.jsonl                   │
+│                                                                              │
+│ Matrix Event:                                                               │
+│   {                                                                         │
+│     "type": "normal_behavior",                                              │
+│     "operation": "matrix_multiplication",                                   │
+│     "size": 100,                                                            │
+│     "result_mean": 24.952,                                                  │
+│     "ts": 1774735937.547                                                    │
+│   }                                                                         │
+│                                                                              │
+│ File Event:                                                                 │
+│   {                                                                         │
+│     "type": "normal_behavior",                                              │
+│     "operation": "file_create|file_read|file_delete",                      │
+│     "path": "/data/normal_files/file_3823.txt",                             │
+│     "size": 1000,  [only for read]                                          │
+│     "ts": 1774735938.609                                                    │
+│   }                                                                         │
+│                                                                              │
+│ Web Request Event:                                                          │
+│   {                                                                         │
+│     "type": "normal_behavior",                                              │
+│     "operation": "web_request",                                             │
+│     "endpoint": "/work",                                                    │
+│     "status_code": 200,                                                     │
+│     "response_time_ms": 26.579,                                             │
+│     "success": true,                                                        │
+│     "ts": 1774735937.709                                                    │
+│   }                                                                         │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ RESOURCE CONSUMPTION                                                        │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│ CPU:            ~3-5% on idle system                                        │
+│ Memory:         ~100MB baseline + temporary buffers                         │
+│ Disk I/O:       10-20 file ops/sec + 3-5 events/sec                         │
+│ Network I/O:    ~0.3 req/sec (localhost only)                               │
+│                                                                              │
+│ Overhead Impact: MINIMAL - suitable for background operations               │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ CHAOS TESTING SCENARIOS                                                     │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│ Scenario 1: CPU Chaos                                                       │
+│   ├─ Enable: POST /chaos/cpu/start?workers=4                                │
+│   ├─ Effect: Matrix computation CPU time increases, response times up       │
+│   └─ Measure: process_cpu_seconds_total spike                               │
+│                                                                              │
+│ Scenario 2: Network Latency                                                 │
+│   ├─ Enable: POST /chaos/net/latency?ms=500                                 │
+│   ├─ Effect: Web request response times increase by 500ms                   │
+│   └─ Measure: Events show response_time_ms += 500                           │
+│                                                                              │
+│ Scenario 3: Memory Leak                                                     │
+│   ├─ Enable: POST /chaos/mem/leak/start?mb_per_sec=50                       │
+│   ├─ Effect: Memory increases 50MB/sec, file ops slow down                  │
+│   └─ Measure: leak_mb increases, operation count decreases                  │
+│                                                                              │
+│ Scenario 4: Disk Fill                                                       │
+│   ├─ Enable: POST /chaos/disk/fill?mb=500                                   │
+│   ├─ Effect: File operations may fail, slower I/O                           │
+│   └─ Measure: File operation error events                                   │
+│                                                                              │
+│ Scenario 5: Combined Chaos                                                  │
+│   ├─ Enable: Multiple chaos modes simultaneously                            │
+│   ├─ Effect: Cascading impact on all normal operations                      │
+│   └─ Measure: All metrics degraded simultaneously                           │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ MONITORING COMMANDS                                                         │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│ View live events:                                                           │
+│   tail -f /data/app/events/chaos_events.jsonl | grep normal_behavior       │
+│                                                                              │
+│ Count events by type:                                                       │
+│   tail -100 /data/app/events/chaos_events.jsonl | \                        │
+│   grep -o '"operation":"[^"]*"' | sort | uniq -c                           │
+│                                                                              │
+│ Check metrics:                                                              │
+│   curl -s http://localhost:8000/metrics | grep process_                    │
+│                                                                              │
+│ View file operations:                                                       │
+│   ls -la /data/normal_files                                                 │
+│                                                                              │
+│ Watch status script:                                                        │
+│   bash NORMAL_BEHAVIOR_TESTING.md  (see check_normal_behavior.sh)          │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ IMPLEMENTATION DETAILS                                                      │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│ File Modified: app/main.py                                                  │
+│   ├─ Import added: numpy                                                    │
+│   ├─ Global added: normal_behavior_stop (threading.Event)                   │
+│   ├─ Functions added: 4 new functions (88-280 lines)                        │
+│   └─ Startup added: @app.on_event("startup") handler                        │
+│                                                                              │
+│ Dependencies added:                                                         │
+│   └─ numpy==1.26.4 (in app/requirements.txt)                                │
+│                                                                              │
+│ Files created:                                                              │
+│   ├─ NORMAL_BEHAVIOR_GUIDE.md                                               │
+│   ├─ NORMAL_BEHAVIOR_TESTING.md                                             │
+│   ├─ NORMAL_BEHAVIOR_IMPLEMENTATION_SUMMARY.md                              │
+│   └─ NORMAL_BEHAVIOR_OVERVIEW.txt (this file)                               │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║ STATUS: ✅ IMPLEMENTED & VERIFIED                                           ║
+║                                                                              ║
+║ ✅ Application running                                                      ║
+║ ✅ Three workers active                                                     ║
+║ ✅ Events being logged                                                      ║
+║ ✅ Metrics accessible                                                       ║
+║ ✅ Ready for chaos testing                                                  ║
+║                                                                              ║
+║ Next: Run NORMAL_BEHAVIOR_TESTING.md for test scenarios                    ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝

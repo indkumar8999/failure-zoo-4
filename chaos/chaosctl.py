@@ -30,7 +30,17 @@ def ensure_proxy():
 
 def clear_toxics():
     ensure_proxy()
-    toxi("DELETE", "/proxies/downstream/toxics")
+    # Get existing toxics and delete them one by one
+    proxies = toxi("GET", "/proxies") or {}
+    downstream = proxies.get("downstream", {})
+    toxics = downstream.get("toxics", [])
+    for toxic in toxics:
+        toxic_name = toxic.get("name", "")
+        if toxic_name:
+            try:
+                toxi("DELETE", f"/proxies/downstream/toxics/{toxic_name}")
+            except Exception:
+                pass  # Ignore errors deleting individual toxics
 
 def add_toxic(name, toxic_type, attributes, toxicity=1.0, stream="downstream"):
     ensure_proxy()
