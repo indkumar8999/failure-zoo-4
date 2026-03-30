@@ -1,0 +1,471 @@
+1774865693.018532 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0 <0.000133>
+1774865693.019610 mmap(NULL, 16384, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xffffba1f8000 <0.000240>
+1774865693.024455 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 17</proc/17/stat> <0.000179>
+1774865693.027857 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000076>
+1774865693.028773 ioctl(17</proc/17/stat>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000599>
+1774865693.031098 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000228>
+1774865693.031760 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000117>
+1774865693.032181 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000082>
+1774865693.032665 read(17</proc/17/stat>, "17 (uvicorn) S 14 1 1 0 -1 4194560 20106 0 0 0 32834 6537 0 0 20 0 8 0 11847356 431718400 19632 18446744073709551615 187651000238080 187651000241032 281474082790640 0 0 0 0 16781312 16386 0 0 0 17 0 0"..., 8192) = 323 <0.000120>
+1774865693.033149 read(17</proc/17/stat>, "", 7869) = 0 <0.000068>
+1774865693.033646 close(17</proc/17/stat>) = 0 <0.000168>
+1774865693.034442 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 17</proc/17/limits> <0.000160>
+1774865693.035138 fstat(17</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000100>
+1774865693.035589 ioctl(17</proc/17/limits>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000241>
+1774865693.036271 lseek(17</proc/17/limits>, 0, SEEK_CUR) = 0 <0.000128>
+1774865693.036792 read(17</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.000171>
+1774865693.037350 close(17</proc/17/limits>) = 0 <0.000098>
+1774865693.037781 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 17</proc/17/fd> <0.000101>
+1774865693.038206 fstat(17</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=18, ...}) = 0 <0.000117>
+1774865693.038660 getdents64(17</proc/17/fd>, 0xffff9c0013f0 /* 20 entries */, 32768) = 480 <0.000263>
+1774865693.039259 getdents64(17</proc/17/fd>, 0xffff9c0013f0 /* 0 entries */, 32768) = 0 <0.000093>
+1774865693.039671 close(17</proc/17/fd>) = 0 <0.000093>
+1774865693.041559 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000225>
+1774865693.187804 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000273>
+1774865693.366654 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000133>
+1774865693.547761 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000231>
+1774865693.703750 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000248>
+1774865693.883038 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000180>
+1774865694.063929 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000219>
+1774865694.222864 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000192>
+1774865694.375919 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000283>
+1774865694.558489 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000327>
+1774865694.725921 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.001086>
+1774865694.891346 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.001542>
+1774865695.074798 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000260>
+1774865695.246819 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000303>
+1774865695.415875 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000122>
+1774865695.592540 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000186>
+1774865695.752016 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000194>
+1774865695.918283 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000193>
+1774865696.067091 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000196>
+1774865696.229847 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000210>
+1774865696.416898 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000267>
+1774865696.597755 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000230>
+1774865696.769981 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000181>
+1774865696.938766 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000240>
+1774865697.119969 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000139>
+1774865697.302755 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000257>
+1774865697.481945 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000146>
+1774865697.660648 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000232>
+1774865697.818082 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000203>
+1774865697.979439 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000195>
+1774865698.011481 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 17</proc/17/stat> <0.000116>
+1774865698.012057 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000065>
+1774865698.012481 ioctl(17</proc/17/stat>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000063>
+1774865698.012896 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000060>
+1774865698.013217 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000062>
+1774865698.013494 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000056>
+1774865698.013785 read(17</proc/17/stat>, "17 (uvicorn) S 14 1 1 0 -1 4194560 20106 0 0 0 32842 6539 0 0 20 0 8 0 11847356 431718400 19632 18446744073709551615 187651000238080 187651000241032 281474082790640 0 0 0 0 16781312 16386 0 0 0 17 0 0"..., 8192) = 323 <0.000087>
+1774865698.014101 read(17</proc/17/stat>, "", 7869) = 0 <0.000056>
+1774865698.014433 close(17</proc/17/stat>) = 0 <0.000065>
+1774865698.014862 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 17</proc/17/limits> <0.000107>
+1774865698.015276 fstat(17</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000060>
+1774865698.015601 ioctl(17</proc/17/limits>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000057>
+1774865698.015915 lseek(17</proc/17/limits>, 0, SEEK_CUR) = 0 <0.000055>
+1774865698.016218 read(17</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.000074>
+1774865698.016591 close(17</proc/17/limits>) = 0 <0.000072>
+1774865698.016917 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 17</proc/17/fd> <0.000072>
+1774865698.017275 fstat(17</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=18, ...}) = 0 <0.000046>
+1774865698.017667 getdents64(17</proc/17/fd>, 0xffff9c001ea0 /* 20 entries */, 32768) = 480 <0.000297>
+1774865698.018240 getdents64(17</proc/17/fd>, 0xffff9c001ea0 /* 0 entries */, 32768) = 0 <0.000048>
+1774865698.018448 close(17</proc/17/fd>) = 0 <0.000047>
+1774865698.019636 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000181>
+1774865698.180038 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000735>
+1774865698.326685 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000533>
+1774865698.508337 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000218>
+1774865698.674306 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000181>
+1774865698.833629 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000176>
+1774865698.991883 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000204>
+1774865699.175843 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000319>
+1774865699.350950 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000238>
+1774865699.530711 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000095>
+1774865699.712757 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000204>
+1774865699.891796 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000181>
+1774865700.079660 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000060>
+1774865700.240223 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000207>
+1774865700.420111 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000204>
+1774865700.597345 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000215>
+1774865700.766448 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000210>
+1774865700.940717 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000200>
+1774865701.113630 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000178>
+1774865701.296846 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000726>
+1774865701.453565 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000338>
+1774865701.619949 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000128>
+1774865701.782690 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000204>
+1774865701.955752 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000382>
+1774865702.117266 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000272>
+1774865702.276087 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000214>
+1774865702.438762 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000192>
+1774865702.619675 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000209>
+1774865702.801106 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000437>
+1774865702.977014 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000316>
+1774865703.011371 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 17</proc/17/stat> <0.000151>
+1774865703.011944 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000050>
+1774865703.012292 ioctl(17</proc/17/stat>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000044>
+1774865703.012712 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000043>
+1774865703.013012 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000058>
+1774865703.013980 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000044>
+1774865703.014296 read(17</proc/17/stat>, "17 (uvicorn) S 14 1 1 0 -1 4194560 20106 0 0 0 32852 6540 0 0 20 0 8 0 11847356 431718400 19632 18446744073709551615 187651000238080 187651000241032 281474082790640 0 0 0 0 16781312 16386 0 0 0 17 0 0"..., 8192) = 323 <0.000102>
+1774865703.014655 read(17</proc/17/stat>, "", 7869) = 0 <0.000042>
+1774865703.015004 close(17</proc/17/stat>) = 0 <0.000060>
+1774865703.015470 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 17</proc/17/limits> <0.000079>
+1774865703.015822 fstat(17</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000041>
+1774865703.016068 ioctl(17</proc/17/limits>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000043>
+1774865703.016337 lseek(17</proc/17/limits>, 0, SEEK_CUR) = 0 <0.000064>
+1774865703.016709 read(17</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.000341>
+1774865703.017915 close(17</proc/17/limits>) = 0 <0.000051>
+1774865703.018261 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 17</proc/17/fd> <0.000079>
+1774865703.018667 fstat(17</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=18, ...}) = 0 <0.000062>
+1774865703.019056 getdents64(17</proc/17/fd>, 0xffff9c002420 /* 20 entries */, 32768) = 480 <0.003937>
+1774865703.023845 getdents64(17</proc/17/fd>, 0xffff9c002420 /* 0 entries */, 32768) = 0 <0.000056>
+1774865703.024224 close(17</proc/17/fd>) = 0 <0.001753>
+1774865703.030136 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000275>
+1774865703.164105 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000256>
+1774865703.335664 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000214>
+1774865703.508687 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000367>
+1774865703.656620 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000337>
+1774865703.849176 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000328>
+1774865703.991058 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000098>
+1774865704.158643 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000361>
+1774865704.314615 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000338>
+1774865704.474247 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000424>
+1774865704.634294 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000337>
+1774865704.811946 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000378>
+1774865704.976555 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000150>
+1774865705.154358 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000310>
+1774865705.328020 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000293>
+1774865705.506186 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000212>
+1774865705.682514 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000174>
+1774865705.830572 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000111>
+1774865706.016709 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.001516>
+1774865706.184452 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000339>
+1774865706.362943 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000381>
+1774865706.498917 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000772>
+1774865706.670808 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000162>
+1774865706.957101 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000431>
+1774865707.055428 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000767>
+1774865707.317591 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.006733>
+1774865707.503172 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.055908>
+1774865707.757847 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.001229>
+1774865707.930036 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.013583>
+1774865708.169986 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 17</proc/17/stat> <0.010831>
+1774865708.238818 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.009719>
+1774865708.506963 ioctl(17</proc/17/stat>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000400>
+1774865708.675513 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.001842>
+1774865708.686180 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000051>
+1774865708.687033 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.001139>
+1774865708.691726 read(17</proc/17/stat>, "17 (uvicorn) S 14 1 1 0 -1 4194560 20107 0 0 0 32890 6550 0 0 20 0 8 0 11847356 431718400 19632 18446744073709551615 187651000238080 187651000241032 281474082790640 0 0 0 0 16781312 16386 0 0 0 17 0 0"..., 8192) = 323 <0.000135>
+1774865708.692361 read(17</proc/17/stat>, "", 7869) = 0 <0.000248>
+1774865708.696249 close(17</proc/17/stat>) = 0 <0.001335>
+1774865708.707055 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 17</proc/17/limits> <0.000399>
+1774865708.709552 fstat(17</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000076>
+1774865708.710157 ioctl(17</proc/17/limits>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000074>
+1774865708.710602 lseek(17</proc/17/limits>, 0, SEEK_CUR) = 0 <0.002145>
+1774865708.716865 read(17</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.001895>
+1774865708.723576 close(17</proc/17/limits>) = 0 <0.000949>
+1774865708.735177 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 17</proc/17/fd> <0.000125>
+1774865708.735618 fstat(17</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=18, ...}) = 0 <0.000042>
+1774865708.735887 getdents64(17</proc/17/fd>, 0xffff9c0029a0 /* 20 entries */, 32768) = 480 <0.000232>
+1774865708.736372 getdents64(17</proc/17/fd>, 0xffff9c0029a0 /* 0 entries */, 32768) = 0 <0.000043>
+1774865708.736778 close(17</proc/17/fd>) = 0 <0.000079>
+1774865708.740531 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000223>
+1774865708.784205 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000260>
+1774865708.924898 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.001511>
+1774865709.102432 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000943>
+1774865709.285119 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000280>
+1774865709.461648 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000189>
+1774865709.641059 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000279>
+1774865709.818445 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000190>
+1774865710.005309 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000362>
+1774865710.155469 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000204>
+1774865710.338193 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.001252>
+1774865710.602859 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000487>
+1774865710.691907 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.002240>
+1774865710.907396 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.006625>
+1774865711.014778 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000941>
+1774865711.167631 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000205>
+1774865711.325935 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000369>
+1774865711.502416 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000407>
+1774865712.302549 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000589>
+1774865713.128984 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 17</proc/17/stat> <0.001539>
+1774865713.133657 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.001019>
+1774865713.139931 ioctl(17</proc/17/stat>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000199>
+1774865713.142337 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000204>
+1774865713.144096 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000272>
+1774865713.147671 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000720>
+1774865713.150753 read(17</proc/17/stat>, "17 (uvicorn) t 14 1 1 0 -1 4194560 20107 0 0 0 32997 6573 0 0 20 0 8 0 11847356 431718400 19632 18446744073709551615 187651000238080 187651000241032 281474082790640 0 0 0 0 16781312 16386 0 0 0 17 0 0"..., 8192) = 325 <0.001220>
+1774865713.153347 read(17</proc/17/stat>, "", 7867) = 0 <0.000223>
+1774865713.154717 close(17</proc/17/stat>) = 0 <0.001203>
+1774865713.159207 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 17</proc/17/limits> <0.000226>
+1774865713.160491 fstat(17</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000533>
+1774865713.169460 ioctl(17</proc/17/limits>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.001147>
+1774865713.184793 lseek(17</proc/17/limits>, 0, SEEK_CUR) = 0 <0.008551>
+1774865713.209757 read(17</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.000563>
+1774865713.216001 close(17</proc/17/limits>) = 0 <0.002297>
+1774865713.223400 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 17</proc/17/fd> <0.002677>
+1774865713.229344 fstat(17</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=18, ...}) = 0 <0.001402>
+1774865713.236921 getdents64(17</proc/17/fd>, 0xffff9c002f20 /* 20 entries */, 32768) = 480 <0.000615>
+1774865713.239052 getdents64(17</proc/17/fd>, 0xffff9c002f20 /* 0 entries */, 32768) = 0 <0.000311>
+1774865713.240593 close(17</proc/17/fd>) = 0 <0.000585>
+1774865713.245263 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000628>
+1774865719.321747 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 17</proc/17/stat> <0.001177>
+1774865719.364249 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.004104>
+1774865719.379587 ioctl(17</proc/17/stat>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.002149>
+1774865719.386448 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.001696>
+1774865719.396383 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.001150>
+1774865719.408201 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000739>
+1774865719.411421 read(17</proc/17/stat>, "17 (uvicorn) S 14 1 1 0 -1 4194560 20107 0 0 0 33052 6588 0 0 20 0 8 0 11847356 431718400 19632 18446744073709551615 187651000238080 187651000241032 281474082790640 0 0 0 0 16781312 16386 0 0 0 17 0 0"..., 8192) = 323 <0.000303>
+1774865719.412870 read(17</proc/17/stat>, "", 7869) = 0 <0.000162>
+1774865719.413571 close(17</proc/17/stat>) = 0 <0.000175>
+1774865719.414952 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 17</proc/17/limits> <0.000236>
+1774865719.418481 fstat(17</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000217>
+1774865719.421364 ioctl(17</proc/17/limits>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000090>
+1774865719.423509 lseek(17</proc/17/limits>, 0, SEEK_CUR) = 0 <0.000845>
+1774865719.428009 read(17</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.000251>
+1774865719.429026 close(17</proc/17/limits>) = 0 <0.000081>
+1774865719.430188 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 17</proc/17/fd> <0.000569>
+1774865719.432285 fstat(17</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=18, ...}) = 0 <0.000304>
+1774865719.434895 getdents64(17</proc/17/fd>, 0xffff9c0034a0 /* 20 entries */, 32768) = 480 <0.001806>
+1774865719.441356 getdents64(17</proc/17/fd>, 0xffff9c0034a0 /* 0 entries */, 32768) = 0 <0.000948>
+1774865719.450839 close(17</proc/17/fd>) = 0 <0.000223>
+1774865719.453642 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000245>
+1774865719.594840 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.001844>
+1774865719.802297 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000495>
+1774865719.898706 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000268>
+1774865720.316715 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000050>
+1774865720.376621 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.004593>
+1774865720.539902 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000544>
+1774865720.709808 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000305>
+1774865720.892466 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000974>
+1774865721.066470 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000549>
+1774865721.239438 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000324>
+1774865721.434286 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000211>
+1774865721.597775 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000892>
+1774865721.774144 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000309>
+1774865721.924274 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000345>
+1774865722.101889 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000266>
+1774865722.279831 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000244>
+1774865722.445296 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000268>
+1774865722.625404 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000635>
+1774865722.790543 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000448>
+1774865722.944305 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000363>
+1774865723.008510 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 17</proc/17/stat> <0.000165>
+1774865723.009287 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000061>
+1774865723.009654 ioctl(17</proc/17/stat>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000061>
+1774865723.010094 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000061>
+1774865723.010441 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000050>
+1774865723.010725 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000057>
+1774865723.011295 read(17</proc/17/stat>, "17 (uvicorn) S 14 1 1 0 -1 4194560 20107 0 0 0 33064 6590 0 0 20 0 8 0 11847356 431718400 19632 18446744073709551615 187651000238080 187651000241032 281474082790640 0 0 0 0 16781312 16386 0 0 0 17 0 0"..., 8192) = 323 <0.000150>
+1774865723.011955 read(17</proc/17/stat>, "", 7869) = 0 <0.000196>
+1774865723.012564 close(17</proc/17/stat>) = 0 <0.000093>
+1774865723.013057 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 17</proc/17/limits> <0.000111>
+1774865723.013542 fstat(17</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000099>
+1774865723.013989 ioctl(17</proc/17/limits>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000094>
+1774865723.014396 lseek(17</proc/17/limits>, 0, SEEK_CUR) = 0 <0.000148>
+1774865723.014849 read(17</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.000108>
+1774865723.015344 close(17</proc/17/limits>) = 0 <0.000101>
+1774865723.015737 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 17</proc/17/fd> <0.000093>
+1774865723.016180 fstat(17</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=18, ...}) = 0 <0.000110>
+1774865723.016594 getdents64(17</proc/17/fd>, 0xffff9c003a20 /* 20 entries */, 32768) = 480 <0.000296>
+1774865723.017252 getdents64(17</proc/17/fd>, 0xffff9c003a20 /* 0 entries */, 32768) = 0 <0.000107>
+1774865723.017649 close(17</proc/17/fd>) = 0 <0.000082>
+1774865723.019371 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000214>
+1774865723.102248 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000181>
+1774865723.285487 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000179>
+1774865723.453197 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000361>
+1774865723.624694 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000158>
+1774865723.791587 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000177>
+1774865723.966091 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000203>
+1774865724.140486 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000255>
+1774865724.317372 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000225>
+1774865724.476997 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000151>
+1774865724.657017 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000171>
+1774865724.837339 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000346>
+1774865725.019265 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000196>
+1774865725.188446 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000180>
+1774865725.356285 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000193>
+1774865725.522889 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000179>
+1774865725.711429 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000164>
+1774865725.891468 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000375>
+1774865726.063920 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000163>
+1774865726.249595 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000261>
+1774865726.400026 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000198>
+1774865726.573665 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000215>
+1774865726.737617 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000194>
+1774865726.914908 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000267>
+1774865727.089270 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000197>
+1774865727.251460 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000257>
+1774865727.420593 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000245>
+1774865727.624890 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000493>
+1774865727.792016 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000210>
+1774865728.228350 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.010736>
+1774865728.484343 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 17</proc/17/stat> <0.000578>
+1774865728.502363 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000633>
+1774865728.505309 ioctl(17</proc/17/stat>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000050>
+1774865728.505961 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000238>
+1774865728.509849 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000102>
+1774865728.510443 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000219>
+1774865728.511412 read(17</proc/17/stat>, "17 (uvicorn) S 14 1 1 0 -1 4194560 20107 0 0 0 33087 6597 0 0 20 0 8 0 11847356 431718400 19632 18446744073709551615 187651000238080 187651000241032 281474082790640 0 0 0 0 16781312 16386 0 0 0 17 0 0"..., 8192) = 323 <0.001281>
+1774865728.516683 read(17</proc/17/stat>, "", 7869) = 0 <0.000090>
+1774865728.518074 close(17</proc/17/stat>) = 0 <0.001779>
+1774865728.540232 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 17</proc/17/limits> <0.004986>
+1774865728.574302 fstat(17</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.006823>
+1774865728.644586 ioctl(17</proc/17/limits>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000252>
+1774865728.646358 lseek(17</proc/17/limits>, 0, SEEK_CUR) = 0 <0.000163>
+1774865728.648212 read(17</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.000737>
+1774865728.649576 close(17</proc/17/limits>) = 0 <0.000072>
+1774865728.651244 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 17</proc/17/fd> <0.000126>
+1774865728.651932 fstat(17</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=18, ...}) = 0 <0.025171>
+1774865728.685193 getdents64(17</proc/17/fd>, 0xffff9c003a20 /* 20 entries */, 32768) = 480 <0.000857>
+1774865728.694798 getdents64(17</proc/17/fd>, 0xffff9c003a20 /* 0 entries */, 32768) = 0 <0.000213>
+1774865728.696316 close(17</proc/17/fd>) = 0 <0.000698>
+1774865728.720153 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000270>
+1774865728.840460 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000481>
+1774865729.009766 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000327>
+1774865729.180735 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000623>
+1774865729.356652 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000131>
+1774865729.518728 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000104>
+1774865729.696327 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000353>
+1774865729.873271 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000414>
+1774865730.065158 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000514>
+1774865730.232842 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000328>
+1774865730.453628 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.001838>
+1774865730.567059 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000632>
+1774865730.836405 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000542>
+1774865730.897245 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000756>
+1774865731.057144 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000214>
+1774865731.242818 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000215>
+1774865731.412043 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000250>
+1774865731.578507 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000221>
+1774865731.751085 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000528>
+1774865731.931967 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000071>
+1774865732.120598 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000260>
+1774865732.302738 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000190>
+1774865732.476912 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000219>
+1774865732.636263 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000614>
+1774865732.811709 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000213>
+1774865732.986076 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000105>
+1774865733.007948 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 17</proc/17/stat> <0.000111>
+1774865733.008305 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000047>
+1774865733.008632 ioctl(17</proc/17/stat>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000069>
+1774865733.009718 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000067>
+1774865733.010053 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000100>
+1774865733.010464 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000069>
+1774865733.010780 read(17</proc/17/stat>, "17 (uvicorn) S 14 1 1 0 -1 4194560 20107 0 0 0 33106 6603 0 0 20 0 8 0 11847356 431718400 19632 18446744073709551615 187651000238080 187651000241032 281474082790640 0 0 0 0 16781312 16386 0 0 0 17 0 0"..., 8192) = 323 <0.000081>
+1774865733.011218 read(17</proc/17/stat>, "", 7869) = 0 <0.000098>
+1774865733.011604 close(17</proc/17/stat>) = 0 <0.000066>
+1774865733.011993 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 17</proc/17/limits> <0.000090>
+1774865733.012317 fstat(17</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000056>
+1774865733.012589 ioctl(17</proc/17/limits>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000063>
+1774865733.012845 lseek(17</proc/17/limits>, 0, SEEK_CUR) = 0 <0.000051>
+1774865733.013133 read(17</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.000078>
+1774865733.013482 close(17</proc/17/limits>) = 0 <0.000060>
+1774865733.013744 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 17</proc/17/fd> <0.000063>
+1774865733.014029 fstat(17</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=18, ...}) = 0 <0.000114>
+1774865733.014366 getdents64(17</proc/17/fd>, 0xffff9c003a20 /* 20 entries */, 32768) = 480 <0.000164>
+1774865733.014719 getdents64(17</proc/17/fd>, 0xffff9c003a20 /* 0 entries */, 32768) = 0 <0.000052>
+1774865733.014930 close(17</proc/17/fd>) = 0 <0.000078>
+1774865733.016715 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000156>
+1774865733.149286 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000095>
+1774865733.334563 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000219>
+1774865733.485842 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000246>
+1774865733.643411 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000302>
+1774865733.800389 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000222>
+1774865733.954678 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000457>
+1774865734.124458 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000248>
+1774865734.309649 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000137>
+1774865734.464858 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000205>
+1774865734.627840 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000186>
+1774865734.793106 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000198>
+1774865734.969251 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000204>
+1774865735.152762 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000651>
+1774865735.720258 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000457>
+1774865735.773815 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000641>
+1774865735.922507 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000235>
+1774865736.100624 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000151>
+1774865736.269526 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000275>
+1774865736.444641 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000063>
+1774865736.614557 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000316>
+1774865736.795445 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000152>
+1774865736.950531 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000357>
+1774865737.123255 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000184>
+1774865737.306415 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000199>
+1774865737.496573 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000248>
+1774865737.656715 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000398>
+1774865737.817061 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000190>
+1774865738.003671 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000077>
+1774865738.009252 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 17</proc/17/stat> <0.000164>
+1774865738.009737 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000152>
+1774865738.010566 ioctl(17</proc/17/stat>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000099>
+1774865738.011283 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000113>
+1774865738.011866 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000098>
+1774865738.012346 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000093>
+1774865738.012811 read(17</proc/17/stat>, "17 (uvicorn) S 14 1 1 0 -1 4194560 20107 0 0 0 33119 6604 0 0 20 0 8 0 11847356 431718400 19632 18446744073709551615 187651000238080 187651000241032 281474082790640 0 0 0 0 16781312 16386 0 0 0 17 0 0"..., 8192) = 323 <0.000165>
+1774865738.013380 read(17</proc/17/stat>, "", 7869) = 0 <0.000092>
+1774865738.013853 close(17</proc/17/stat>) = 0 <0.000098>
+1774865738.014401 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 17</proc/17/limits> <0.000125>
+1774865738.014888 fstat(17</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000091>
+1774865738.015285 ioctl(17</proc/17/limits>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000090>
+1774865738.015692 lseek(17</proc/17/limits>, 0, SEEK_CUR) = 0 <0.000090>
+1774865738.016135 read(17</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.000130>
+1774865738.016620 close(17</proc/17/limits>) = 0 <0.000093>
+1774865738.017030 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 17</proc/17/fd> <0.000099>
+1774865738.017482 fstat(17</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=18, ...}) = 0 <0.000121>
+1774865738.017943 getdents64(17</proc/17/fd>, 0xffff9c003a20 /* 20 entries */, 32768) = 480 <0.000347>
+1774865738.018658 getdents64(17</proc/17/fd>, 0xffff9c003a20 /* 0 entries */, 32768) = 0 <0.000103>
+1774865738.019084 close(17</proc/17/fd>) = 0 <0.000092>
+1774865738.021278 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000251>
+1774865738.155396 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000170>
+1774865738.321519 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000392>
+1774865738.497496 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000203>
+1774865738.658817 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000304>
+1774865738.826017 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000144>
+1774865739.003919 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000196>
+1774865739.175301 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000331>
+1774865739.344156 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000209>
+1774865739.525548 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000203>
+1774865739.682417 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000222>
+1774865739.858810 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000261>
+1774865740.051422 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.005027>
+1774865740.235645 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.002549>
+1774865740.426192 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000427>
+1774865740.538625 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000709>
+1774865740.724352 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000457>
+1774865740.876906 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000190>
+1774865741.058500 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000152>
+1774865741.233861 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000202>
+1774865741.386899 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000150>
+1774865741.559899 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000160>
+1774865741.723188 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000205>
+1774865741.887909 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000210>
+1774865742.061491 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000288>
+1774865742.220518 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000190>
+1774865742.373295 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000214>
+1774865742.553535 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000219>
+1774865742.718554 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000211>
+1774865742.881595 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000283>
+1774865743.015052 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 17</proc/17/stat> <0.000282>
+1774865743.020009 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000195>
+1774865743.021747 ioctl(17</proc/17/stat>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000052>
+1774865743.022220 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000059>
+1774865743.023368 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000110>
+1774865743.023714 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000053>
+1774865743.024093 read(17</proc/17/stat>, "17 (uvicorn) S 14 1 1 0 -1 4194560 20108 0 0 0 33131 6608 0 0 20 0 8 0 11847356 431718400 19632 18446744073709551615 187651000238080 187651000241032 281474082790640 0 0 0 0 16781312 16386 0 0 0 17 0 0"..., 8192) = 323 <0.000143>
+1774865743.024498 read(17</proc/17/stat>, "", 7869) = 0 <0.000042>
+1774865743.024751 close(17</proc/17/stat>) = 0 <0.000041>
+1774865743.025028 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 17</proc/17/limits> <0.000076>
+1774865743.025292 fstat(17</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000056>
+1774865743.025537 ioctl(17</proc/17/limits>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000049>
+1774865743.025758 lseek(17</proc/17/limits>, 0, SEEK_CUR) = 0 <0.000047>
+1774865743.026055 read(17</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.000055>
+1774865743.026316 close(17</proc/17/limits>) = 0 <0.000051>
+1774865743.026559 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 17</proc/17/fd> <0.000071>
+1774865743.026982 fstat(17</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=18, ...}) = 0 <0.000059>
+1774865743.027657 getdents64(17</proc/17/fd>, 0xffff9c003a20 /* 20 entries */, 32768) = 480 <0.000185>
+1774865743.028083 getdents64(17</proc/17/fd>, 0xffff9c003a20 /* 0 entries */, 32768) = 0 <0.000051>
+1774865743.028335 close(17</proc/17/fd>) = 0 <0.000060>
+1774865743.029635 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000187>
+1774865753.096399 rt_sigprocmask(SIG_BLOCK, ~[RT_1], NULL, 8) = 0 <0.000123>
+1774865753.097196 exit(0)               = ?
+1774865753.098407 +++ exited with 0 +++

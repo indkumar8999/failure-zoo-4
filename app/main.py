@@ -1,3 +1,4 @@
+import functools
 import os
 import time
 import threading
@@ -5,7 +6,7 @@ from typing import Optional, Dict, Any
 
 import dns.resolver
 import requests
-from fastapi import FastAPI, HTTPException
+from fastapi import BackgroundTasks, FastAPI, HTTPException
 from prometheus_client import Counter, Gauge, Histogram, generate_latest, CONTENT_TYPE_LATEST
 from starlette.responses import Response
 
@@ -94,6 +95,7 @@ def _set_chaos_metric(mode: str, enabled: bool, extra: Optional[Dict[str, Any]] 
 def instrument(path: str):
     """Decorator to record request count + latency for a FastAPI handler."""
     def deco(func):
+        @functools.wraps(func)
         def wrapper(*args, **kwargs):
             t0 = time.time()
             try:
@@ -120,6 +122,7 @@ def health():
 
 
 @app.get("/work")
+@instrument("/work")
 def work(ms: int = 20):
     t0 = time.time()
     x = 0
@@ -171,18 +174,28 @@ def _lock_convoy():
             pass
 
 
+def _start_lock_convoy_workers(target_threads: int) -> None:
+    created: list[threading.Thread] = []
+    for _ in range(max(2, min(target_threads, 500))):
+        t = threading.Thread(target=_lock_convoy, daemon=True)
+        created.append(t)
+    for t in created:
+        t.start()
+    with state_lock:
+        lock_convoy_threads.extend(created)
+        _set_chaos_metric("lock_convoy", True, {"threads": len(lock_convoy_threads)})
+
+
 @app.post("/chaos/lock_convoy/start")
-def chaos_lock_convoy_start(threads: int = 50):
+def chaos_lock_convoy_start(background_tasks: BackgroundTasks, threads: int = 50):
     with state_lock:
         if lock_convoy_threads:
             return {"started": True, "threads": len(lock_convoy_threads)}
         lock_convoy_stop.clear()
-        for _ in range(max(2, min(threads, 500))):
-            t = threading.Thread(target=_lock_convoy, daemon=True)
-            lock_convoy_threads.append(t)
-            t.start()
-        _set_chaos_metric("lock_convoy", True, {"threads": len(lock_convoy_threads)})
-    return {"started": True, "threads": len(lock_convoy_threads)}
+    requested = max(2, min(threads, 500))
+    # Spawn workers after returning HTTP response to avoid control-plane timeouts.
+    background_tasks.add_task(_start_lock_convoy_workers, requested)
+    return {"started": True, "threads_requested": requested}
 
 
 @app.post("/chaos/lock_convoy/stop")
@@ -235,11 +248,13 @@ def chaos_mem_leak_stop():
 @app.post("/chaos/mem/pressure")
 def chaos_mem_pressure(mb: int = 300):
     mb = max(1, min(mb, CHAOS_MEM_LIMIT_MB))
+    CHAOS.labels("mem_pressure").set(1)
     _write_event({"type": "chaos", "mode": "mem_pressure", "enabled": True, "mb": mb, "duration_s": 30})
     b = bytearray(mb * 1024 * 1024)
     for i in range(0, len(b), 4096):
         b[i] = 1
     time.sleep(30)
+    CHAOS.labels("mem_pressure").set(0)
     _write_event({"type": "chaos", "mode": "mem_pressure", "enabled": False})
     return {"held_mb": mb, "duration_s": 30}
 
@@ -320,6 +335,7 @@ def chaos_disk_clear():
 
 # DB slow query + inflight gate
 @app.get("/db/slow")
+@instrument("/db/slow")
 def db_slow(seconds: int = 2):
     seconds = max(0, min(seconds, 60))
     with db_gate:
@@ -395,7 +411,17 @@ def dns_set_server(server: Optional[str] = None):
     return {"dns_server": dns_server}
 
 
+@app.post("/chaos/mark")
+def chaos_mark(mode: str, enabled: bool, intensity: Optional[float] = None):
+    extra: Dict[str, Any] = {}
+    if intensity is not None:
+        extra["intensity"] = float(intensity)
+    _set_chaos_metric(mode, bool(enabled), extra if extra else None)
+    return {"mode": mode, "enabled": bool(enabled), "intensity": intensity}
+
+
 @app.get("/dns/test")
+@instrument("/dns/test")
 def dns_test(name: str = "example.com"):
     resolver = dns.resolver.Resolver(configure=True)
     if dns_server:

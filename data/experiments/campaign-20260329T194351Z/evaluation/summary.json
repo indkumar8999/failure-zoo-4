@@ -1,0 +1,117 @@
+{
+  "campaign_meta": {
+    "allow_paper_fidelity_drift": false,
+    "allow_reuse_cross_fault": false,
+    "campaign_dir": "/Users/aumpandya/Documents/Projects/ads_project/failure-zoo-4/data/experiments/campaign-20260329T194351Z",
+    "campaign_id": "20260329T194351Z",
+    "comparator_scope": "pca_knn_not_included",
+    "compose_config_sha256": "b8aa251220f91d1d822b2121fb09f5e104601c3e79c90a1ed319140c0426b4d0",
+    "compose_images": [],
+    "dry_run": false,
+    "generated_at": 1774813651.2819588,
+    "git_branch": "feature/experiments",
+    "git_sha": "c0d24cc342cdc19036af7c2164a5279748e5ce76",
+    "loadgen_enabled": true,
+    "loadgen_ms": 20,
+    "loadgen_profile": "steady",
+    "loadgen_rps": 4.0,
+    "loadgen_seed": 42,
+    "matrix_description": "One run only \u2014 sanity check for stack, chaos, learner, and evaluation pipeline.",
+    "matrix_name": "ubl_minimal_single_run",
+    "matrix_path": "experiments/fault_matrix_minimal.yaml",
+    "matrix_seed": 42,
+    "matrix_seeds": [
+      42
+    ],
+    "mode": "full",
+    "platform": "macOS-26.2-arm64-arm-64bit",
+    "python_version": "3.10.16",
+    "resumed_campaign_dir": "",
+    "reuse_learner_if_env_unchanged": false,
+    "run_count": 1
+  },
+  "delta_vs_paper_fidelity": [],
+  "failed_runs": [
+    {
+      "failed_phase": "execution",
+      "failure_reason": "App did not become healthy within 90s. Last error: [Errno 54] Connection reset by peer",
+      "fault_family": "paper_aligned",
+      "fault_id": "mem_leak",
+      "run_id": "20260329T194351Z-minimal_ubl-mem_leak-ibase-dbase-wbase-s01-r01",
+      "run_status": "failed",
+      "variant": "minimal_ubl"
+    }
+  ],
+  "fidelity_checks": {
+    "campaign_id": "20260329T194351Z",
+    "checks": {
+      "comparator_scope_declared": "pca_knn_not_included",
+      "duration_ladder_levels_seen": [],
+      "fault_family_core_present": false,
+      "fault_family_coverage": [],
+      "intensity_ladder_levels_seen": [],
+      "matching_modes_seen": [],
+      "paper_pending_windows_evaluated": [],
+      "paper_style_threshold_replay_ran": false,
+      "paper_style_threshold_replay_rows": 0,
+      "pca_or_knn_comparator_present": false,
+      "pending_window_sweep_present": false,
+      "pending_windows_seen": [],
+      "sampling_interval_has_1s": false,
+      "sampling_intervals_seen": [],
+      "som_param_variants_present": false,
+      "threshold_percentile_sweep_present": false,
+      "threshold_percentiles_seen": []
+    },
+    "faithfulness_label_distribution": {
+      "extended-beyond-paper": 0,
+      "paper-faithful": 0,
+      "paper-faithful-with-proxy": 0
+    },
+    "notes": [
+      "If pca_or_knn_comparator_present is false, mark comparator scope as not included.",
+      "If sampling_interval_has_1s is false, include explicit sensitivity statement in paper-fidelity section."
+    ]
+  },
+  "matching_mode": "many_to_many",
+  "paired_significance": [],
+  "paper_roc_replay_by_run": [],
+  "paper_roc_replay_rollup": [],
+  "pending_window_sensitivity": [],
+  "roc_points": [],
+  "rollup_metrics": [],
+  "run_metrics": [],
+  "som_rollup_metrics": [],
+  "stratified_rollup_metrics": [],
+  "validity_ledger": {
+    "campaign_id": "20260329T194351Z",
+    "construct_validity": [
+      "Network and system faults are proxy implementations in a Docker lab (for example Toxiproxy latency/bandwidth/reset for net-hog-like behaviors).",
+      "Fault injections represent causal stressors but are not byte-for-byte reproductions of Xen/VCL paper infrastructure."
+    ],
+    "external_validity": [
+      "Results generalize to this containerized proxy environment first; portability to production cloud stacks requires re-validation.",
+      "Workload shape and resource constraints in this lab may differ from real deployments."
+    ],
+    "faithfulness_labels_present": [],
+    "fault_families_present": [],
+    "internal_validity": [
+      "SOM initialization and runtime behavior can vary by random state; repeat counts and confidence intervals should be used for claims.",
+      "Campaign reproducibility depends on fixed matrix settings, recorded learner env, and consistent host/container runtime."
+    ],
+    "metric_validity": [
+      "Pending-window scoring (W) is an operational proxy for prediction success and should be sensitivity-tested.",
+      "Legacy column fpr equals alarm_fp_fraction = fp/(fp+tp) from the old TN proxy (not UBL Eq.5 AF); compare to the paper using paper_af and paper_at.",
+      "paper_af uses Nfp/(Nfp+Ntn) with Ntn approximated from pre-injection poll ticks minus pre-injection alarms (see ubl_metrics._paper_ntn_ticks).",
+      "prediction_target_eval selects t2 as slo_violation_proxy when prediction_target events exist, else fault injection onset.",
+      "Offline --paper-roc-replay uses ubl_train_scores in som_model.npz plus artifacts/score_stream.jsonl (new runs); legacy campaigns lack these and replay_ok will be false.",
+      "Feature observability may differ by fault family; consult coverage_ok and observability_limited fields."
+    ],
+    "paper_faithfulness_policy": {
+      "extended-beyond-paper": "Any non-paper learner mode, fault set, or ablation beyond replication scope.",
+      "paper-faithful": "Only when both configuration and environment are direct paper matches (rare in this repo).",
+      "paper-faithful-with-proxy": "Paper-aligned learner settings with practical proxy fault mappings."
+    },
+    "study_scopes_present": []
+  }
+}

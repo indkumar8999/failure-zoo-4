@@ -1,0 +1,21 @@
+name: "ubl_paper_fidelity_baseline"
+description: "Reproducible learner controls aligned to UBL paper behavior in this repo."
+learner_env:
+  POLL_SEC: 1.0
+  SOM_SCORING_MODE: "ubl_area"
+  SOM_SMOOTH_K: 5
+  ANOMALY_STREAK: 3
+  ANOMALY_QUANTILE: 0.85
+  BOOTSTRAP_SAMPLES: 180
+  SOM_ROWS: 32
+  SOM_COLS: 32
+  SOM_LR: 0.7
+  SOM_SIGMA: 4.0
+  SOM_KFOLD: 3
+  SOM_INIT_TRIALS: 3
+  SOM_NORMALIZATION_MODE: "train_max_100"
+  SOM_ONLINE_CLIP_MODE: "none"
+  SOM_CAUSE_Q: 5
+notes:
+  - "UBL paper used neighborhood area thresholding with percentile threshold and consecutive anomaly filtering."
+  - "This baseline enables 3-fold model selection, paper-style normalization, and cause ranking hints."

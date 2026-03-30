@@ -1,0 +1,69 @@
+{
+  "ablation_block": "decision",
+  "campaign_id": "20260329T010813Z",
+  "duration_level": "base",
+  "durations_s": {
+    "bootstrap": 300,
+    "cooldown": 30,
+    "fault_window_on_delay": 20,
+    "inject": 60,
+    "warmup": 30
+  },
+  "failed_phase": "",
+  "failure_reason": "",
+  "faithfulness_label": "paper-faithful-with-proxy",
+  "fault_family": "paper_aligned",
+  "fault_id": "net_hog_like_latency",
+  "fault_intensity": 400.0,
+  "fault_off": [
+    "net",
+    "clear"
+  ],
+  "fault_on": [
+    "net",
+    "latency",
+    "400"
+  ],
+  "fault_window_on_delay_s": 20,
+  "hypothesis_id": "H-paper-replication-smoke",
+  "intensity_level": "base",
+  "interpretation_note": "Paper-faithful-with-proxy settings with multi-seed/repeat coverage.",
+  "learner_env": {
+    "ANOMALY_QUANTILE": "0.85",
+    "ANOMALY_STREAK": "3",
+    "BOOTSTRAP_SAMPLES": "180",
+    "POLL_SEC": "1.0",
+    "SOM_CAUSE_Q": "5",
+    "SOM_COLS": "32",
+    "SOM_INIT_TRIALS": "3",
+    "SOM_KFOLD": "3",
+    "SOM_LR": "0.7",
+    "SOM_NORMALIZATION_MODE": "train_max_100",
+    "SOM_ONLINE_CLIP_MODE": "none",
+    "SOM_ROWS": "32",
+    "SOM_SCORING_MODE": "ubl_area",
+    "SOM_SIGMA": "4.0",
+    "SOM_SMOOTH_K": "5",
+    "UBL_RANDOM_SEED": "167956203"
+  },
+  "learner_recreated": true,
+  "load_profile": {
+    "enabled": true,
+    "profile": "mixed",
+    "rps": 6.0,
+    "work_ms": 20
+  },
+  "loadgen_seed": 167956203,
+  "matrix_seed": 42,
+  "pending_level": "base",
+  "pending_window_s": 60,
+  "repeat_idx": 2,
+  "run_id": "20260329T010813Z-paper_fidelity_replication_smoke-net_hog_like_latency-ibase-dbase-wbase-s02-r02",
+  "run_seed": 167956203,
+  "run_status": "completed",
+  "seed_idx": 2,
+  "started_at": 1774746494.625304,
+  "study_scope": "paper_faithful",
+  "train_mode": "fresh_bootstrap",
+  "variant": "paper_fidelity_replication_smoke"
+}

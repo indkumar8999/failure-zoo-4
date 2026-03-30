@@ -1,0 +1,69 @@
+{
+  "ablation_block": "decision",
+  "anomaly_quantile_level": "base",
+  "campaign_id": "20260329T152310Z",
+  "duration_level": "base",
+  "durations_s": {
+    "bootstrap": 120,
+    "cooldown": 25,
+    "fault_window_on_delay": 0,
+    "inject": 60,
+    "warmup": 20
+  },
+  "failed_phase": "",
+  "failure_reason": "",
+  "faithfulness_label": "paper-faithful-with-proxy",
+  "fault_family": "paper_aligned",
+  "fault_id": "cpu_hog_like",
+  "fault_intensity": 4.0,
+  "fault_off": [
+    "cpu",
+    "off"
+  ],
+  "fault_on": [
+    "cpu",
+    "on",
+    "4"
+  ],
+  "fault_window_on_delay_s": 0,
+  "hypothesis_id": "H-anchor",
+  "intensity_level": "base",
+  "interpretation_note": "Reference paper-faithful-with-proxy anchor.",
+  "learner_env": {
+    "ANOMALY_QUANTILE": "0.85",
+    "ANOMALY_STREAK": "3",
+    "BOOTSTRAP_SAMPLES": "80",
+    "POLL_SEC": "1.0",
+    "SOM_COLS": "32",
+    "SOM_INIT_TRIALS": "3",
+    "SOM_KFOLD": "3",
+    "SOM_LR": "0.7",
+    "SOM_NORMALIZATION_MODE": "train_max_100",
+    "SOM_ONLINE_CLIP_MODE": "none",
+    "SOM_ROWS": "32",
+    "SOM_SCORING_MODE": "ubl_area",
+    "SOM_SIGMA": "4.0",
+    "SOM_SMOOTH_K": "5",
+    "UBL_RANDOM_SEED": "3452107347"
+  },
+  "learner_recreated": true,
+  "load_profile": {
+    "enabled": true,
+    "profile": "mixed",
+    "rps": 5.0,
+    "work_ms": 18
+  },
+  "loadgen_seed": 3452107347,
+  "matrix_seed": 42,
+  "pending_level": "base",
+  "pending_window_s": 90,
+  "repeat_idx": 3,
+  "run_id": "20260329T152310Z-paper_fidelity_anchor-cpu_hog_like-ibase-dbase-wbase-s01-r03",
+  "run_seed": 3452107347,
+  "run_status": "completed",
+  "seed_idx": 1,
+  "started_at": 1774801165.554854,
+  "study_scope": "paper_faithful",
+  "train_mode": "fresh_bootstrap",
+  "variant": "paper_fidelity_anchor"
+}

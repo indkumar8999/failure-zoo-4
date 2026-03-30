@@ -1,0 +1,270 @@
+{
+  "faults": [
+    {
+      "ablation_block": "fault",
+      "command_off": [
+        "memleak",
+        "off"
+      ],
+      "command_on": [
+        "memleak",
+        "on",
+        "{intensity}"
+      ],
+      "duration_ladder_s": [
+        {
+          "level": "short",
+          "value": 60
+        },
+        {
+          "level": "long",
+          "value": 300
+        }
+      ],
+      "family": "paper_aligned",
+      "hypothesis_id": "H-memleak-boundary-in-global-context",
+      "id": "mem_leak",
+      "intensity": 20,
+      "intensity_ladder": [
+        {
+          "level": "very_low",
+          "value": 10
+        },
+        {
+          "level": "low",
+          "value": 20
+        },
+        {
+          "level": "medium",
+          "value": 40
+        }
+      ],
+      "interpretation_note": "Track low-end mem_leak detectability while comparing against other families in the same stage.",
+      "proxy_mapping": true
+    },
+    {
+      "ablation_block": "fault",
+      "command_off": [
+        "cpu",
+        "off"
+      ],
+      "command_on": [
+        "cpu",
+        "on",
+        "{intensity}"
+      ],
+      "duration_ladder_s": [
+        {
+          "level": "short",
+          "value": 60
+        },
+        {
+          "level": "long",
+          "value": 300
+        }
+      ],
+      "family": "paper_aligned",
+      "hypothesis_id": "H-cpu-geometry-trend",
+      "id": "cpu_hog_like",
+      "intensity": 4,
+      "intensity_ladder": [
+        {
+          "level": "low",
+          "value": 2
+        },
+        {
+          "level": "medium",
+          "value": 4
+        },
+        {
+          "level": "high",
+          "value": 8
+        }
+      ],
+      "interpretation_note": "Fast-onset family used to compare intensity and duration sensitivity against gradual faults.",
+      "proxy_mapping": true
+    },
+    {
+      "ablation_block": "fault",
+      "command_off": [
+        "net",
+        "clear"
+      ],
+      "command_on": [
+        "net",
+        "latency",
+        "{intensity}"
+      ],
+      "duration_ladder_s": [
+        {
+          "level": "short",
+          "value": 60
+        },
+        {
+          "level": "long",
+          "value": 300
+        }
+      ],
+      "family": "paper_aligned",
+      "hypothesis_id": "H-net-latency-geometry-trend",
+      "id": "net_hog_like_latency",
+      "intensity": 400,
+      "intensity_ladder": [
+        {
+          "level": "low",
+          "value": 150
+        },
+        {
+          "level": "medium",
+          "value": 400
+        },
+        {
+          "level": "high",
+          "value": 700
+        }
+      ],
+      "interpretation_note": "Network stress family captures latency-driven geometry effects under fixed detector settings.",
+      "proxy_mapping": true
+    },
+    {
+      "ablation_block": "fault",
+      "command_off": [
+        "lock",
+        "off"
+      ],
+      "command_on": [
+        "lock",
+        "on",
+        "{intensity}"
+      ],
+      "duration_ladder_s": [
+        {
+          "level": "short",
+          "value": 30
+        },
+        {
+          "level": "long",
+          "value": 90
+        }
+      ],
+      "family": "extended",
+      "hypothesis_id": "H-lock-geometry-trend",
+      "id": "lock_convoy",
+      "intensity": 40,
+      "intensity_ladder": [
+        {
+          "level": "low",
+          "value": 20
+        },
+        {
+          "level": "medium",
+          "value": 40
+        },
+        {
+          "level": "high",
+          "value": 60
+        }
+      ],
+      "interpretation_note": "Extended contention family acts as a transfer and saturation reference.",
+      "proxy_mapping": true
+    },
+    {
+      "ablation_block": "fault",
+      "command_off": [
+        "disk",
+        "clear"
+      ],
+      "command_on": [
+        "disk",
+        "fill",
+        "{intensity}"
+      ],
+      "duration_ladder_s": [
+        {
+          "level": "short",
+          "value": 60
+        },
+        {
+          "level": "long",
+          "value": 300
+        }
+      ],
+      "family": "extended",
+      "hypothesis_id": "H-disk-geometry-trend",
+      "id": "disk_fill",
+      "intensity": 2000,
+      "intensity_ladder": [
+        {
+          "level": "low",
+          "value": 500
+        },
+        {
+          "level": "medium",
+          "value": 2000
+        },
+        {
+          "level": "high",
+          "value": 5000
+        }
+      ],
+      "interpretation_note": "Extended storage pressure family captures behavior distinct from memory, CPU, and network families.",
+      "proxy_mapping": true
+    }
+  ],
+  "learner": {
+    "variants": [
+      {
+        "ablation_block": "decision",
+        "env": {
+          "ANOMALY_QUANTILE": "0.85",
+          "ANOMALY_STREAK": "3",
+          "BOOTSTRAP_SAMPLES": "180",
+          "POLL_SEC": "1.0",
+          "SOM_CAUSE_Q": "5",
+          "SOM_COLS": "32",
+          "SOM_INIT_TRIALS": "3",
+          "SOM_KFOLD": "3",
+          "SOM_LR": "0.7",
+          "SOM_NORMALIZATION_MODE": "train_max_100",
+          "SOM_ONLINE_CLIP_MODE": "none",
+          "SOM_ROWS": "32",
+          "SOM_SCORING_MODE": "ubl_area",
+          "SOM_SIGMA": "4.0",
+          "SOM_SMOOTH_K": "5"
+        },
+        "hypothesis_id": "H-paper-learner-fixed",
+        "interpretation_note": "Paper-faithful-with-proxy learner; only stage-specific fault geometry changes.",
+        "name": "paper_fidelity_research_anchor",
+        "study_scope": "paper_faithful",
+        "train_mode": "fresh_bootstrap"
+      }
+    ]
+  },
+  "meta": {
+    "ablation_block": "fault",
+    "bootstrap_s": 240,
+    "comparator_scope": "pca_knn_not_included",
+    "cooldown_s": 90,
+    "description": "Stage 2 cross-family geometry consolidation with fixed paper-faithful learner.",
+    "fault_window_on_delay_s": 14,
+    "hypothesis_id": "H-research-stage2-cross-family-geometry",
+    "inject_s": 180,
+    "interpretation_note": "Consolidate geometry trends across paper-aligned and selected extended fault families.",
+    "loadgen_enabled": true,
+    "loadgen_ms": 20,
+    "loadgen_profile": "steady",
+    "loadgen_rps": 6,
+    "name": "ubl_research_stage2_cross_family_geometry",
+    "pending_window_s": 60,
+    "prediction_target_mode": "injection_onset",
+    "repeats": 1,
+    "seed": 42,
+    "seeds": [
+      42
+    ],
+    "study_scope": "paper_faithful",
+    "train_mode": "fresh_bootstrap",
+    "use_ladders": true,
+    "warmup_s": 60
+  }
+}

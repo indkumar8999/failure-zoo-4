@@ -1,0 +1,141 @@
+{
+  "faults": [
+    {
+      "ablation_block": "fault",
+      "command_off": [
+        "memleak",
+        "off"
+      ],
+      "command_on": [
+        "memleak",
+        "on",
+        "{intensity}"
+      ],
+      "family": "paper_aligned",
+      "id": "mem_leak",
+      "intensity": 50,
+      "proxy_mapping": true
+    },
+    {
+      "ablation_block": "fault",
+      "command_off": [
+        "cpu",
+        "off"
+      ],
+      "command_on": [
+        "cpu",
+        "on",
+        "{intensity}"
+      ],
+      "family": "paper_aligned",
+      "id": "cpu_hog_like",
+      "intensity": 4,
+      "proxy_mapping": true
+    },
+    {
+      "ablation_block": "fault",
+      "command_off": [
+        "net",
+        "clear"
+      ],
+      "command_on": [
+        "net",
+        "latency",
+        "{intensity}"
+      ],
+      "family": "paper_aligned",
+      "id": "net_hog_like_latency",
+      "intensity": 400,
+      "proxy_mapping": true
+    },
+    {
+      "ablation_block": "fault",
+      "command_off": [
+        "lock",
+        "off"
+      ],
+      "command_on": [
+        "lock",
+        "on",
+        "{intensity}"
+      ],
+      "family": "extended",
+      "id": "lock_convoy",
+      "intensity": 60,
+      "proxy_mapping": true
+    }
+  ],
+  "learner": {
+    "baseline_env": {
+      "ANOMALY_QUANTILE": 0.85,
+      "ANOMALY_STREAK": 3,
+      "SOM_SCORING_MODE": "ubl_area",
+      "SOM_SMOOTH_K": 5
+    },
+    "variants": [
+      {
+        "ablation_block": "decision",
+        "env": {
+          "ANOMALY_QUANTILE": 0.85,
+          "ANOMALY_STREAK": 3,
+          "POLL_SEC": 1.0,
+          "SOM_COLS": 32,
+          "SOM_INIT_TRIALS": 3,
+          "SOM_KFOLD": 3,
+          "SOM_LR": 0.7,
+          "SOM_NORMALIZATION_MODE": "train_max_100",
+          "SOM_ONLINE_CLIP_MODE": "none",
+          "SOM_ROWS": 32,
+          "SOM_SCORING_MODE": "ubl_area",
+          "SOM_SIGMA": 4.0,
+          "SOM_SMOOTH_K": 5
+        },
+        "hypothesis_id": "H-paper-anchor",
+        "interpretation_note": "Paper-faithful-with-proxy anchor.",
+        "name": "paper_fidelity",
+        "study_scope": "paper_faithful",
+        "train_mode": "fresh_bootstrap"
+      },
+      {
+        "ablation_block": "decision",
+        "env": {
+          "ANOMALY_QUANTILE": 0.99,
+          "ANOMALY_STREAK": 1,
+          "SOM_SCORING_MODE": "bmu",
+          "SOM_SMOOTH_K": 1
+        },
+        "hypothesis_id": "H-baseline-comparison",
+        "interpretation_note": "Current default baseline comparator.",
+        "name": "current_default",
+        "study_scope": "extended",
+        "train_mode": "warm_start"
+      }
+    ]
+  },
+  "meta": {
+    "ablation_block": "fault",
+    "baseline_slo_window_s": 30,
+    "bootstrap_s": 15,
+    "comparator_scope": "pca_knn_not_included",
+    "cooldown_s": 10,
+    "description": "Paper-aligned and extended fault campaigns for UBL-style evaluation.",
+    "hypothesis_id": "H-quick",
+    "inject_s": 10,
+    "interpretation_note": "Quick matrix for smoke-like multiseed checks.",
+    "loadgen_enabled": true,
+    "loadgen_ms": 20,
+    "loadgen_profile": "steady",
+    "loadgen_rps": 4,
+    "name": "ubl_fault_matrix_v1",
+    "pending_window_s": 60,
+    "repeats": 2,
+    "seed": 42,
+    "seeds": [
+      41,
+      42,
+      43
+    ],
+    "study_scope": "extended",
+    "warmup_s": 10
+  }
+}

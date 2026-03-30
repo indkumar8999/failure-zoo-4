@@ -1,0 +1,108 @@
+{
+  "faults": [
+    {
+      "ablation_block": "fault",
+      "command_off": [
+        "memleak",
+        "off"
+      ],
+      "command_on": [
+        "memleak",
+        "on",
+        "{intensity}"
+      ],
+      "family": "paper_aligned",
+      "id": "mem_leak",
+      "intensity": 50,
+      "proxy_mapping": true
+    },
+    {
+      "ablation_block": "fault",
+      "command_off": [
+        "cpu",
+        "off"
+      ],
+      "command_on": [
+        "cpu",
+        "on",
+        "{intensity}"
+      ],
+      "family": "paper_aligned",
+      "id": "cpu_hog_like",
+      "intensity": 4,
+      "proxy_mapping": true
+    },
+    {
+      "ablation_block": "fault",
+      "command_off": [
+        "net",
+        "clear"
+      ],
+      "command_on": [
+        "net",
+        "latency",
+        "{intensity}"
+      ],
+      "family": "paper_aligned",
+      "id": "net_hog_like_latency",
+      "intensity": 400,
+      "proxy_mapping": true
+    }
+  ],
+  "learner": {
+    "variants": [
+      {
+        "ablation_block": "decision",
+        "env": {
+          "ANOMALY_QUANTILE": "0.85",
+          "ANOMALY_STREAK": "3",
+          "BOOTSTRAP_SAMPLES": "180",
+          "POLL_SEC": "1.0",
+          "SOM_CAUSE_Q": "5",
+          "SOM_COLS": "32",
+          "SOM_INIT_TRIALS": "3",
+          "SOM_KFOLD": "3",
+          "SOM_LR": "0.7",
+          "SOM_NORMALIZATION_MODE": "train_max_100",
+          "SOM_ONLINE_CLIP_MODE": "none",
+          "SOM_ROWS": "32",
+          "SOM_SCORING_MODE": "ubl_area",
+          "SOM_SIGMA": "4.0",
+          "SOM_SMOOTH_K": "5"
+        },
+        "hypothesis_id": "H-paper-smoke-anchor",
+        "interpretation_note": "Paper-faithful-with-proxy learner profile for a short smoke campaign.",
+        "name": "paper_fidelity_smoke",
+        "study_scope": "paper_faithful",
+        "train_mode": "fresh_bootstrap"
+      }
+    ]
+  },
+  "meta": {
+    "ablation_block": "fault",
+    "baseline_slo_window_s": 30,
+    "bootstrap_s": 240,
+    "comparator_scope": "pca_knn_not_included",
+    "cooldown_s": 10,
+    "description": "Minimal smoke campaign over paper-aligned UBL faults with canonical paper_fidelity learner settings.",
+    "fault_window_on_delay_s": 14,
+    "hypothesis_id": "H-smoke-paper-aligned",
+    "inject_s": 20,
+    "interpretation_note": "Smoke pass over paper-aligned faults before larger ablations.",
+    "loadgen_enabled": true,
+    "loadgen_ms": 20,
+    "loadgen_profile": "steady",
+    "loadgen_rps": 4,
+    "name": "ubl_exact_faults_smoke",
+    "pending_window_s": 60,
+    "repeats": 1,
+    "seed": 42,
+    "seeds": [
+      42
+    ],
+    "study_scope": "paper_faithful",
+    "train_mode": "fresh_bootstrap",
+    "use_ladders": false,
+    "warmup_s": 10
+  }
+}

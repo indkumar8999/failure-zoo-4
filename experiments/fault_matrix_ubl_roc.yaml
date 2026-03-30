@@ -1,0 +1,67 @@
+# UBL-style neighborhood-area percentile sweep for ROC points (paper Sec. 3, Figs. 4–6).
+# Run: python3 experiments/run_experiments.py --mode full --matrix experiments/fault_matrix_ubl_roc.yaml
+# Evaluate: python3 experiments/evaluate.py --campaign-dir data/experiments/campaign-<id> --out-dir ...
+# Use roc_points.csv (mean_paper_at vs mean_paper_af) for paper-comparable operating curves.
+
+meta:
+  name: "ubl_percentile_roc_sweep"
+  description: "Multiple ANOMALY_QUANTILE values per fault for ROC; keep other dimensions fixed."
+  seed: 42
+  seeds: [42]
+  warmup_s: 5
+  bootstrap_s: 75
+  fault_window_on_delay_s: 14
+  inject_s: 15
+  cooldown_s: 8
+  repeats: 1
+  pending_window_s: 60
+  use_ladders: false
+  study_scope: "extended"
+  comparator_scope: "pca_knn_not_included"
+  loadgen_enabled: true
+  loadgen_profile: "steady"
+  loadgen_rps: 4
+  loadgen_ms: 20
+  train_mode: "fresh_bootstrap"
+  baseline_slo_window_s: 30
+  prediction_target_mode: "slo_violation_proxy"
+  slo_violation_proxy_delay_s: 0
+  anomaly_quantile_ladder:
+    - { level: "q70", value: 0.70 }
+    - { level: "q76", value: 0.76 }
+    - { level: "q82", value: 0.82 }
+    - { level: "q88", value: 0.88 }
+    - { level: "q94", value: 0.94 }
+
+learner:
+  variants:
+    - name: "ubl_roc_sweep"
+      study_scope: "extended"
+      ablation_block: "decision"
+      hypothesis_id: "H-ubl-roc"
+      interpretation_note: "Percentile ladder only; compare to UBL paper ROC methodology."
+      train_mode: "fresh_bootstrap"
+      env:
+        SOM_SCORING_MODE: "ubl_area"
+        SOM_SMOOTH_K: "3"
+        ANOMALY_STREAK: "2"
+        ANOMALY_QUANTILE: "0.85"
+        BOOTSTRAP_SAMPLES: "30"
+        POLL_SEC: "2.0"
+        SOM_ROWS: "16"
+        SOM_COLS: "16"
+        SOM_LR: "0.25"
+        SOM_SIGMA: "3.0"
+        SOM_KFOLD: "2"
+        SOM_INIT_TRIALS: "2"
+        SOM_NORMALIZATION_MODE: "train_max_100"
+        SOM_ONLINE_CLIP_MODE: "none"
+
+faults:
+  - id: "mem_leak"
+    family: "paper_aligned"
+    proxy_mapping: true
+    ablation_block: "fault"
+    command_on: ["memleak", "on", "{intensity}"]
+    command_off: ["memleak", "off"]
+    intensity: 50

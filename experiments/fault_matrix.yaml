@@ -1,0 +1,234 @@
+meta:
+  name: "ubl_fault_matrix_v1"
+  description: "Paper-aligned and extended fault campaigns for UBL-style evaluation."
+  comparator_scope: "pca_knn_not_included"
+  seed: 42
+  seeds: [41, 42, 43]
+  warmup_s: 60
+  bootstrap_s: 240
+  inject_s: 180
+  cooldown_s: 90
+  repeats: 3
+  use_ladders: true
+  pending_window_s: 60
+  pending_window_s_ladder: [45, 60, 90]
+  baseline_slo_window_s: 30
+  # Paper §3: evaluate prediction relative to SLO-style failure time; delay is a lab proxy
+  # (fault_on + N seconds). Zero uses baseline_slo_window_s automatically in run_experiments.
+  prediction_target_mode: "slo_violation_proxy"
+  slo_violation_proxy_delay_s: 0
+  study_scope: "extended"
+  ablation_block: "fault"
+  hypothesis_id: "H-main"
+  interpretation_note: "Main campaign covering paper-aligned and extended faults."
+  loadgen_enabled: true
+  loadgen_profile: "mixed"
+  loadgen_rps: 6
+  loadgen_ms: 20
+  train_mode: "warm_start"
+
+learner:
+  baseline_env:
+    SOM_SCORING_MODE: "ubl_area"
+    SOM_SMOOTH_K: 5
+    ANOMALY_STREAK: 3
+    ANOMALY_QUANTILE: 0.85
+    SOM_ROWS: 32
+    SOM_COLS: 32
+    SOM_KFOLD: 3
+    SOM_INIT_TRIALS: 3
+    SOM_NORMALIZATION_MODE: "train_max_100"
+    SOM_ONLINE_CLIP_MODE: "none"
+    SOM_CAUSE_Q: 5
+  variants:
+    - name: "paper_fidelity"
+      study_scope: "paper_faithful"
+      ablation_block: "decision"
+      hypothesis_id: "H-paper-anchor"
+      interpretation_note: "Paper-faithful-with-proxy anchor configuration."
+      train_mode: "fresh_bootstrap"
+      env:
+        SOM_SCORING_MODE: "ubl_area"
+        SOM_SMOOTH_K: 5
+        ANOMALY_STREAK: 3
+        ANOMALY_QUANTILE: 0.85
+        POLL_SEC: 1.0
+        SOM_ROWS: 32
+        SOM_COLS: 32
+        SOM_LR: 0.7
+        SOM_SIGMA: 4.0
+        SOM_KFOLD: 3
+        SOM_INIT_TRIALS: 3
+        SOM_NORMALIZATION_MODE: "train_max_100"
+        SOM_ONLINE_CLIP_MODE: "none"
+        SOM_CAUSE_Q: 5
+    - name: "current_default"
+      study_scope: "extended"
+      ablation_block: "decision"
+      hypothesis_id: "H-baseline-comparison"
+      interpretation_note: "Current baseline mode for comparative ablations."
+      train_mode: "warm_start"
+      env:
+        SOM_SCORING_MODE: "bmu"
+        SOM_SMOOTH_K: 1
+        ANOMALY_STREAK: 1
+        ANOMALY_QUANTILE: 0.99
+        SOM_ROWS: 20
+        SOM_COLS: 20
+        SOM_KFOLD: 1
+        SOM_INIT_TRIALS: 1
+        SOM_NORMALIZATION_MODE: "train_max_100"
+        SOM_ONLINE_CLIP_MODE: "clip_300"
+        SOM_CAUSE_Q: 5
+
+faults:
+  - id: "mem_leak"
+    family: "paper_aligned"
+    proxy_mapping: true
+    ablation_block: "fault"
+    command_on: ["memleak", "on", "{intensity}"]
+    command_off: ["memleak", "off"]
+    intensity: 50
+    intensity_ladder:
+      - level: low
+        value: 20
+      - level: medium
+        value: 50
+      - level: high
+        value: 80
+    duration_ladder_s:
+      - level: short
+        value: 60
+      - level: medium
+        value: 180
+      - level: long
+        value: 300
+  - id: "cpu_hog_like"
+    family: "paper_aligned"
+    proxy_mapping: true
+    ablation_block: "fault"
+    # Paper §3.2.1: smoothing can wash out fast CPU-hog precursors; UBL-NS often wins on CpuHog.
+    learner_env:
+      SOM_SMOOTH_K: "1"
+    command_on: ["cpu", "on", "{intensity}"]
+    command_off: ["cpu", "off"]
+    intensity: 4
+    intensity_ladder:
+      - level: low
+        value: 2
+      - level: medium
+        value: 4
+      - level: high
+        value: 8
+    duration_ladder_s:
+      - level: short
+        value: 60
+      - level: medium
+        value: 180
+      - level: long
+        value: 300
+  - id: "net_hog_like_latency"
+    family: "paper_aligned"
+    proxy_mapping: true
+    ablation_block: "fault"
+    command_on: ["net", "latency", "{intensity}"]
+    command_off: ["net", "clear"]
+    intensity: 400
+    intensity_ladder:
+      - level: low
+        value: 150
+      - level: medium
+        value: 400
+      - level: high
+        value: 700
+    duration_ladder_s:
+      - level: short
+        value: 60
+      - level: medium
+        value: 180
+      - level: long
+        value: 300
+  - id: "lock_convoy"
+    family: "extended"
+    proxy_mapping: true
+    ablation_block: "fault"
+    command_on: ["lock", "on", "{intensity}"]
+    command_off: ["lock", "off"]
+    intensity: 60
+    intensity_ladder:
+      - level: low
+        value: 20
+      - level: medium
+        value: 40
+      - level: high
+        value: 60
+    duration_ladder_s:
+      - level: short
+        value: 30
+      - level: medium
+        value: 60
+      - level: long
+        value: 90
+  - id: "fd_leak"
+    family: "extended"
+    proxy_mapping: true
+    ablation_block: "fault"
+    command_on: ["fdleak", "on", "{intensity}"]
+    command_off: ["fdleak", "off"]
+    intensity: 200
+    intensity_ladder:
+      - level: low
+        value: 100
+      - level: medium
+        value: 200
+      - level: high
+        value: 400
+  - id: "disk_fill"
+    family: "extended"
+    proxy_mapping: true
+    ablation_block: "fault"
+    command_on: ["disk", "fill", "{intensity}"]
+    command_off: ["disk", "clear"]
+    intensity: 2000
+    intensity_ladder:
+      - level: low
+        value: 500
+      - level: medium
+        value: 2000
+      - level: high
+        value: 5000
+  - id: "db_gate"
+    family: "extended"
+    proxy_mapping: true
+    ablation_block: "fault"
+    command_on: ["dbgate", "1"]
+    command_off: ["dbgate", "10"]
+    intensity: 1
+  - id: "retry_storm"
+    family: "extended"
+    proxy_mapping: true
+    ablation_block: "fault"
+    command_on: ["retrystorm", "on", "50"]
+    command_off: ["retrystorm", "off"]
+    intensity: 50
+  - id: "dns_test"
+    family: "extended"
+    proxy_mapping: true
+    ablation_block: "fault"
+    command_on: ["dns", "bad"]
+    command_off: ["dns", "ok"]
+    intensity: 1
+  - id: "net_reset_peer"
+    family: "extended"
+    proxy_mapping: true
+    ablation_block: "fault"
+    command_on: ["net", "reset_peer"]
+    command_off: ["net", "clear"]
+    intensity: 1
+  - id: "net_bandwidth"
+    family: "extended"
+    proxy_mapping: true
+    ablation_block: "fault"
+    command_on: ["net", "bandwidth", "64"]
+    command_off: ["net", "clear"]
+    intensity: 64

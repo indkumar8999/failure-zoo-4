@@ -1,0 +1,123 @@
+{
+  "allow_paper_fidelity_drift": false,
+  "allow_reuse_cross_fault": false,
+  "campaign_dir": "/Users/aumpandya/Documents/Projects/ads_project/failure-zoo-4/data/experiments/campaign-20260329T011143Z",
+  "campaign_id": "20260329T011143Z",
+  "comparator_scope": "pca_knn_not_included",
+  "compose_config_sha256": "176f295739ee852c3433736f3f1e29a3f597557544919377a8ef9ce04eada555",
+  "compose_images": [
+    {
+      "ContainerName": "failure-zoo-4-prometheus-1",
+      "Created": "2024-08-27T11:20:52.992734116Z",
+      "ID": "sha256:f6639335d34a77d9d9db382b92eeb7fc00934be8eae81dbc03b31cfe90411a94",
+      "LastTagTime": "2026-03-28T19:00:44.438197759Z",
+      "Platform": "linux/arm64/v8",
+      "Repository": "prom/prometheus",
+      "Size": 102324478,
+      "Tag": "v2.54.1"
+    },
+    {
+      "ContainerName": "failure-zoo-4-postgres-1",
+      "Created": "2026-03-16T22:36:17.629438972Z",
+      "ID": "sha256:2586e2a95d1c9b31cb2967feb562948f7d364854453d703039b6efa45fe48417",
+      "LastTagTime": "2026-03-28T19:01:08.210259131Z",
+      "Platform": "linux/arm64/v8",
+      "Repository": "postgres",
+      "Size": 158777125,
+      "Tag": "16"
+    },
+    {
+      "ContainerName": "failure-zoo-4-cadvisor-1",
+      "Created": "2024-03-02T20:57:54.4078261Z",
+      "ID": "sha256:3cde6faf0791ebf7b41d6f8ae7145466fed712ea6f252c935294d2608b1af388",
+      "LastTagTime": "2026-03-28T19:00:41.189484675Z",
+      "Platform": "linux/arm64",
+      "Repository": "gcr.io/cadvisor/cadvisor",
+      "Size": 29230503,
+      "Tag": "v0.49.1"
+    },
+    {
+      "ContainerName": "failure-zoo-4-toxiproxy-1",
+      "Created": "2025-03-18T13:12:13.175597728Z",
+      "ID": "sha256:9378ed52a28bc50edc1350f936f518f31fa95f0d15917d6eb40b8e376d1a214e",
+      "LastTagTime": "2026-03-28T19:00:37.93365884Z",
+      "Platform": "linux/arm64",
+      "Repository": "ghcr.io/shopify/toxiproxy",
+      "Size": 6975652,
+      "Tag": "latest"
+    },
+    {
+      "ContainerName": "failure-zoo-4-downstream-1",
+      "Created": "2026-03-28T19:02:33.26388717Z",
+      "ID": "sha256:58210a01264a0890930bb6b10e501955c143ed57b58d9ba77262314a4a0fbac4",
+      "LastTagTime": "2026-03-29T00:53:34.69655551Z",
+      "Platform": "linux/arm64",
+      "Repository": "failure-zoo-4-downstream",
+      "Size": 58398303,
+      "Tag": "latest"
+    },
+    {
+      "ContainerName": "failure-zoo-4-loadgen-1",
+      "Created": "2026-03-28T23:15:13.611144502Z",
+      "ID": "sha256:65da404fbf7eed6b3c654308aabf16e58480dc5359eb3b43e0a5534ec68110d9",
+      "LastTagTime": "2026-03-29T00:38:42.61885625Z",
+      "Platform": "linux/arm64",
+      "Repository": "failure-zoo-4-loadgen",
+      "Size": 47893121,
+      "Tag": "latest"
+    },
+    {
+      "ContainerName": "failure-zoo-4-learner-1",
+      "Created": "2026-03-28T23:08:39.092684584Z",
+      "ID": "sha256:28210b07c5c663e0ae623cc4dff0a59e3e3c55c0d0e794718ecad367396480ec",
+      "LastTagTime": "2026-03-29T00:53:34.697524844Z",
+      "Platform": "linux/arm64",
+      "Repository": "failure-zoo-4-learner",
+      "Size": 77084052,
+      "Tag": "latest"
+    },
+    {
+      "ContainerName": "failure-zoo-4-app-1",
+      "Created": "2026-03-28T22:24:46.984799505Z",
+      "ID": "sha256:32b682e3c0c3a81f8b3145a5c1320b4588e13811f9898a730ce3586bca6c9e96",
+      "LastTagTime": "2026-03-29T00:53:34.710832552Z",
+      "Platform": "linux/arm64",
+      "Repository": "failure-zoo-4-app",
+      "Size": 71094074,
+      "Tag": "latest"
+    },
+    {
+      "ContainerName": "failure-zoo-4-grafana-1",
+      "Created": "2024-08-13T21:50:59.533386256Z",
+      "ID": "sha256:886b56d5534e54f69a8cfcb4b8928da8fc753178a7a3d20c3f9b04b660169805",
+      "LastTagTime": "2026-03-28T19:00:57.435673043Z",
+      "Platform": "linux/arm64",
+      "Repository": "grafana/grafana",
+      "Size": 114958692,
+      "Tag": "11.1.4"
+    }
+  ],
+  "dry_run": true,
+  "generated_at": 1774746705.848609,
+  "git_branch": "feature/experiments",
+  "git_sha": "c0d24cc342cdc19036af7c2164a5279748e5ce76",
+  "loadgen_enabled": true,
+  "loadgen_ms": 20,
+  "loadgen_profile": "mixed",
+  "loadgen_rps": 6.0,
+  "loadgen_seed": 42,
+  "matrix_description": "2-hour bounded smoke with more samples.",
+  "matrix_name": "ubl_2h_smoke",
+  "matrix_path": "experiments/fault_matrix_ubl_2h.yaml",
+  "matrix_seed": 42,
+  "matrix_seeds": [
+    41,
+    42
+  ],
+  "mode": "full",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "python_version": "3.10.16",
+  "resumed_campaign_dir": "",
+  "reuse_learner_if_env_unchanged": false,
+  "run_count": 6
+}

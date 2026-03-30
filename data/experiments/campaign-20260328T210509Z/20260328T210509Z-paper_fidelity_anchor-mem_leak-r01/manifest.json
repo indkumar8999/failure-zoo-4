@@ -1,0 +1,44 @@
+{
+  "ablation_block": "decision",
+  "campaign_id": "20260328T210509Z",
+  "durations_s": {
+    "bootstrap": 120,
+    "cooldown": 45,
+    "inject": 90,
+    "warmup": 30
+  },
+  "faithfulness_label": "paper-faithful-with-proxy",
+  "fault_family": "paper_aligned",
+  "fault_id": "mem_leak",
+  "fault_intensity": 50.0,
+  "fault_off": [
+    "memleak",
+    "off"
+  ],
+  "fault_on": [
+    "memleak",
+    "on",
+    "50"
+  ],
+  "hypothesis_id": "H-anchor",
+  "interpretation_note": "Reference paper-faithful-with-proxy anchor.",
+  "learner_env": {
+    "ANOMALY_QUANTILE": "0.85",
+    "ANOMALY_STREAK": "3",
+    "SOM_COLS": "32",
+    "SOM_INIT_TRIALS": "3",
+    "SOM_KFOLD": "3",
+    "SOM_NORMALIZATION_MODE": "train_max_100",
+    "SOM_ONLINE_CLIP_MODE": "none",
+    "SOM_ROWS": "32",
+    "SOM_SCORING_MODE": "ubl_area",
+    "SOM_SMOOTH_K": "5"
+  },
+  "matrix_seed": 42,
+  "pending_window_s": 60,
+  "repeat_idx": 1,
+  "run_id": "20260328T210509Z-paper_fidelity_anchor-mem_leak-r01",
+  "started_at": 1774731922.443975,
+  "study_scope": "paper_faithful",
+  "variant": "paper_fidelity_anchor"
+}

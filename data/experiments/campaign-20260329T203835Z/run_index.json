@@ -1,0 +1,231 @@
+[
+  {
+    "ablation_block": "decision",
+    "anomaly_quantile_level": "base",
+    "campaign_id": "20260329T203835Z",
+    "duration_level": "short",
+    "durations_s": {
+      "bootstrap": 15,
+      "cooldown": 10,
+      "fault_window_on_delay": 14,
+      "inject": 60,
+      "warmup": 10
+    },
+    "failed_phase": "execution",
+    "failure_reason": "Learner did not become trained+model-ready within 85s. model_exists=False last_status={'trained': False, 'bootstrap_samples': 40, 'bootstrap_target': 80, 'total_samples': 40, 'threshold': 0.0, 'feature_names': ['req_rate', 'latency_p95', 'db_inflight', 'leak_mb', 'open_fds_sim', 'disk_fill_mb', 'retry_rate', 'proc_mem_bytes', 'proc_open_fds'], 'model_path': '/data/model/som_model.npz', 'anomaly_log': '/data/events/anomaly_events.jsonl', 'scoring_mode': 'ubl_area', 'smooth_k': 5, 'alarm_streak_target': 3, 'normalization_mode': 'train_max_100', 'online_clip_mode': 'clip_300', 'cause_q': 5, 'model_meta': {}, 'alarm_log_min_interval_s': 0.0} last_error=[Errno 54] Connection reset by peer",
+    "faithfulness_label": "paper-faithful-with-proxy",
+    "fault_family": "paper_aligned",
+    "fault_id": "cpu_hog_like",
+    "fault_intensity": 2.0,
+    "fault_off": [
+      "cpu",
+      "off"
+    ],
+    "fault_on": [
+      "cpu",
+      "on",
+      "2"
+    ],
+    "fault_window_on_delay_s": 14,
+    "hypothesis_id": "H-paper-learner-fixed",
+    "intensity_level": "low",
+    "interpretation_note": "Paper-faithful-with-proxy learner; identical across all fault cells.",
+    "learner_env": {
+      "ANOMALY_QUANTILE": "0.85",
+      "ANOMALY_STREAK": "3",
+      "BOOTSTRAP_SAMPLES": "15",
+      "POLL_SEC": "1.0",
+      "SOM_CAUSE_Q": "5",
+      "SOM_COLS": "32",
+      "SOM_INIT_TRIALS": "3",
+      "SOM_KFOLD": "3",
+      "SOM_LR": "0.7",
+      "SOM_NORMALIZATION_MODE": "train_max_100",
+      "SOM_ONLINE_CLIP_MODE": "none",
+      "SOM_ROWS": "32",
+      "SOM_SCORING_MODE": "ubl_area",
+      "SOM_SIGMA": "4.0",
+      "SOM_SMOOTH_K": "5",
+      "UBL_RANDOM_SEED": "2473116779"
+    },
+    "learner_recreated": true,
+    "load_profile": {
+      "enabled": true,
+      "profile": "steady",
+      "rps": 6.0,
+      "work_ms": 20
+    },
+    "loadgen_seed": 2473116779,
+    "matrix_seed": 42,
+    "pending_level": "base",
+    "pending_window_s": 60,
+    "repeat_idx": 1,
+    "run_id": "20260329T203835Z-paper_fidelity_fault_geometry-cpu_hog_like-ilow-dshort-wbase-s01-r01",
+    "run_seed": 2473116779,
+    "run_status": "failed",
+    "seed_idx": 1,
+    "started_at": 1774816936.935056,
+    "study_scope": "paper_faithful",
+    "train_mode": "fresh_bootstrap",
+    "variant": "paper_fidelity_fault_geometry"
+  },
+  {
+    "ablation_block": "decision",
+    "anomaly_quantile_level": "base",
+    "campaign_id": "20260329T203835Z",
+    "duration_level": "short",
+    "durations_s": {
+      "bootstrap": 15,
+      "cooldown": 10,
+      "fault_window_on_delay": 14,
+      "inject": 60,
+      "warmup": 10
+    },
+    "failed_phase": "",
+    "failure_reason": "",
+    "faithfulness_label": "paper-faithful-with-proxy",
+    "fault_family": "paper_aligned",
+    "fault_id": "mem_leak",
+    "fault_intensity": 20.0,
+    "fault_off": [
+      "memleak",
+      "off"
+    ],
+    "fault_on": [
+      "memleak",
+      "on",
+      "20"
+    ],
+    "fault_window_on_delay_s": 14,
+    "hypothesis_id": "H-paper-learner-fixed",
+    "intensity_level": "low",
+    "interpretation_note": "Paper-faithful-with-proxy learner; identical across all fault cells.",
+    "learner_env": {
+      "ANOMALY_QUANTILE": "0.85",
+      "ANOMALY_STREAK": "3",
+      "BOOTSTRAP_SAMPLES": "15",
+      "POLL_SEC": "1.0",
+      "SOM_CAUSE_Q": "5",
+      "SOM_COLS": "32",
+      "SOM_INIT_TRIALS": "3",
+      "SOM_KFOLD": "3",
+      "SOM_LR": "0.7",
+      "SOM_NORMALIZATION_MODE": "train_max_100",
+      "SOM_ONLINE_CLIP_MODE": "none",
+      "SOM_ROWS": "32",
+      "SOM_SCORING_MODE": "ubl_area",
+      "SOM_SIGMA": "4.0",
+      "SOM_SMOOTH_K": "5",
+      "UBL_RANDOM_SEED": "3326278097"
+    },
+    "learner_recreated": true,
+    "learner_status_post_bootstrap": {
+      "bootstrap_samples": 15,
+      "bootstrap_target": 15,
+      "model_path": "/data/model/som_model.npz",
+      "threshold": 15.330560883739249,
+      "total_samples": 19,
+      "trained": true
+    },
+    "load_profile": {
+      "enabled": true,
+      "profile": "steady",
+      "rps": 6.0,
+      "work_ms": 20
+    },
+    "loadgen_seed": 3326278097,
+    "matrix_seed": 42,
+    "pending_level": "base",
+    "pending_window_s": 60,
+    "repeat_idx": 1,
+    "run_id": "20260329T203835Z-paper_fidelity_fault_geometry-mem_leak-ilow-dshort-wbase-s01-r01",
+    "run_seed": 3326278097,
+    "run_status": "completed",
+    "seed_idx": 1,
+    "started_at": 1774816762.974117,
+    "study_scope": "paper_faithful",
+    "train_mode": "fresh_bootstrap",
+    "variant": "paper_fidelity_fault_geometry"
+  },
+  {
+    "ablation_block": "decision",
+    "anomaly_quantile_level": "base",
+    "artifact_snapshot_warnings": [
+      "completed fresh_bootstrap run but som_model.npz was not snapshotted (source missing at /Users/aumpandya/Documents/Projects/ads_project/failure-zoo-4/data/learner/model/som_model.npz). Check compose file location and ./data/learner bind mount."
+    ],
+    "campaign_id": "20260329T203835Z",
+    "duration_level": "short",
+    "durations_s": {
+      "bootstrap": 15,
+      "cooldown": 10,
+      "fault_window_on_delay": 14,
+      "inject": 60,
+      "warmup": 10
+    },
+    "failed_phase": "",
+    "failure_reason": "",
+    "faithfulness_label": "paper-faithful-with-proxy",
+    "fault_family": "paper_aligned",
+    "fault_id": "net_hog_like_latency",
+    "fault_intensity": 150.0,
+    "fault_off": [
+      "net",
+      "clear"
+    ],
+    "fault_on": [
+      "net",
+      "latency",
+      "150"
+    ],
+    "fault_window_on_delay_s": 14,
+    "hypothesis_id": "H-paper-learner-fixed",
+    "intensity_level": "low",
+    "interpretation_note": "Paper-faithful-with-proxy learner; identical across all fault cells.",
+    "learner_env": {
+      "ANOMALY_QUANTILE": "0.85",
+      "ANOMALY_STREAK": "3",
+      "BOOTSTRAP_SAMPLES": "15",
+      "POLL_SEC": "1.0",
+      "SOM_CAUSE_Q": "5",
+      "SOM_COLS": "32",
+      "SOM_INIT_TRIALS": "3",
+      "SOM_KFOLD": "3",
+      "SOM_LR": "0.7",
+      "SOM_NORMALIZATION_MODE": "train_max_100",
+      "SOM_ONLINE_CLIP_MODE": "none",
+      "SOM_ROWS": "32",
+      "SOM_SCORING_MODE": "ubl_area",
+      "SOM_SIGMA": "4.0",
+      "SOM_SMOOTH_K": "5",
+      "UBL_RANDOM_SEED": "4237318536"
+    },
+    "learner_recreated": true,
+    "learner_status_post_bootstrap": {
+      "bootstrap_samples": 15,
+      "bootstrap_target": 15,
+      "model_path": "/data/model/som_model.npz",
+      "threshold": 13.933587803973209,
+      "total_samples": 17,
+      "trained": true
+    },
+    "load_profile": {
+      "enabled": true,
+      "profile": "steady",
+      "rps": 6.0,
+      "work_ms": 20
+    },
+    "loadgen_seed": 4237318536,
+    "matrix_seed": 42,
+    "pending_level": "base",
+    "pending_window_s": 60,
+    "repeat_idx": 1,
+    "run_id": "20260329T203835Z-paper_fidelity_fault_geometry-net_hog_like_latency-ilow-dshort-wbase-s01-r01",
+    "run_seed": 4237318536,
+    "run_status": "completed",
+    "seed_idx": 1,
+    "started_at": 1774817085.1598248,
+    "study_scope": "paper_faithful",
+    "train_mode": "fresh_bootstrap",
+    "variant": "paper_fidelity_fault_geometry"
+  }
+]

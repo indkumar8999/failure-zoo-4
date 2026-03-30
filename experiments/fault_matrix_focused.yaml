@@ -1,0 +1,203 @@
+meta:
+  name: "ubl_ablation_focused_v1"
+  description: "Stage-2 focused matrix for high-sensitivity factors and interactions."
+  comparator_scope: "pca_knn_not_included"
+  seed: 42
+  seeds: [41, 42, 43]
+  warmup_s: 60
+  bootstrap_s: 240
+  inject_s: 180
+  cooldown_s: 90
+  repeats: 3
+  pending_window_s: 60
+  pending_window_s_ladder: [45, 90]
+  study_scope: "extended"
+  ablation_block: "decision"
+  hypothesis_id: "H-focused"
+  interpretation_note: "Focused interaction sweeps after screening."
+  loadgen_enabled: true
+  loadgen_profile: "mixed"
+  loadgen_rps: 8
+  loadgen_ms: 20
+  train_mode: "fresh_bootstrap"
+  use_ladders: true
+
+learner:
+  variants:
+    - name: "paper_fidelity_anchor"
+      study_scope: "paper_faithful"
+      ablation_block: "decision"
+      hypothesis_id: "H-anchor"
+      interpretation_note: "Anchor profile for all focused comparisons."
+      train_mode: "fresh_bootstrap"
+      env:
+        SOM_SCORING_MODE: "ubl_area"
+        SOM_SMOOTH_K: 5
+        ANOMALY_STREAK: 3
+        ANOMALY_QUANTILE: 0.85
+        POLL_SEC: 1.0
+        SOM_ROWS: 32
+        SOM_COLS: 32
+        SOM_LR: 0.7
+        SOM_SIGMA: 4.0
+        SOM_KFOLD: 3
+        SOM_INIT_TRIALS: 3
+        SOM_NORMALIZATION_MODE: "train_max_100"
+        SOM_ONLINE_CLIP_MODE: "none"
+    - name: "focus_smooth1_streak1"
+      study_scope: "extended"
+      ablation_block: "decision"
+      hypothesis_id: "H-interaction-smoothing-streak"
+      interpretation_note: "Low smoothing and low streak should increase sensitivity and false positives."
+      train_mode: "warm_start"
+      env:
+        SOM_SCORING_MODE: "ubl_area"
+        SOM_SMOOTH_K: 1
+        ANOMALY_STREAK: 1
+        ANOMALY_QUANTILE: 0.85
+        SOM_ROWS: 32
+        SOM_COLS: 32
+        SOM_KFOLD: 3
+        SOM_INIT_TRIALS: 3
+        SOM_NORMALIZATION_MODE: "train_max_100"
+        SOM_ONLINE_CLIP_MODE: "none"
+    - name: "focus_smooth8_streak3"
+      study_scope: "extended"
+      ablation_block: "decision"
+      hypothesis_id: "H-interaction-smoothing-streak"
+      interpretation_note: "Higher smoothing can reduce false alarms but may miss short pre-failure cues."
+      train_mode: "warm_start"
+      env:
+        SOM_SCORING_MODE: "ubl_area"
+        SOM_SMOOTH_K: 8
+        ANOMALY_STREAK: 3
+        ANOMALY_QUANTILE: 0.85
+        SOM_ROWS: 32
+        SOM_COLS: 32
+        SOM_KFOLD: 3
+        SOM_INIT_TRIALS: 3
+        SOM_NORMALIZATION_MODE: "train_max_100"
+        SOM_ONLINE_CLIP_MODE: "none"
+    - name: "focus_quantile95"
+      study_scope: "extended"
+      ablation_block: "decision"
+      hypothesis_id: "H-quantile-intensity"
+      interpretation_note: "Higher threshold tests precision/recall tradeoff under stronger fault intensities."
+      train_mode: "warm_start"
+      env:
+        SOM_SCORING_MODE: "ubl_area"
+        SOM_SMOOTH_K: 5
+        ANOMALY_STREAK: 3
+        ANOMALY_QUANTILE: 0.95
+        SOM_ROWS: 32
+        SOM_COLS: 32
+        SOM_KFOLD: 3
+        SOM_INIT_TRIALS: 3
+        SOM_NORMALIZATION_MODE: "train_max_100"
+        SOM_ONLINE_CLIP_MODE: "none"
+    - name: "focus_kfold5_init5"
+      study_scope: "extended"
+      ablation_block: "training"
+      hypothesis_id: "H-kfold-init"
+      interpretation_note: "More map selection trials may improve stability."
+      train_mode: "fresh_bootstrap"
+      env:
+        SOM_SCORING_MODE: "ubl_area"
+        SOM_SMOOTH_K: 5
+        ANOMALY_STREAK: 3
+        ANOMALY_QUANTILE: 0.85
+        SOM_ROWS: 32
+        SOM_COLS: 32
+        SOM_KFOLD: 5
+        SOM_INIT_TRIALS: 5
+        SOM_NORMALIZATION_MODE: "train_max_100"
+        SOM_ONLINE_CLIP_MODE: "none"
+    - name: "focus_som40_lr015_sigma4"
+      study_scope: "extended"
+      ablation_block: "som"
+      hypothesis_id: "H-som-geometry-learning"
+      interpretation_note: "Larger map and gentler LR test topology resolution effects."
+      train_mode: "fresh_bootstrap"
+      env:
+        SOM_SCORING_MODE: "ubl_area"
+        SOM_SMOOTH_K: 5
+        ANOMALY_STREAK: 3
+        ANOMALY_QUANTILE: 0.85
+        SOM_ROWS: 40
+        SOM_COLS: 40
+        SOM_LR: 0.15
+        SOM_SIGMA: 4.0
+        SOM_KFOLD: 3
+        SOM_INIT_TRIALS: 3
+        SOM_NORMALIZATION_MODE: "train_max_100"
+        SOM_ONLINE_CLIP_MODE: "none"
+
+faults:
+  - id: "mem_leak"
+    family: "paper_aligned"
+    proxy_mapping: true
+    ablation_block: "fault"
+    command_on: ["memleak", "on", "{intensity}"]
+    command_off: ["memleak", "off"]
+    intensity: 50
+    intensity_ladder:
+      - level: low
+        value: 20
+      - level: high
+        value: 80
+    duration_ladder_s:
+      - level: short
+        value: 60
+      - level: long
+        value: 300
+  - id: "cpu_hog_like"
+    family: "paper_aligned"
+    proxy_mapping: true
+    ablation_block: "fault"
+    command_on: ["cpu", "on", "{intensity}"]
+    command_off: ["cpu", "off"]
+    intensity: 4
+    intensity_ladder:
+      - level: low
+        value: 2
+      - level: high
+        value: 8
+    duration_ladder_s:
+      - level: short
+        value: 60
+      - level: long
+        value: 300
+  - id: "net_hog_like_latency"
+    family: "paper_aligned"
+    proxy_mapping: true
+    ablation_block: "fault"
+    command_on: ["net", "latency", "{intensity}"]
+    command_off: ["net", "clear"]
+    intensity: 600
+    intensity_ladder:
+      - level: low
+        value: 250
+      - level: high
+        value: 900
+    duration_ladder_s:
+      - level: short
+        value: 60
+      - level: long
+        value: 300
+  - id: "disk_fill"
+    family: "extended"
+    proxy_mapping: true
+    ablation_block: "fault"
+    command_on: ["disk", "fill", "{intensity}"]
+    command_off: ["disk", "clear"]
+    intensity: 2000
+    intensity_ladder:
+      - level: low
+        value: 500
+      - level: high
+        value: 5000
+    duration_ladder_s:
+      - level: short
+        value: 60
+      - level: long
+        value: 300

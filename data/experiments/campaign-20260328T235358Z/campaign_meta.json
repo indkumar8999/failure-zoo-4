@@ -1,0 +1,124 @@
+{
+  "allow_paper_fidelity_drift": false,
+  "allow_reuse_cross_fault": false,
+  "campaign_dir": "/Users/aumpandya/Documents/Projects/ads_project/failure-zoo-4/data/experiments/campaign-20260328T235358Z",
+  "campaign_id": "20260328T235358Z",
+  "comparator_scope": "pca_knn_not_included",
+  "compose_config_sha256": "176f295739ee852c3433736f3f1e29a3f597557544919377a8ef9ce04eada555",
+  "compose_images": [
+    {
+      "ContainerName": "failure-zoo-4-toxiproxy-1",
+      "Created": "2025-03-18T13:12:13.175597728Z",
+      "ID": "sha256:9378ed52a28bc50edc1350f936f518f31fa95f0d15917d6eb40b8e376d1a214e",
+      "LastTagTime": "2026-03-28T19:00:37.93365884Z",
+      "Platform": "linux/arm64",
+      "Repository": "ghcr.io/shopify/toxiproxy",
+      "Size": 6975652,
+      "Tag": "latest"
+    },
+    {
+      "ContainerName": "failure-zoo-4-cadvisor-1",
+      "Created": "2024-03-02T20:57:54.4078261Z",
+      "ID": "sha256:3cde6faf0791ebf7b41d6f8ae7145466fed712ea6f252c935294d2608b1af388",
+      "LastTagTime": "2026-03-28T19:00:41.189484675Z",
+      "Platform": "linux/arm64",
+      "Repository": "gcr.io/cadvisor/cadvisor",
+      "Size": 29230503,
+      "Tag": "v0.49.1"
+    },
+    {
+      "ContainerName": "failure-zoo-4-downstream-1",
+      "Created": "2026-03-28T19:02:33.26388717Z",
+      "ID": "sha256:db0d04c15567d41dcec97bb221589b69e9bbda4c6d9b1d02006ab45ebabe9b84",
+      "LastTagTime": "2026-03-28T23:52:04.020514428Z",
+      "Platform": "linux/arm64",
+      "Repository": "failure-zoo-4-downstream",
+      "Size": 58398303,
+      "Tag": "latest"
+    },
+    {
+      "ContainerName": "failure-zoo-4-loadgen-1",
+      "Created": "2026-03-28T23:15:13.611144502Z",
+      "ID": "sha256:9fe2041e4daaf6ed1b1f0f5b0050d0fa20a36c8a93a1cd8022188dff07769695",
+      "LastTagTime": "2026-03-28T23:47:29.503627051Z",
+      "Platform": "linux/arm64",
+      "Repository": "failure-zoo-4-loadgen",
+      "Size": 47893121,
+      "Tag": "latest"
+    },
+    {
+      "ContainerName": "failure-zoo-4-app-1",
+      "Created": "2026-03-28T22:24:46.984799505Z",
+      "ID": "sha256:817acb068a858a8f7e01a2e48be4e76b29e9abacac0486e05229b9908a1cb30a",
+      "LastTagTime": "2026-03-28T23:52:04.028546053Z",
+      "Platform": "linux/arm64",
+      "Repository": "failure-zoo-4-app",
+      "Size": 71094074,
+      "Tag": "latest"
+    },
+    {
+      "ContainerName": "failure-zoo-4-grafana-1",
+      "Created": "2024-08-13T21:50:59.533386256Z",
+      "ID": "sha256:886b56d5534e54f69a8cfcb4b8928da8fc753178a7a3d20c3f9b04b660169805",
+      "LastTagTime": "2026-03-28T19:00:57.435673043Z",
+      "Platform": "linux/arm64",
+      "Repository": "grafana/grafana",
+      "Size": 114958692,
+      "Tag": "11.1.4"
+    },
+    {
+      "ContainerName": "failure-zoo-4-learner-1",
+      "Created": "2026-03-28T23:08:39.092684584Z",
+      "ID": "sha256:43bf1d2f2400e0dbb23f6686f688d6fa6dba86ea041efeb9ad6b83f008a2f8f9",
+      "LastTagTime": "2026-03-28T23:52:04.024608261Z",
+      "Platform": "linux/arm64",
+      "Repository": "failure-zoo-4-learner",
+      "Size": 77084052,
+      "Tag": "latest"
+    },
+    {
+      "ContainerName": "failure-zoo-4-prometheus-1",
+      "Created": "2024-08-27T11:20:52.992734116Z",
+      "ID": "sha256:f6639335d34a77d9d9db382b92eeb7fc00934be8eae81dbc03b31cfe90411a94",
+      "LastTagTime": "2026-03-28T19:00:44.438197759Z",
+      "Platform": "linux/arm64/v8",
+      "Repository": "prom/prometheus",
+      "Size": 102324478,
+      "Tag": "v2.54.1"
+    },
+    {
+      "ContainerName": "failure-zoo-4-postgres-1",
+      "Created": "2026-03-16T22:36:17.629438972Z",
+      "ID": "sha256:2586e2a95d1c9b31cb2967feb562948f7d364854453d703039b6efa45fe48417",
+      "LastTagTime": "2026-03-28T19:01:08.210259131Z",
+      "Platform": "linux/arm64/v8",
+      "Repository": "postgres",
+      "Size": 158777125,
+      "Tag": "16"
+    }
+  ],
+  "dry_run": true,
+  "generated_at": 1774742039.552785,
+  "git_branch": "feature/experiments",
+  "git_sha": "c0d24cc342cdc19036af7c2164a5279748e5ce76",
+  "loadgen_enabled": true,
+  "loadgen_ms": 20,
+  "loadgen_profile": "steady",
+  "loadgen_rps": 4.0,
+  "loadgen_seed": 42,
+  "matrix_description": "Paper-aligned and extended fault campaigns for UBL-style evaluation.",
+  "matrix_name": "ubl_fault_matrix_v1",
+  "matrix_path": "experiments/fault_matrix_multiseed_quick.yaml",
+  "matrix_seed": 42,
+  "matrix_seeds": [
+    41,
+    42,
+    43
+  ],
+  "mode": "full",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "python_version": "3.10.16",
+  "resumed_campaign_dir": "",
+  "reuse_learner_if_env_unchanged": false,
+  "run_count": 48
+}

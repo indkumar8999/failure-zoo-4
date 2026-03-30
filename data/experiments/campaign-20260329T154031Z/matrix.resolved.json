@@ -1,0 +1,168 @@
+{
+  "faults": [
+    {
+      "ablation_block": "fault",
+      "command_off": [
+        "memleak",
+        "off"
+      ],
+      "command_on": [
+        "memleak",
+        "on",
+        "{intensity}"
+      ],
+      "family": "paper_aligned",
+      "id": "mem_leak",
+      "intensity": 50,
+      "proxy_mapping": true
+    },
+    {
+      "ablation_block": "fault",
+      "command_off": [
+        "cpu",
+        "off"
+      ],
+      "command_on": [
+        "cpu",
+        "on",
+        "{intensity}"
+      ],
+      "family": "paper_aligned",
+      "id": "cpu_hog_like",
+      "intensity": 4,
+      "proxy_mapping": true
+    }
+  ],
+  "learner": {
+    "baseline_env": {
+      "BOOTSTRAP_SAMPLES": "15",
+      "POLL_SEC": "1.0"
+    },
+    "variants": [
+      {
+        "ablation_block": "decision",
+        "env": {
+          "ANOMALY_QUANTILE": "0.85",
+          "ANOMALY_STREAK": "3",
+          "BOOTSTRAP_SAMPLES": "15",
+          "POLL_SEC": "1.0",
+          "SOM_COLS": "32",
+          "SOM_INIT_TRIALS": "3",
+          "SOM_KFOLD": "3",
+          "SOM_LR": "0.7",
+          "SOM_NORMALIZATION_MODE": "train_max_100",
+          "SOM_ONLINE_CLIP_MODE": "none",
+          "SOM_ROWS": "32",
+          "SOM_SCORING_MODE": "ubl_area",
+          "SOM_SIGMA": "4.0",
+          "SOM_SMOOTH_K": "5"
+        },
+        "hypothesis_id": "H-anchor",
+        "interpretation_note": "Reference paper-faithful-with-proxy anchor.",
+        "name": "paper_fidelity_anchor",
+        "study_scope": "paper_faithful",
+        "train_mode": "fresh_bootstrap"
+      },
+      {
+        "ablation_block": "decision",
+        "env": {
+          "ALARM_LOG_MIN_INTERVAL_S": "20",
+          "ANOMALY_QUANTILE": "0.88",
+          "ANOMALY_STREAK": "2",
+          "BOOTSTRAP_SAMPLES": "15",
+          "POLL_SEC": "1.0",
+          "SOM_COLS": "32",
+          "SOM_INIT_TRIALS": "3",
+          "SOM_KFOLD": "3",
+          "SOM_LR": "0.7",
+          "SOM_NORMALIZATION_MODE": "train_max_100",
+          "SOM_ONLINE_CLIP_MODE": "none",
+          "SOM_ROWS": "32",
+          "SOM_SCORING_MODE": "ubl_area",
+          "SOM_SIGMA": "4.0",
+          "SOM_SMOOTH_K": "3"
+        },
+        "hypothesis_id": "H-smooth-streak",
+        "interpretation_note": "Balanced smooth/streak, stricter quantile, 20s alarm log dedupe vs old aggressive 1/1.",
+        "name": "screen_smooth_streak",
+        "study_scope": "extended",
+        "train_mode": "warm_start"
+      },
+      {
+        "ablation_block": "decision",
+        "env": {
+          "ANOMALY_QUANTILE": "0.95",
+          "ANOMALY_STREAK": "3",
+          "BOOTSTRAP_SAMPLES": "15",
+          "POLL_SEC": "1.0",
+          "SOM_COLS": "32",
+          "SOM_INIT_TRIALS": "3",
+          "SOM_KFOLD": "3",
+          "SOM_LR": "0.7",
+          "SOM_NORMALIZATION_MODE": "train_max_100",
+          "SOM_ONLINE_CLIP_MODE": "none",
+          "SOM_ROWS": "32",
+          "SOM_SCORING_MODE": "ubl_area",
+          "SOM_SIGMA": "4.0",
+          "SOM_SMOOTH_K": "5"
+        },
+        "hypothesis_id": "H-quantile",
+        "interpretation_note": "Stricter quantile vs anchor.",
+        "name": "screen_threshold",
+        "study_scope": "extended",
+        "train_mode": "warm_start"
+      },
+      {
+        "ablation_block": "training",
+        "env": {
+          "ANOMALY_QUANTILE": "0.80",
+          "ANOMALY_STREAK": "3",
+          "BOOTSTRAP_SAMPLES": "15",
+          "POLL_SEC": "1.0",
+          "SOM_COLS": "20",
+          "SOM_INIT_TRIALS": "1",
+          "SOM_KFOLD": "1",
+          "SOM_LR": "0.7",
+          "SOM_NORMALIZATION_MODE": "train_max_100",
+          "SOM_ONLINE_CLIP_MODE": "clip_300",
+          "SOM_ROWS": "20",
+          "SOM_SCORING_MODE": "ubl_area",
+          "SOM_SIGMA": "4.0",
+          "SOM_SMOOTH_K": "5"
+        },
+        "hypothesis_id": "H-kfold-geometry",
+        "interpretation_note": "Reduced K-fold, smaller map, clip; quantile 0.80 to improve pre-fault alarm rate in lab.",
+        "name": "screen_training_topology",
+        "study_scope": "extended",
+        "train_mode": "fresh_bootstrap"
+      }
+    ]
+  },
+  "meta": {
+    "ablation_block": "fault",
+    "bootstrap_s": 15,
+    "comparator_scope": "pca_knn_not_included",
+    "cooldown_s": 10,
+    "description": "Bounded screening-style ablations: 4 learner variants x 2 faults x 10 repeats.",
+    "hypothesis_id": "H-ablation-start",
+    "inject_s": 10,
+    "interpretation_note": "Entry ablation before full screening/focused matrices.",
+    "loadgen_enabled": true,
+    "loadgen_ms": 18,
+    "loadgen_profile": "mixed",
+    "loadgen_rps": 5,
+    "name": "ubl_ablation_start_v1",
+    "pending_window_s": 90,
+    "prediction_target_mode": "injection_onset",
+    "repeats": 1,
+    "seed": 42,
+    "seeds": [
+      42
+    ],
+    "slo_violation_proxy_delay_s": 0,
+    "study_scope": "extended",
+    "train_mode": "warm_start",
+    "use_ladders": false,
+    "warmup_s": 10
+  }
+}

@@ -1,0 +1,88 @@
+meta:
+  name: ubl_2h_smoke
+  description: 2-hour bounded smoke with more samples.
+  comparator_scope: pca_knn_not_included
+  seed: 42
+  seeds:
+  - 41
+  - 42
+  warmup_s: 20
+  bootstrap_s: 240
+  fault_window_on_delay_s: 14
+  inject_s: 45
+  cooldown_s: 20
+  repeats: 1
+  pending_window_s: 60
+  use_ladders: false
+  baseline_slo_window_s: 30
+  study_scope: paper_faithful
+  ablation_block: fault
+  hypothesis_id: H-replication-smoke
+  interpretation_note: Larger-data mini replication before broad ablations.
+  loadgen_enabled: true
+  loadgen_profile: mixed
+  loadgen_rps: 6
+  loadgen_ms: 20
+  train_mode: fresh_bootstrap
+learner:
+  variants:
+  - name: paper_fidelity_replication_smoke
+    study_scope: paper_faithful
+    ablation_block: decision
+    hypothesis_id: H-paper-replication-smoke
+    interpretation_note: Paper-faithful-with-proxy settings with multi-seed/repeat
+      coverage.
+    train_mode: fresh_bootstrap
+    env:
+      SOM_SCORING_MODE: ubl_area
+      SOM_SMOOTH_K: '5'
+      ANOMALY_STREAK: '3'
+      ANOMALY_QUANTILE: '0.85'
+      BOOTSTRAP_SAMPLES: '180'
+      POLL_SEC: '1.0'
+      SOM_ROWS: '32'
+      SOM_COLS: '32'
+      SOM_LR: '0.7'
+      SOM_SIGMA: '4.0'
+      SOM_KFOLD: '3'
+      SOM_INIT_TRIALS: '3'
+      SOM_NORMALIZATION_MODE: train_max_100
+      SOM_ONLINE_CLIP_MODE: none
+      SOM_CAUSE_Q: '5'
+faults:
+- id: mem_leak
+  family: paper_aligned
+  proxy_mapping: true
+  ablation_block: fault
+  command_on:
+  - memleak
+  - 'on'
+  - '{intensity}'
+  command_off:
+  - memleak
+  - 'off'
+  intensity: 50
+- id: cpu_hog_like
+  family: paper_aligned
+  proxy_mapping: true
+  ablation_block: fault
+  command_on:
+  - cpu
+  - 'on'
+  - '{intensity}'
+  command_off:
+  - cpu
+  - 'off'
+  intensity: 4
+- id: net_hog_like_latency
+  family: paper_aligned
+  proxy_mapping: true
+  ablation_block: fault
+  command_on:
+  - net
+  - latency
+  - '{intensity}'
+  command_off:
+  - net
+  - clear
+  intensity: 400

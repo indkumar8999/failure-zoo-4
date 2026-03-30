@@ -1,0 +1,26 @@
+1774862013.240471 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0 <0.000074>
+1774862013.241952 mmap(NULL, 16384, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xffffba1f8000 <0.000193>
+1774862013.244281 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 17</proc/17/stat> <0.000139>
+1774862013.244934 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000042>
+1774862013.245257 ioctl(17</proc/17/stat>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000041>
+1774862013.245592 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000052>
+1774862013.245864 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000040>
+1774862013.246104 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000071>
+1774862013.246461 read(17</proc/17/stat>, "17 (uvicorn) S 14 1 1 0 -1 4194560 20000 0 0 0 24733 4903 0 0 20 0 8 0 11847356 431718400 19632 18446744073709551615 187651000238080 187651000241032 281474082790640 0 0 0 0 16781312 16386 0 0 0 17 0 0"..., 8192) = 323 <0.000102>
+1774862013.246915 read(17</proc/17/stat>, "", 7869) = 0 <0.000126>
+1774862013.247417 close(17</proc/17/stat>) = 0 <0.000097>
+1774862013.247907 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 17</proc/17/limits> <0.000126>
+1774862013.248406 fstat(17</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000075>
+1774862013.248886 ioctl(17</proc/17/limits>, TCGETS, 0xffffb356e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000070>
+1774862013.249361 lseek(17</proc/17/limits>, 0, SEEK_CUR) = 0 <0.000071>
+1774862013.249755 read(17</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.000169>
+1774862013.250411 close(17</proc/17/limits>) = 0 <0.000084>
+1774862013.250881 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 17</proc/17/fd> <0.000109>
+1774862013.251388 fstat(17</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=18, ...}) = 0 <0.000098>
+1774862013.251870 getdents64(17</proc/17/fd>, 0xffff9c0013f0 /* 20 entries */, 32768) = 480 <0.000383>
+1774862013.252797 getdents64(17</proc/17/fd>, 0xffff9c0013f0 /* 0 entries */, 32768) = 0 <0.000134>
+1774862013.253286 close(17</proc/17/fd>) = 0 <0.000082>
+1774862013.256045 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000324>
+1774862023.361682 rt_sigprocmask(SIG_BLOCK, ~[RT_1], NULL, 8) = 0 <0.000067>
+1774862023.362633 exit(0)               = ?
+1774862023.363575 +++ exited with 0 +++

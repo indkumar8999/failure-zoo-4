@@ -1,0 +1,101 @@
+# Smaller fault-geometry grid: same paper learner and full phase timings as
+# fault_matrix_fault_geometry_paper_learner.yaml, but fewer faults and 2×2 ladders.
+#
+# Why use this instead of --mode smoke on the big matrix?
+#   --mode full + this file keeps warmup_s / bootstrap_s / BOOTSTRAP_SAMPLES aligned so training
+#   and som_model.npz snapshots stay reliable. Smoke trims time and bootstrap and is only for wiring.
+#
+# Planned runs (full mode): 2 faults × 2 intensity × 2 duration × seeds × repeats
+#   => 2 × 2 × 2 × 1 × 1 = 8 runs (order ~1–1.5 h wall-clock vs ~5.5 h for the 3×3×4 full grid).
+#
+# Usage:
+#   python3 experiments/run_experiments.py --mode full --matrix experiments/fault_matrix_fault_geometry_paper_learner_minimal.yaml
+#
+# Scale up: copy from fault_matrix_fault_geometry_paper_learner.yaml (3×3 ladders, four faults) or add seeds/repeats.
+
+meta:
+  name: "ubl_fault_geometry_paper_learner_minimal_v1"
+  description: "Minimal fault intensity×duration grid; paper-faithful learner fixed; one paper_aligned + one extended fault."
+  comparator_scope: "pca_knn_not_included"
+  seed: 42
+  seeds: [42]
+  warmup_s: 60
+  bootstrap_s: 240
+  inject_s: 180
+  cooldown_s: 90
+  repeats: 1
+  use_ladders: true
+  pending_window_s: 60
+  fault_window_on_delay_s: 14
+  prediction_target_mode: "injection_onset"
+  study_scope: "paper_faithful"
+  ablation_block: "fault"
+  hypothesis_id: "H-fault-geometry-minimal"
+  interpretation_note: "Reduced grid for wall-clock; same learner protocol as full fault_geometry matrix."
+  loadgen_enabled: true
+  loadgen_profile: "steady"
+  loadgen_rps: 6
+  loadgen_ms: 20
+  train_mode: "fresh_bootstrap"
+
+learner:
+  variants:
+    - name: "paper_fidelity_fault_geometry"
+      study_scope: "paper_faithful"
+      ablation_block: "decision"
+      hypothesis_id: "H-paper-learner-fixed"
+      interpretation_note: "Paper-faithful-with-proxy learner; identical across all fault cells."
+      train_mode: "fresh_bootstrap"
+      env:
+        SOM_SCORING_MODE: "ubl_area"
+        SOM_SMOOTH_K: "5"
+        ANOMALY_STREAK: "3"
+        ANOMALY_QUANTILE: "0.85"
+        POLL_SEC: "1.0"
+        SOM_ROWS: "32"
+        SOM_COLS: "32"
+        SOM_LR: "0.7"
+        SOM_SIGMA: "4.0"
+        SOM_KFOLD: "3"
+        SOM_INIT_TRIALS: "3"
+        SOM_NORMALIZATION_MODE: "train_max_100"
+        SOM_ONLINE_CLIP_MODE: "none"
+        SOM_CAUSE_Q: "5"
+        BOOTSTRAP_SAMPLES: "180"
+
+faults:
+  - id: "mem_leak"
+    family: "paper_aligned"
+    proxy_mapping: true
+    ablation_block: "fault"
+    command_on: ["memleak", "on", "{intensity}"]
+    command_off: ["memleak", "off"]
+    intensity: 50
+    intensity_ladder:
+      - level: low
+        value: 20
+      - level: high
+        value: 80
+    duration_ladder_s:
+      - level: short
+        value: 60
+      - level: long
+        value: 300
+
+  - id: "lock_convoy"
+    family: "extended"
+    proxy_mapping: true
+    ablation_block: "fault"
+    command_on: ["lock", "on", "{intensity}"]
+    command_off: ["lock", "off"]
+    intensity: 60
+    intensity_ladder:
+      - level: low
+        value: 20
+      - level: high
+        value: 60
+    duration_ladder_s:
+      - level: short
+        value: 30
+      - level: long
+        value: 90

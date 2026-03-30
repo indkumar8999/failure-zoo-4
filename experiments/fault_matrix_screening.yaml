@@ -1,0 +1,168 @@
+meta:
+  name: "ubl_ablation_screening_v1"
+  description: "Stage-1 screening matrix to detect sensitive UBL factors with bounded runtime."
+  comparator_scope: "pca_knn_not_included"
+  seed: 42
+  seeds: [41, 42, 43]
+  warmup_s: 30
+  bootstrap_s: 120
+  inject_s: 90
+  cooldown_s: 45
+  repeats: 3
+  pending_window_s: 60
+  pending_window_s_ladder: [60]
+  study_scope: "extended"
+  ablation_block: "fault"
+  hypothesis_id: "H-screen"
+  interpretation_note: "Screen broad factor influence before focused sweeps."
+  loadgen_enabled: true
+  loadgen_profile: "mixed"
+  loadgen_rps: 6
+  loadgen_ms: 15
+  train_mode: "warm_start"
+  use_ladders: true
+
+learner:
+  variants:
+    - name: "paper_fidelity_anchor"
+      study_scope: "paper_faithful"
+      ablation_block: "decision"
+      hypothesis_id: "H-anchor"
+      interpretation_note: "Reference paper-faithful-with-proxy anchor."
+      train_mode: "fresh_bootstrap"
+      env:
+        SOM_SCORING_MODE: "ubl_area"
+        SOM_SMOOTH_K: 5
+        ANOMALY_STREAK: 3
+        ANOMALY_QUANTILE: 0.85
+        POLL_SEC: 1.0
+        SOM_ROWS: 32
+        SOM_COLS: 32
+        SOM_LR: 0.7
+        SOM_SIGMA: 4.0
+        SOM_KFOLD: 3
+        SOM_INIT_TRIALS: 3
+        SOM_NORMALIZATION_MODE: "train_max_100"
+        SOM_ONLINE_CLIP_MODE: "none"
+    - name: "screen_smooth_streak"
+      study_scope: "extended"
+      ablation_block: "decision"
+      hypothesis_id: "H-smooth-streak"
+      interpretation_note: "Balanced smooth/streak, stricter quantile, 20s alarm log dedupe."
+      train_mode: "warm_start"
+      env:
+        SOM_SCORING_MODE: "ubl_area"
+        SOM_SMOOTH_K: 3
+        ANOMALY_STREAK: 2
+        ANOMALY_QUANTILE: 0.88
+        ALARM_LOG_MIN_INTERVAL_S: "20"
+        SOM_ROWS: 32
+        SOM_COLS: 32
+        SOM_KFOLD: 3
+        SOM_INIT_TRIALS: 3
+        SOM_NORMALIZATION_MODE: "train_max_100"
+        SOM_ONLINE_CLIP_MODE: "none"
+    - name: "screen_threshold"
+      study_scope: "extended"
+      ablation_block: "decision"
+      hypothesis_id: "H-quantile"
+      interpretation_note: "Higher quantile should reduce alarms and lower TPR."
+      train_mode: "warm_start"
+      env:
+        SOM_SCORING_MODE: "ubl_area"
+        SOM_SMOOTH_K: 5
+        ANOMALY_STREAK: 3
+        ANOMALY_QUANTILE: 0.95
+        SOM_ROWS: 32
+        SOM_COLS: 32
+        SOM_KFOLD: 3
+        SOM_INIT_TRIALS: 3
+        SOM_NORMALIZATION_MODE: "train_max_100"
+        SOM_ONLINE_CLIP_MODE: "none"
+    - name: "screen_training_topology"
+      study_scope: "extended"
+      ablation_block: "training"
+      hypothesis_id: "H-kfold-geometry"
+      interpretation_note: "Reduced K-fold, smaller map; quantile 0.80 for lab alarm rate."
+      train_mode: "fresh_bootstrap"
+      env:
+        SOM_SCORING_MODE: "ubl_area"
+        SOM_SMOOTH_K: 5
+        ANOMALY_STREAK: 3
+        ANOMALY_QUANTILE: 0.80
+        SOM_ROWS: 20
+        SOM_COLS: 20
+        SOM_KFOLD: 1
+        SOM_INIT_TRIALS: 1
+        SOM_NORMALIZATION_MODE: "train_max_100"
+        SOM_ONLINE_CLIP_MODE: "clip_300"
+
+faults:
+  - id: "mem_leak"
+    family: "paper_aligned"
+    proxy_mapping: true
+    ablation_block: "fault"
+    command_on: ["memleak", "on", "{intensity}"]
+    command_off: ["memleak", "off"]
+    intensity: 50
+    intensity_ladder:
+      - level: low
+        value: 20
+      - level: high
+        value: 50
+    duration_ladder_s:
+      - level: short
+        value: 45
+      - level: long
+        value: 120
+  - id: "cpu_hog_like"
+    family: "paper_aligned"
+    proxy_mapping: true
+    ablation_block: "fault"
+    command_on: ["cpu", "on", "{intensity}"]
+    command_off: ["cpu", "off"]
+    intensity: 4
+    intensity_ladder:
+      - level: low
+        value: 2
+      - level: high
+        value: 6
+    duration_ladder_s:
+      - level: short
+        value: 45
+      - level: long
+        value: 120
+  - id: "net_hog_like_latency"
+    family: "paper_aligned"
+    proxy_mapping: true
+    ablation_block: "fault"
+    command_on: ["net", "latency", "{intensity}"]
+    command_off: ["net", "clear"]
+    intensity: 400
+    intensity_ladder:
+      - level: low
+        value: 150
+      - level: high
+        value: 600
+    duration_ladder_s:
+      - level: short
+        value: 45
+      - level: long
+        value: 120
+  - id: "lock_convoy"
+    family: "extended"
+    proxy_mapping: true
+    ablation_block: "fault"
+    command_on: ["lock", "on", "{intensity}"]
+    command_off: ["lock", "off"]
+    intensity: 60
+    intensity_ladder:
+      - level: low
+        value: 20
+      - level: high
+        value: 60
+    duration_ladder_s:
+      - level: short
+        value: 30
+      - level: long
+        value: 90

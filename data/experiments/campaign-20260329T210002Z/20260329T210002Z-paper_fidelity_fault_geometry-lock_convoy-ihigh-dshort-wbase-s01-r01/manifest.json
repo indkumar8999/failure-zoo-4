@@ -1,0 +1,78 @@
+{
+  "ablation_block": "decision",
+  "anomaly_quantile_level": "base",
+  "campaign_id": "20260329T210002Z",
+  "duration_level": "short",
+  "durations_s": {
+    "bootstrap": 240,
+    "cooldown": 90,
+    "fault_window_on_delay": 14,
+    "inject": 30,
+    "warmup": 60
+  },
+  "failed_phase": "",
+  "failure_reason": "",
+  "faithfulness_label": "paper-faithful-with-proxy",
+  "fault_family": "extended",
+  "fault_id": "lock_convoy",
+  "fault_intensity": 60.0,
+  "fault_off": [
+    "lock",
+    "off"
+  ],
+  "fault_on": [
+    "lock",
+    "on",
+    "60"
+  ],
+  "fault_window_on_delay_s": 14,
+  "hypothesis_id": "H-paper-learner-fixed",
+  "intensity_level": "high",
+  "interpretation_note": "Paper-faithful-with-proxy learner; identical across all fault cells.",
+  "learner_env": {
+    "ANOMALY_QUANTILE": "0.85",
+    "ANOMALY_STREAK": "3",
+    "BOOTSTRAP_SAMPLES": "180",
+    "POLL_SEC": "1.0",
+    "SOM_CAUSE_Q": "5",
+    "SOM_COLS": "32",
+    "SOM_INIT_TRIALS": "3",
+    "SOM_KFOLD": "3",
+    "SOM_LR": "0.7",
+    "SOM_NORMALIZATION_MODE": "train_max_100",
+    "SOM_ONLINE_CLIP_MODE": "none",
+    "SOM_ROWS": "32",
+    "SOM_SCORING_MODE": "ubl_area",
+    "SOM_SIGMA": "4.0",
+    "SOM_SMOOTH_K": "5",
+    "UBL_RANDOM_SEED": "1091508854"
+  },
+  "learner_recreated": true,
+  "learner_status_post_bootstrap": {
+    "bootstrap_samples": 180,
+    "bootstrap_target": 180,
+    "model_path": "/data/model/som_model.npz",
+    "threshold": 2.570249346572552,
+    "total_samples": 180,
+    "trained": true
+  },
+  "load_profile": {
+    "enabled": true,
+    "profile": "steady",
+    "rps": 6.0,
+    "work_ms": 20
+  },
+  "loadgen_seed": 1091508854,
+  "matrix_seed": 42,
+  "pending_level": "base",
+  "pending_window_s": 60,
+  "repeat_idx": 1,
+  "run_id": "20260329T210002Z-paper_fidelity_fault_geometry-lock_convoy-ihigh-dshort-wbase-s01-r01",
+  "run_seed": 1091508854,
+  "run_status": "completed",
+  "seed_idx": 1,
+  "started_at": 1774822407.349246,
+  "study_scope": "paper_faithful",
+  "train_mode": "fresh_bootstrap",
+  "variant": "paper_fidelity_fault_geometry"
+}

@@ -1,0 +1,69 @@
+{
+  "ablation_block": "decision",
+  "anomaly_quantile_level": "q70",
+  "campaign_id": "20260329T033841Z",
+  "duration_level": "base",
+  "durations_s": {
+    "bootstrap": 75,
+    "cooldown": 8,
+    "fault_window_on_delay": 14,
+    "inject": 15,
+    "warmup": 5
+  },
+  "failed_phase": "",
+  "failure_reason": "",
+  "faithfulness_label": "extended-beyond-paper",
+  "fault_family": "paper_aligned",
+  "fault_id": "mem_leak",
+  "fault_intensity": 50.0,
+  "fault_off": [
+    "memleak",
+    "off"
+  ],
+  "fault_on": [
+    "memleak",
+    "on",
+    "50"
+  ],
+  "fault_window_on_delay_s": 14,
+  "hypothesis_id": "H-ubl-roc",
+  "intensity_level": "base",
+  "interpretation_note": "Percentile ladder only; compare to UBL paper ROC methodology.",
+  "learner_env": {
+    "ANOMALY_QUANTILE": "0.7",
+    "ANOMALY_STREAK": "2",
+    "BOOTSTRAP_SAMPLES": "30",
+    "POLL_SEC": "2.0",
+    "SOM_COLS": "16",
+    "SOM_INIT_TRIALS": "2",
+    "SOM_KFOLD": "2",
+    "SOM_LR": "0.25",
+    "SOM_NORMALIZATION_MODE": "train_max_100",
+    "SOM_ONLINE_CLIP_MODE": "none",
+    "SOM_ROWS": "16",
+    "SOM_SCORING_MODE": "ubl_area",
+    "SOM_SIGMA": "3.0",
+    "SOM_SMOOTH_K": "3",
+    "UBL_RANDOM_SEED": "783088701"
+  },
+  "learner_recreated": true,
+  "load_profile": {
+    "enabled": true,
+    "profile": "steady",
+    "rps": 4.0,
+    "work_ms": 20
+  },
+  "loadgen_seed": 783088701,
+  "matrix_seed": 42,
+  "pending_level": "base",
+  "pending_window_s": 60,
+  "repeat_idx": 1,
+  "run_id": "20260329T033841Z-ubl_roc_sweep-mem_leak-ibase-dbase-wbase-q70-s01-r01",
+  "run_seed": 783088701,
+  "run_status": "completed",
+  "seed_idx": 1,
+  "started_at": 1774755542.863075,
+  "study_scope": "extended",
+  "train_mode": "fresh_bootstrap",
+  "variant": "ubl_roc_sweep"
+}

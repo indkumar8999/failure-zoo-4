@@ -1,0 +1,89 @@
+1774861693.164649 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0 <0.000041>
+1774861693.165040 mmap(NULL, 16384, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xffffba1f8000 <0.000051>
+1774861693.166145 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 17</proc/17/stat> <0.000044>
+1774861693.166429 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000047>
+1774861693.166637 ioctl(17</proc/17/stat>, TCGETS, 0xffffb2d5e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000030>
+1774861693.166804 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000027>
+1774861693.166953 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000035>
+1774861693.167121 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000029>
+1774861693.167278 read(17</proc/17/stat>, "17 (uvicorn) S 14 1 1 0 -1 4194560 19989 0 0 0 24041 4762 0 0 20 0 8 0 11847356 431718400 19632 18446744073709551615 187651000238080 187651000241032 281474082790640 0 0 0 0 16781312 16386 0 0 0 17 0 0"..., 8192) = 323 <0.000039>
+1774861693.167435 read(17</proc/17/stat>, "", 7869) = 0 <0.000030>
+1774861693.167586 close(17</proc/17/stat>) = 0 <0.000030>
+1774861693.167757 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 17</proc/17/limits> <0.000034>
+1774861693.167914 fstat(17</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000028>
+1774861693.168051 ioctl(17</proc/17/limits>, TCGETS, 0xffffb2d5e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000030>
+1774861693.168190 lseek(17</proc/17/limits>, 0, SEEK_CUR) = 0 <0.000028>
+1774861693.168344 read(17</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.000040>
+1774861693.168519 close(17</proc/17/limits>) = 0 <0.000030>
+1774861693.168660 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 17</proc/17/fd> <0.000032>
+1774861693.168807 fstat(17</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=18, ...}) = 0 <0.000030>
+1774861693.168988 getdents64(17</proc/17/fd>, 0xffff9c0013f0 /* 20 entries */, 32768) = 480 <0.000070>
+1774861693.169192 getdents64(17</proc/17/fd>, 0xffff9c0013f0 /* 0 entries */, 32768) = 0 <0.000028>
+1774861693.169343 close(17</proc/17/fd>) = 0 <0.000030>
+1774861693.170025 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000093>
+1774861703.160587 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 17</proc/17/stat> <0.000193>
+1774861703.162040 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000121>
+1774861703.162664 ioctl(17</proc/17/stat>, TCGETS, 0xffffb2d5e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000121>
+1774861703.163252 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000062>
+1774861703.163627 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000052>
+1774861703.163882 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000050>
+1774861703.164156 read(17</proc/17/stat>, "17 (uvicorn) S 14 1 1 0 -1 4194560 19989 0 0 0 24061 4766 0 0 20 0 8 0 11847356 431718400 19632 18446744073709551615 187651000238080 187651000241032 281474082790640 0 0 0 0 16781312 16386 0 0 0 17 0 0"..., 8192) = 323 <0.000065>
+1774861703.164458 read(17</proc/17/stat>, "", 7869) = 0 <0.000051>
+1774861703.164759 close(17</proc/17/stat>) = 0 <0.000058>
+1774861703.165121 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 17</proc/17/limits> <0.000085>
+1774861703.165493 fstat(17</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000052>
+1774861703.165773 ioctl(17</proc/17/limits>, TCGETS, 0xffffb2d5e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000030>
+1774861703.166002 lseek(17</proc/17/limits>, 0, SEEK_CUR) = 0 <0.000049>
+1774861703.166262 read(17</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.000065>
+1774861703.166692 close(17</proc/17/limits>) = 0 <0.000052>
+1774861703.166941 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 17</proc/17/fd> <0.000057>
+1774861703.167186 fstat(17</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=18, ...}) = 0 <0.000049>
+1774861703.167512 getdents64(17</proc/17/fd>, 0xffff9c001ea0 /* 20 entries */, 32768) = 480 <0.000174>
+1774861703.168011 getdents64(17</proc/17/fd>, 0xffff9c001ea0 /* 0 entries */, 32768) = 0 <0.000092>
+1774861703.168405 close(17</proc/17/fd>) = 0 <0.000093>
+1774861703.169899 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000225>
+1774861708.160873 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 17</proc/17/stat> <0.000125>
+1774861708.161917 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000220>
+1774861708.162621 ioctl(17</proc/17/stat>, TCGETS, 0xffffb2d5e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000098>
+1774861708.163136 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000094>
+1774861708.163576 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000093>
+1774861708.163990 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000108>
+1774861708.164428 read(17</proc/17/stat>, "17 (uvicorn) S 14 1 1 0 -1 4194560 19989 0 0 0 24071 4767 0 0 20 0 8 0 11847356 431718400 19632 18446744073709551615 187651000238080 187651000241032 281474082790640 0 0 0 0 16781312 16386 0 0 0 17 0 0"..., 8192) = 323 <0.000070>
+1774861708.164736 read(17</proc/17/stat>, "", 7869) = 0 <0.000073>
+1774861708.165036 close(17</proc/17/stat>) = 0 <0.000073>
+1774861708.165692 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 17</proc/17/limits> <0.000101>
+1774861708.166139 fstat(17</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000051>
+1774861708.166401 ioctl(17</proc/17/limits>, TCGETS, 0xffffb2d5e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000070>
+1774861708.166746 lseek(17</proc/17/limits>, 0, SEEK_CUR) = 0 <0.000095>
+1774861708.167190 read(17</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.000108>
+1774861708.167658 close(17</proc/17/limits>) = 0 <0.000097>
+1774861708.168083 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 17</proc/17/fd> <0.000102>
+1774861708.168551 fstat(17</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=18, ...}) = 0 <0.000096>
+1774861708.169004 getdents64(17</proc/17/fd>, 0xffff9c002420 /* 20 entries */, 32768) = 480 <0.000129>
+1774861708.169471 getdents64(17</proc/17/fd>, 0xffff9c002420 /* 0 entries */, 32768) = 0 <0.000097>
+1774861708.169931 close(17</proc/17/fd>) = 0 <0.000096>
+1774861708.171194 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000240>
+1774861713.162619 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 17</proc/17/stat> <0.000196>
+1774861713.163504 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000120>
+1774861713.164209 ioctl(17</proc/17/stat>, TCGETS, 0xffffb2d5e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000095>
+1774861713.164800 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000098>
+1774861713.165360 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000094>
+1774861713.165790 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000096>
+1774861713.166231 read(17</proc/17/stat>, "17 (uvicorn) S 14 1 1 0 -1 4194560 19989 0 0 0 24081 4769 0 0 20 0 8 0 11847356 431718400 19632 18446744073709551615 187651000238080 187651000241032 281474082790640 0 0 0 0 16781312 16386 0 0 0 17 0 0"..., 8192) = 323 <0.000113>
+1774861713.166615 read(17</proc/17/stat>, "", 7869) = 0 <0.000080>
+1774861713.167035 close(17</proc/17/stat>) = 0 <0.000074>
+1774861713.167472 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 17</proc/17/limits> <0.000103>
+1774861713.167984 fstat(17</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000056>
+1774861713.168296 ioctl(17</proc/17/limits>, TCGETS, 0xffffb2d5e180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000048>
+1774861713.168560 lseek(17</proc/17/limits>, 0, SEEK_CUR) = 0 <0.000075>
+1774861713.168922 read(17</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.000071>
+1774861713.169233 close(17</proc/17/limits>) = 0 <0.000054>
+1774861713.169481 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 17</proc/17/fd> <0.000085>
+1774861713.169843 fstat(17</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=18, ...}) = 0 <0.000077>
+1774861713.170226 getdents64(17</proc/17/fd>, 0xffff9c0029a0 /* 20 entries */, 32768) = 480 <0.000241>
+1774861713.170768 getdents64(17</proc/17/fd>, 0xffff9c0029a0 /* 0 entries */, 32768) = 0 <0.000034>
+1774861713.171010 close(17</proc/17/fd>) = 0 <0.000064>
+1774861713.173087 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000190>
+1774861723.252411 rt_sigprocmask(SIG_BLOCK, ~[RT_1], NULL, 8) = 0 <0.000160>
+1774861723.253718 exit(0)               = ?
+1774861723.254693 +++ exited with 0 +++

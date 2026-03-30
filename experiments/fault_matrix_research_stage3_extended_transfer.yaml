@@ -1,0 +1,90 @@
+meta:
+  name: "ubl_research_stage3_extended_transfer"
+  description: "Stage 3 transfer test to selected extended fault families with fixed paper-faithful learner."
+  comparator_scope: "pca_knn_not_included"
+  seed: 42
+  seeds: [42]
+  warmup_s: 60
+  bootstrap_s: 240
+  inject_s: 180
+  cooldown_s: 90
+  repeats: 1
+  use_ladders: true
+  pending_window_s: 60
+  fault_window_on_delay_s: 14
+  prediction_target_mode: "injection_onset"
+  study_scope: "paper_faithful"
+  ablation_block: "fault"
+  hypothesis_id: "H-research-stage3-extended-transfer"
+  interpretation_note: "Test transfer of the paper-faithful detector to extended fault families."
+  loadgen_enabled: true
+  loadgen_profile: "steady"
+  loadgen_rps: 6
+  loadgen_ms: 20
+  train_mode: "fresh_bootstrap"
+
+learner:
+  variants:
+    - name: "paper_fidelity_research_anchor"
+      study_scope: "paper_faithful"
+      ablation_block: "decision"
+      hypothesis_id: "H-paper-learner-fixed"
+      interpretation_note: "Paper-faithful-with-proxy learner; only fault family and geometry vary."
+      train_mode: "fresh_bootstrap"
+      env:
+        SOM_SCORING_MODE: "ubl_area"
+        SOM_SMOOTH_K: "5"
+        ANOMALY_STREAK: "3"
+        ANOMALY_QUANTILE: "0.85"
+        POLL_SEC: "1.0"
+        SOM_ROWS: "32"
+        SOM_COLS: "32"
+        SOM_LR: "0.7"
+        SOM_SIGMA: "4.0"
+        SOM_KFOLD: "3"
+        SOM_INIT_TRIALS: "3"
+        SOM_NORMALIZATION_MODE: "train_max_100"
+        SOM_ONLINE_CLIP_MODE: "none"
+        SOM_CAUSE_Q: "5"
+        BOOTSTRAP_SAMPLES: "180"
+
+faults:
+  - id: "lock_convoy"
+    family: "extended"
+    proxy_mapping: true
+    ablation_block: "fault"
+    hypothesis_id: "H-lock-transfer"
+    interpretation_note: "Known strong extended signal; reference for transfer consistency."
+    command_on: ["lock", "on", "{intensity}"]
+    command_off: ["lock", "off"]
+    intensity: 60
+    intensity_ladder:
+      - level: low
+        value: 20
+      - level: high
+        value: 60
+    duration_ladder_s:
+      - level: short
+        value: 30
+      - level: long
+        value: 90
+
+  - id: "disk_fill"
+    family: "extended"
+    proxy_mapping: true
+    ablation_block: "fault"
+    hypothesis_id: "H-disk-transfer"
+    interpretation_note: "Behaviorally distinct extended stressor for transfer validation."
+    command_on: ["disk", "fill", "{intensity}"]
+    command_off: ["disk", "clear"]
+    intensity: 2000
+    intensity_ladder:
+      - level: low
+        value: 500
+      - level: high
+        value: 5000
+    duration_ladder_s:
+      - level: short
+        value: 60
+      - level: long
+        value: 300

@@ -1,0 +1,61 @@
+# Single-run smoke matrix: 1 variant × 1 fault × 1 seed × 1 repeat = 1 planned run.
+# Use: python3 experiments/run_experiments.py --mode full --matrix experiments/fault_matrix_minimal.yaml
+# (~2–6 min wall-clock depending on Docker; phase sleeps sum to warmup+bootstrap+delay+inject+cooldown plus learner/chaos.)
+#
+# Evaluator TP (ubl_metrics): alarm at t1 with fault_window start t2 requires t1 < t2 < t1 + pending_window_s.
+# For mem_leak, chaos starts at inject_start, so metrics move before the labeled fault_window unless we lag the label.
+# fault_window_on_delay_s: chaos is already on during this sleep; ground-truth "fault_window on" is written after it.
+
+meta:
+  name: "ubl_minimal_single_run"
+  description: "One run only — sanity check for stack, chaos, learner, and evaluation pipeline."
+  seed: 42
+  seeds: [42]
+  warmup_s: 5
+  bootstrap_s: 90
+  fault_window_on_delay_s: 14
+  inject_s: 15
+  cooldown_s: 8
+  repeats: 1
+  pending_window_s: 60
+  use_ladders: false
+  study_scope: "extended"
+  comparator_scope: "pca_knn_not_included"
+  loadgen_enabled: true
+  loadgen_profile: "steady"
+  loadgen_rps: 4
+  loadgen_ms: 20
+  train_mode: "fresh_bootstrap"
+
+learner:
+  variants:
+    - name: "minimal_ubl"
+      study_scope: "extended"
+      ablation_block: "decision"
+      hypothesis_id: "H-minimal"
+      interpretation_note: "Fast single-run sanity; reduced bootstrap for wall-clock."
+      train_mode: "fresh_bootstrap"
+      env:
+        SOM_SCORING_MODE: "ubl_area"
+        SOM_SMOOTH_K: "3"
+        ANOMALY_STREAK: "1"
+        ANOMALY_QUANTILE: "0.80"
+        BOOTSTRAP_SAMPLES: "30"
+        POLL_SEC: "2.0"
+        SOM_ROWS: "16"
+        SOM_COLS: "16"
+        SOM_LR: "0.25"
+        SOM_SIGMA: "3.0"
+        SOM_KFOLD: "2"
+        SOM_INIT_TRIALS: "2"
+        SOM_NORMALIZATION_MODE: "train_max_100"
+        SOM_ONLINE_CLIP_MODE: "none"
+
+faults:
+  - id: "mem_leak"
+    family: "paper_aligned"
+    proxy_mapping: true
+    ablation_block: "fault"
+    command_on: ["memleak", "on", "{intensity}"]
+    command_off: ["memleak", "off"]
+    intensity: 50

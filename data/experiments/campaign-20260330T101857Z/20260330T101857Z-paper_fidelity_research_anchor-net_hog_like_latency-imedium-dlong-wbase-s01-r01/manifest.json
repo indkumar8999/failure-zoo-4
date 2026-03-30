@@ -1,0 +1,78 @@
+{
+  "ablation_block": "decision",
+  "anomaly_quantile_level": "base",
+  "campaign_id": "20260330T101857Z",
+  "duration_level": "long",
+  "durations_s": {
+    "bootstrap": 240,
+    "cooldown": 90,
+    "fault_window_on_delay": 14,
+    "inject": 300,
+    "warmup": 60
+  },
+  "failed_phase": "",
+  "failure_reason": "",
+  "faithfulness_label": "paper-faithful-with-proxy",
+  "fault_family": "paper_aligned",
+  "fault_id": "net_hog_like_latency",
+  "fault_intensity": 400.0,
+  "fault_off": [
+    "net",
+    "clear"
+  ],
+  "fault_on": [
+    "net",
+    "latency",
+    "400"
+  ],
+  "fault_window_on_delay_s": 14,
+  "hypothesis_id": "H-paper-learner-fixed",
+  "intensity_level": "medium",
+  "interpretation_note": "Paper-faithful-with-proxy learner; only stage-specific fault geometry changes.",
+  "learner_env": {
+    "ANOMALY_QUANTILE": "0.85",
+    "ANOMALY_STREAK": "3",
+    "BOOTSTRAP_SAMPLES": "180",
+    "POLL_SEC": "1.0",
+    "SOM_CAUSE_Q": "5",
+    "SOM_COLS": "32",
+    "SOM_INIT_TRIALS": "3",
+    "SOM_KFOLD": "3",
+    "SOM_LR": "0.7",
+    "SOM_NORMALIZATION_MODE": "train_max_100",
+    "SOM_ONLINE_CLIP_MODE": "none",
+    "SOM_ROWS": "32",
+    "SOM_SCORING_MODE": "ubl_area",
+    "SOM_SIGMA": "4.0",
+    "SOM_SMOOTH_K": "5",
+    "UBL_RANDOM_SEED": "374544885"
+  },
+  "learner_recreated": true,
+  "learner_status_post_bootstrap": {
+    "bootstrap_samples": 180,
+    "bootstrap_target": 180,
+    "model_path": "/data/model/som_model.npz",
+    "threshold": 3.497081288187491,
+    "total_samples": 181,
+    "trained": true
+  },
+  "load_profile": {
+    "enabled": true,
+    "profile": "steady",
+    "rps": 6.0,
+    "work_ms": 20
+  },
+  "loadgen_seed": 374544885,
+  "matrix_seed": 42,
+  "pending_level": "base",
+  "pending_window_s": 60,
+  "repeat_idx": 1,
+  "run_id": "20260330T101857Z-paper_fidelity_research_anchor-net_hog_like_latency-imedium-dlong-wbase-s01-r01",
+  "run_seed": 374544885,
+  "run_status": "completed",
+  "seed_idx": 1,
+  "started_at": 1774876475.912321,
+  "study_scope": "paper_faithful",
+  "train_mode": "fresh_bootstrap",
+  "variant": "paper_fidelity_research_anchor"
+}

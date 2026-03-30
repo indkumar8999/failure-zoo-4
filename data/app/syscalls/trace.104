@@ -1,0 +1,202 @@
+1774891959.526380 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0 <0.000049>
+1774891960.006272 mmap(NULL, 16384, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xffffb6da4000 <0.000224>
+1774891961.010919 newfstatat(AT_FDCWD</srv>, "/data", {st_mode=S_IFDIR|0755, st_size=224, ...}, 0) = 0 <0.000720>
+1774891961.112844 mkdirat(AT_FDCWD</srv>, "/data/events", 0777) = -1 EEXIST (File exists) <0.000109>
+1774891961.120768 newfstatat(AT_FDCWD</srv>, "/data/events", {st_mode=S_IFDIR|0755, st_size=96, ...}, 0) = 0 <0.000184>
+1774891961.126178 openat(AT_FDCWD</srv>, "/data/events/chaos_events.jsonl", O_WRONLY|O_CREAT|O_APPEND|O_CLOEXEC, 0666) = 18</data/events/chaos_events.jsonl> <0.000265>
+1774891961.127582 fstat(18</data/events/chaos_events.jsonl>, {st_mode=S_IFREG|0644, st_size=920284, ...}) = 0 <0.000028>
+1774891961.130221 lseek(18</data/events/chaos_events.jsonl>, 0, SEEK_END) = 920284 <0.000068>
+1774891961.133663 ioctl(18</data/events/chaos_events.jsonl>, TCGETS, 0xfffe8fffe180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000041>
+1774891961.135258 lseek(18</data/events/chaos_events.jsonl>, 0, SEEK_CUR) = 920284 <0.000046>
+1774891961.136718 lseek(18</data/events/chaos_events.jsonl>, 0, SEEK_CUR) = 920284 <0.000031>
+1774891961.137847 write(18</data/events/chaos_events.jsonl>, "{\"type\":\"chaos\",\"mode\":\"lock_convoy\",\"enabled\":false,\"ts\":1774891961.1260765}\n", 78) = 78 <0.000430>
+1774891961.139036 close(18</data/events/chaos_events.jsonl>) = 0 <0.000087>
+1774891961.169396 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000049>
+1774891961.414307 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 18</proc/17/stat> <0.000309>
+1774891961.415482 fstat(18</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000087>
+1774891961.417324 ioctl(18</proc/17/stat>, TCGETS, 0xfffe8fffe180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000170>
+1774891961.417824 lseek(18</proc/17/stat>, 0, SEEK_CUR) = 0 <0.001217>
+1774891961.421673 lseek(18</proc/17/stat>, 0, SEEK_CUR) = 0 <0.001096>
+1774891961.423412 fstat(18</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000137>
+1774891961.424009 read(18</proc/17/stat>, "17 (uvicorn) R 14 1 1 0 -1 4194560 20134 0 0 0 36551 52166 0 0 20 0 12 0 472271 4433477632 19865 18446744073709551615 187650394357760 187650394360712 281474795210400 0 0 0 0 16781312 16386 0 0 0 17 6 "..., 8192) = 324 <0.000098>
+1774891961.434575 read(18</proc/17/stat>, "", 7868) = 0 <0.000087>
+1774891961.435235 close(18</proc/17/stat>) = 0 <0.000023>
+1774891961.436077 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 18</proc/17/limits> <0.000149>
+1774891961.439909 fstat(18</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000082>
+1774891961.444107 ioctl(18</proc/17/limits>, TCGETS, 0xfffe8fffe180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000062>
+1774891961.445776 lseek(18</proc/17/limits>, 0, SEEK_CUR) = 0 <0.000053>
+1774891961.448160 read(18</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.000082>
+1774891961.449453 close(18</proc/17/limits>) = 0 <0.000121>
+1774891961.450885 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 18</proc/17/fd> <0.000061>
+1774891961.451186 fstat(18</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=20, ...}) = 0 <0.000116>
+1774891961.453896 getdents64(18</proc/17/fd>, 0xffff9c017c90 /* 22 entries */, 32768) = 528 <0.000053>
+1774891961.464439 getdents64(18</proc/17/fd>, 0xffff9c017c90 /* 0 entries */, 32768) = 0 <0.000065>
+1774891961.465425 close(18</proc/17/fd>) = 0 <0.000081>
+1774891961.474184 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 18</proc/17/stat> <0.000105>
+1774891961.474746 fstat(18</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000052>
+1774891961.475493 ioctl(18</proc/17/stat>, TCGETS, 0xfffe8fffe180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000062>
+1774891961.477035 lseek(18</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000050>
+1774891961.477809 lseek(18</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000108>
+1774891961.478063 fstat(18</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000043>
+1774891961.479653 read(18</proc/17/stat>, "17 (uvicorn) S 14 1 1 0 -1 4194560 20134 0 0 0 36552 52167 0 0 20 0 12 0 472271 4433477632 19865 18446744073709551615 187650394357760 187650394360712 281474795210400 0 0 0 0 16781312 16386 0 0 0 17 7 "..., 8192) = 324 <0.000060>
+1774891961.480911 read(18</proc/17/stat>, "", 7868) = 0 <0.000061>
+1774891961.481879 close(18</proc/17/stat>) = 0 <0.000061>
+1774891961.482832 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 18</proc/17/limits> <0.000072>
+1774891961.483476 fstat(18</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000056>
+1774891961.483714 ioctl(18</proc/17/limits>, TCGETS, 0xfffe8fffe180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000141>
+1774891961.484386 lseek(18</proc/17/limits>, 0, SEEK_CUR) = 0 <0.000057>
+1774891961.486774 read(18</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.000117>
+1774891961.488850 close(18</proc/17/limits>) = 0 <0.000774>
+1774891961.490644 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 18</proc/17/fd> <0.000130>
+1774891961.490953 fstat(18</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=19, ...}) = 0 <0.000057>
+1774891961.492852 getdents64(18</proc/17/fd>, 0xffff9c017c90 /* 22 entries */, 32768) = 528 <0.000058>
+1774891961.496038 getdents64(18</proc/17/fd>, 0xffff9c017c90 /* 0 entries */, 32768) = 0 <0.000057>
+1774891961.496924 close(18</proc/17/fd>) = 0 <0.000070>
+1774891961.498052 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000048>
+1774891961.606245 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 17</proc/17/stat> <0.000039>
+1774891961.607330 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000032>
+1774891961.608557 ioctl(17</proc/17/stat>, TCGETS, 0xfffe8fffe180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000069>
+1774891961.608814 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.001086>
+1774891961.610764 lseek(17</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000090>
+1774891961.611015 fstat(17</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000077>
+1774891961.611288 read(17</proc/17/stat>, "17 (uvicorn) R 14 1 1 0 -1 4194560 20135 0 0 0 36554 52169 0 0 20 0 12 0 472271 4433477632 19865 18446744073709551615 187650394357760 187650394360712 281474795210400 0 0 0 0 16781312 16386 0 0 0 17 7 "..., 8192) = 324 <0.000059>
+1774891961.612716 read(17</proc/17/stat>, "", 7868) = 0 <0.000031>
+1774891961.614039 close(17</proc/17/stat>) = 0 <0.000133>
+1774891961.615608 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 17</proc/17/limits> <0.000076>
+1774891961.615871 fstat(17</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000739>
+1774891961.617308 ioctl(17</proc/17/limits>, TCGETS, 0xfffe8fffe180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000118>
+1774891961.617585 lseek(17</proc/17/limits>, 0, SEEK_CUR) = 0 <0.000048>
+1774891961.619221 read(17</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.000054>
+1774891961.620733 close(17</proc/17/limits>) = 0 <0.000055>
+1774891961.622170 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 15</proc/17/fd> <0.000052>
+1774891961.622390 fstat(15</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=19, ...}) = 0 <0.000701>
+1774891961.623773 getdents64(15</proc/17/fd>, 0xffff9c017c90 /* 21 entries */, 32768) = 504 <0.000138>
+1774891961.624153 getdents64(15</proc/17/fd>, 0xffff9c017c90 /* 0 entries */, 32768) = 0 <0.000062>
+1774891961.624370 close(15</proc/17/fd>) = 0 <0.000044>
+1774891961.626206 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000049>
+1774891961.676664 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 18</proc/17/stat> <0.000039>
+1774891961.677476 fstat(18</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000032>
+1774891961.678492 ioctl(18</proc/17/stat>, TCGETS, 0xfffe8fffe180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000057>
+1774891961.678721 lseek(18</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000821>
+1774891961.680488 lseek(18</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000034>
+1774891961.680765 fstat(18</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000071>
+1774891961.681050 read(18</proc/17/stat>, "17 (uvicorn) t 14 1 1 0 -1 4194560 20140 0 0 0 36555 52170 0 0 20 0 12 0 472271 4433477632 19865 18446744073709551615 187650394357760 187650394360712 281474795210400 0 0 0 0 16781312 16386 0 0 0 17 7 "..., 8192) = 324 <0.000098>
+1774891961.682628 read(18</proc/17/stat>, "", 7868) = 0 <0.000044>
+1774891961.684814 close(18</proc/17/stat>) = 0 <0.000098>
+1774891961.686620 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 15</proc/17/limits> <0.000107>
+1774891961.689259 fstat(15</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000728>
+1774891961.691325 ioctl(15</proc/17/limits>, TCGETS, 0xfffe8fffe180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000032>
+1774891961.692767 lseek(15</proc/17/limits>, 0, SEEK_CUR) = 0 <0.000032>
+1774891961.693902 read(15</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.000039>
+1774891961.694750 close(15</proc/17/limits>) = 0 <0.000062>
+1774891961.694943 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 17</proc/17/fd> <0.000717>
+1774891961.695822 fstat(17</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=19, ...}) = 0 <0.000054>
+1774891961.696009 getdents64(17</proc/17/fd>, 0xffff9c017c90 /* 21 entries */, 32768) = 504 <0.000049>
+1774891961.696212 getdents64(17</proc/17/fd>, 0xffff9c017c90 /* 0 entries */, 32768) = 0 <0.000047>
+1774891961.696384 close(17</proc/17/fd>) = 0 <0.000044>
+1774891961.698048 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000033>
+1774891961.741891 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 19</proc/17/stat> <0.000082>
+1774891961.743168 fstat(19</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000055>
+1774891961.743375 ioctl(19</proc/17/stat>, TCGETS, 0xfffe8fffe180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000050>
+1774891961.743582 lseek(19</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000062>
+1774891961.745838 lseek(19</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000093>
+1774891961.746143 fstat(19</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000068>
+1774891961.746471 read(19</proc/17/stat>, "17 (uvicorn) t 14 1 1 0 -1 4194560 20140 0 0 0 36556 52171 0 0 20 0 12 0 472271 4433477632 19865 18446744073709551615 187650394357760 187650394360712 281474795210400 0 0 0 0 16781312 16386 0 0 0 17 1 "..., 8192) = 324 <0.000101>
+1774891961.748281 read(19</proc/17/stat>, "", 7868) = 0 <0.000059>
+1774891961.749666 close(19</proc/17/stat>) = 0 <0.000050>
+1774891961.750385 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 19</proc/17/limits> <0.000072>
+1774891961.752348 fstat(19</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000048>
+1774891961.753739 ioctl(19</proc/17/limits>, TCGETS, 0xfffe8fffe180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000046>
+1774891961.755115 lseek(19</proc/17/limits>, 0, SEEK_CUR) = 0 <0.000051>
+1774891961.755297 read(19</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.000650>
+1774891961.756625 close(19</proc/17/limits>) = 0 <0.000077>
+1774891961.756833 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 18</proc/17/fd> <0.000048>
+1774891961.757006 fstat(18</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=19, ...}) = 0 <0.000034>
+1774891961.758261 getdents64(18</proc/17/fd>, 0xffff9c017c90 /* 21 entries */, 32768) = 504 <0.000052>
+1774891961.760095 getdents64(18</proc/17/fd>, 0xffff9c017c90 /* 0 entries */, 32768) = 0 <0.000050>
+1774891961.760289 close(18</proc/17/fd>) = 0 <0.000638>
+1774891961.761800 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000033>
+1774891961.769053 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 18</proc/17/stat> <0.000111>
+1774891961.769778 fstat(18</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000055>
+1774891961.770665 ioctl(18</proc/17/stat>, TCGETS, 0xfffe8fffe180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000063>
+1774891961.770895 lseek(18</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000625>
+1774891961.772196 lseek(18</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000105>
+1774891961.772467 fstat(18</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000051>
+1774891961.774617 read(18</proc/17/stat>, "17 (uvicorn) R 14 1 1 0 -1 4194560 20140 0 0 0 36557 52171 0 0 20 0 12 0 472271 4433477632 19865 18446744073709551615 187650394357760 187650394360712 281474795210400 0 0 0 0 16781312 16386 0 0 0 17 6 "..., 8192) = 324 <0.000064>
+1774891961.776020 read(18</proc/17/stat>, "", 7868) = 0 <0.000118>
+1774891961.777081 close(18</proc/17/stat>) = 0 <0.000062>
+1774891961.777297 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 18</proc/17/limits> <0.000653>
+1774891961.778609 fstat(18</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000120>
+1774891961.778899 ioctl(18</proc/17/limits>, TCGETS, 0xfffe8fffe180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000062>
+1774891961.779128 lseek(18</proc/17/limits>, 0, SEEK_CUR) = 0 <0.000047>
+1774891961.780596 read(18</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.000047>
+1774891961.782020 close(18</proc/17/limits>) = 0 <0.000046>
+1774891961.782821 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 18</proc/17/fd> <0.000093>
+1774891961.783210 fstat(18</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=19, ...}) = 0 <0.000059>
+1774891961.785930 getdents64(18</proc/17/fd>, 0xffff9c017c90 /* 22 entries */, 32768) = 528 <0.000065>
+1774891961.798367 getdents64(18</proc/17/fd>, 0xffff9c017c90 /* 0 entries */, 32768) = 0 <0.000061>
+1774891961.799163 close(18</proc/17/fd>) = 0 <0.000105>
+1774891961.809315 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 18</proc/17/stat> <0.000037>
+1774891961.810153 fstat(18</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000110>
+1774891961.811171 ioctl(18</proc/17/stat>, TCGETS, 0xfffe8fffe180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000161>
+1774891961.811670 lseek(18</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000662>
+1774891961.813202 lseek(18</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000106>
+1774891961.813471 fstat(18</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000048>
+1774891961.815092 read(18</proc/17/stat>, "17 (uvicorn) S 14 1 1 0 -1 4194560 20140 0 0 0 36557 52172 0 0 20 0 12 0 472271 4433477632 19865 18446744073709551615 187650394357760 187650394360712 281474795210400 0 0 0 0 16781312 16386 0 0 0 17 3 "..., 8192) = 324 <0.000064>
+1774891961.816801 read(18</proc/17/stat>, "", 7868) = 0 <0.000109>
+1774891961.817808 close(18</proc/17/stat>) = 0 <0.000058>
+1774891961.818010 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 18</proc/17/limits> <0.000617>
+1774891961.819335 fstat(18</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000074>
+1774891961.819574 ioctl(18</proc/17/limits>, TCGETS, 0xfffe8fffe180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000059>
+1774891961.821222 lseek(18</proc/17/limits>, 0, SEEK_CUR) = 0 <0.000049>
+1774891961.822371 read(18</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.000059>
+1774891961.824349 close(18</proc/17/limits>) = 0 <0.000614>
+1774891961.826631 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 19</proc/17/fd> <0.000060>
+1774891961.826853 fstat(19</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=20, ...}) = 0 <0.000061>
+1774891961.828302 getdents64(19</proc/17/fd>, 0xffff9c017c90 /* 22 entries */, 32768) = 528 <0.000073>
+1774891961.837959 getdents64(19</proc/17/fd>, 0xffff9c017c90 /* 0 entries */, 32768) = 0 <0.000062>
+1774891961.838719 close(19</proc/17/fd>) = 0 <0.000033>
+1774891961.917270 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000032>
+1774891961.952172 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000050>
+1774891961.999696 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000081>
+1774891962.038650 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000059>
+1774891962.049506 newfstatat(AT_FDCWD</srv>, "/data", {st_mode=S_IFDIR|0755, st_size=224, ...}, 0) = 0 <0.000036>
+1774891962.050102 mkdirat(AT_FDCWD</srv>, "/data/events", 0777) = -1 EEXIST (File exists) <0.000124>
+1774891962.051142 newfstatat(AT_FDCWD</srv>, "/data/events", {st_mode=S_IFDIR|0755, st_size=96, ...}, 0) = 0 <0.000630>
+1774891962.052811 openat(AT_FDCWD</srv>, "/data/events/chaos_events.jsonl", O_WRONLY|O_CREAT|O_APPEND|O_CLOEXEC, 0666) = 17</data/events/chaos_events.jsonl> <0.000254>
+1774891962.054268 fstat(17</data/events/chaos_events.jsonl>, {st_mode=S_IFREG|0644, st_size=921604, ...}) = 0 <0.000052>
+1774891962.055637 lseek(17</data/events/chaos_events.jsonl>, 0, SEEK_END) = 921604 <0.000118>
+1774891962.057896 ioctl(17</data/events/chaos_events.jsonl>, TCGETS, 0xfffe8fffe180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000116>
+1774891962.059628 lseek(17</data/events/chaos_events.jsonl>, 0, SEEK_CUR) = 921604 <0.000056>
+1774891962.061642 lseek(17</data/events/chaos_events.jsonl>, 0, SEEK_CUR) = 921604 <0.000060>
+1774891962.062113 write(17</data/events/chaos_events.jsonl>, "{\"type\":\"chaos\",\"mode\":\"lock_convoy\",\"enabled\":false,\"ts\":1774891962.0526533}\n", 78) = 78 <0.000119>
+1774891962.062384 close(17</data/events/chaos_events.jsonl>) = 0 <0.000134>
+1774891962.139677 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000048>
+1774891962.199989 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000041>
+1774891962.231031 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000032>
+1774891962.239016 openat(AT_FDCWD</srv>, "/proc/self/stat", O_RDONLY|O_CLOEXEC) = 19</proc/17/stat> <0.000052>
+1774891962.240784 fstat(19</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000036>
+1774891962.243549 ioctl(19</proc/17/stat>, TCGETS, 0xfffe8fffe180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000038>
+1774891962.245029 lseek(19</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000081>
+1774891962.245253 lseek(19</proc/17/stat>, 0, SEEK_CUR) = 0 <0.000048>
+1774891962.245429 fstat(19</proc/17/stat>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000033>
+1774891962.246579 read(19</proc/17/stat>, "17 (uvicorn) S 14 1 1 0 -1 4194560 20146 0 0 0 36567 52179 0 0 20 0 12 0 472271 4433477632 19865 18446744073709551615 187650394357760 187650394360712 281474795210400 0 0 0 0 16781312 16386 0 0 0 17 3 "..., 8192) = 324 <0.000033>
+1774891962.247813 read(19</proc/17/stat>, "", 7868) = 0 <0.000031>
+1774891962.248610 close(19</proc/17/stat>) = 0 <0.000051>
+1774891962.248804 openat(AT_FDCWD</srv>, "/proc/self/limits", O_RDONLY|O_CLOEXEC) = 18</proc/17/limits> <0.000652>
+1774891962.250361 fstat(18</proc/17/limits>, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0 <0.000080>
+1774891962.250596 ioctl(18</proc/17/limits>, TCGETS, 0xfffe8fffe180) = -1 ENOTTY (Inappropriate ioctl for device) <0.000058>
+1774891962.250801 lseek(18</proc/17/limits>, 0, SEEK_CUR) = 0 <0.000031>
+1774891962.252052 read(18</proc/17/limits>, "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited       "..., 1024) = 1024 <0.000029>
+1774891962.253306 close(18</proc/17/limits>) = 0 <0.000033>
+1774891962.254079 openat(AT_FDCWD</srv>, "/proc/self/fd", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 17</proc/17/fd> <0.000058>
+1774891962.254266 fstat(17</proc/17/fd>, {st_mode=S_IFDIR|0500, st_size=19, ...}) = 0 <0.000673>
+1774891962.256042 getdents64(17</proc/17/fd>, 0xffff9c017c90 /* 21 entries */, 32768) = 504 <0.000078>
+1774891962.256315 getdents64(17</proc/17/fd>, 0xffff9c017c90 /* 0 entries */, 32768) = 0 <0.000089>
+1774891962.256615 close(17</proc/17/fd>) = 0 <0.000052>
+1774891962.258433 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000043>
+1774891962.290271 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000078>
+1774891962.323993 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000058>
+1774891972.413161 rt_sigprocmask(SIG_BLOCK, ~[RT_1], NULL, 8) = 0 <0.000075>
+1774891972.415360 exit(0)               = ?
+1774891972.415621 +++ exited with 0 +++

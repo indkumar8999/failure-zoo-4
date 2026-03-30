@@ -1,0 +1,236 @@
+{
+  "faults": [
+    {
+      "ablation_block": "fault",
+      "command_off": [
+        "memleak",
+        "off"
+      ],
+      "command_on": [
+        "memleak",
+        "on",
+        "{intensity}"
+      ],
+      "duration_ladder_s": [
+        {
+          "level": "short",
+          "value": 60
+        },
+        {
+          "level": "medium",
+          "value": 180
+        },
+        {
+          "level": "long",
+          "value": 300
+        }
+      ],
+      "family": "paper_aligned",
+      "id": "mem_leak",
+      "intensity": 50,
+      "intensity_ladder": [
+        {
+          "level": "low",
+          "value": 20
+        },
+        {
+          "level": "medium",
+          "value": 50
+        },
+        {
+          "level": "high",
+          "value": 80
+        }
+      ],
+      "proxy_mapping": true
+    },
+    {
+      "ablation_block": "fault",
+      "command_off": [
+        "cpu",
+        "off"
+      ],
+      "command_on": [
+        "cpu",
+        "on",
+        "{intensity}"
+      ],
+      "duration_ladder_s": [
+        {
+          "level": "short",
+          "value": 60
+        },
+        {
+          "level": "medium",
+          "value": 180
+        },
+        {
+          "level": "long",
+          "value": 300
+        }
+      ],
+      "family": "paper_aligned",
+      "id": "cpu_hog_like",
+      "intensity": 4,
+      "intensity_ladder": [
+        {
+          "level": "low",
+          "value": 2
+        },
+        {
+          "level": "medium",
+          "value": 4
+        },
+        {
+          "level": "high",
+          "value": 8
+        }
+      ],
+      "proxy_mapping": true
+    },
+    {
+      "ablation_block": "fault",
+      "command_off": [
+        "net",
+        "clear"
+      ],
+      "command_on": [
+        "net",
+        "latency",
+        "{intensity}"
+      ],
+      "duration_ladder_s": [
+        {
+          "level": "short",
+          "value": 60
+        },
+        {
+          "level": "medium",
+          "value": 180
+        },
+        {
+          "level": "long",
+          "value": 300
+        }
+      ],
+      "family": "paper_aligned",
+      "id": "net_hog_like_latency",
+      "intensity": 400,
+      "intensity_ladder": [
+        {
+          "level": "low",
+          "value": 150
+        },
+        {
+          "level": "medium",
+          "value": 400
+        },
+        {
+          "level": "high",
+          "value": 700
+        }
+      ],
+      "proxy_mapping": true
+    },
+    {
+      "ablation_block": "fault",
+      "command_off": [
+        "lock",
+        "off"
+      ],
+      "command_on": [
+        "lock",
+        "on",
+        "{intensity}"
+      ],
+      "duration_ladder_s": [
+        {
+          "level": "short",
+          "value": 30
+        },
+        {
+          "level": "medium",
+          "value": 60
+        },
+        {
+          "level": "long",
+          "value": 90
+        }
+      ],
+      "family": "extended",
+      "id": "lock_convoy",
+      "intensity": 60,
+      "intensity_ladder": [
+        {
+          "level": "low",
+          "value": 20
+        },
+        {
+          "level": "medium",
+          "value": 40
+        },
+        {
+          "level": "high",
+          "value": 60
+        }
+      ],
+      "proxy_mapping": true
+    }
+  ],
+  "learner": {
+    "variants": [
+      {
+        "ablation_block": "decision",
+        "env": {
+          "ANOMALY_QUANTILE": "0.85",
+          "ANOMALY_STREAK": "3",
+          "BOOTSTRAP_SAMPLES": "180",
+          "POLL_SEC": "1.0",
+          "SOM_CAUSE_Q": "5",
+          "SOM_COLS": "32",
+          "SOM_INIT_TRIALS": "3",
+          "SOM_KFOLD": "3",
+          "SOM_LR": "0.7",
+          "SOM_NORMALIZATION_MODE": "train_max_100",
+          "SOM_ONLINE_CLIP_MODE": "none",
+          "SOM_ROWS": "32",
+          "SOM_SCORING_MODE": "ubl_area",
+          "SOM_SIGMA": "4.0",
+          "SOM_SMOOTH_K": "5"
+        },
+        "hypothesis_id": "H-paper-learner-fixed",
+        "interpretation_note": "Paper-faithful-with-proxy learner; identical across all fault cells.",
+        "name": "paper_fidelity_fault_geometry",
+        "study_scope": "paper_faithful",
+        "train_mode": "fresh_bootstrap"
+      }
+    ]
+  },
+  "meta": {
+    "ablation_block": "fault",
+    "bootstrap_s": 240,
+    "comparator_scope": "pca_knn_not_included",
+    "cooldown_s": 90,
+    "description": "Ablate fault family, intensity, and inject duration; learner fixed to paper-faithful UBL profile.",
+    "fault_window_on_delay_s": 14,
+    "hypothesis_id": "H-fault-geometry",
+    "inject_s": 180,
+    "interpretation_note": "Fault intensity/duration sweep; detector frozen to paper-faithful SOM/UBL settings.",
+    "loadgen_enabled": true,
+    "loadgen_ms": 20,
+    "loadgen_profile": "steady",
+    "loadgen_rps": 6,
+    "name": "ubl_fault_geometry_paper_learner_v1",
+    "pending_window_s": 60,
+    "prediction_target_mode": "injection_onset",
+    "repeats": 1,
+    "seed": 42,
+    "seeds": [
+      42
+    ],
+    "study_scope": "paper_faithful",
+    "train_mode": "fresh_bootstrap",
+    "use_ladders": true,
+    "warmup_s": 60
+  }
+}

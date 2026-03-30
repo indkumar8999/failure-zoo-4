@@ -1,0 +1,69 @@
+{
+  "ablation_block": "training",
+  "anomaly_quantile_level": "base",
+  "campaign_id": "20260329T052721Z",
+  "duration_level": "base",
+  "durations_s": {
+    "bootstrap": 120,
+    "cooldown": 25,
+    "fault_window_on_delay": 0,
+    "inject": 60,
+    "warmup": 20
+  },
+  "failed_phase": "",
+  "failure_reason": "",
+  "faithfulness_label": "extended-beyond-paper",
+  "fault_family": "paper_aligned",
+  "fault_id": "mem_leak",
+  "fault_intensity": 50.0,
+  "fault_off": [
+    "memleak",
+    "off"
+  ],
+  "fault_on": [
+    "memleak",
+    "on",
+    "50"
+  ],
+  "fault_window_on_delay_s": 0,
+  "hypothesis_id": "H-kfold-geometry",
+  "intensity_level": "base",
+  "interpretation_note": "Reduced K-fold, smaller map, clip; quantile 0.80 to improve pre-fault alarm rate in lab.",
+  "learner_env": {
+    "ANOMALY_QUANTILE": "0.8",
+    "ANOMALY_STREAK": "3",
+    "BOOTSTRAP_SAMPLES": "80",
+    "POLL_SEC": "1.0",
+    "SOM_COLS": "20",
+    "SOM_INIT_TRIALS": "1",
+    "SOM_KFOLD": "1",
+    "SOM_LR": "0.7",
+    "SOM_NORMALIZATION_MODE": "train_max_100",
+    "SOM_ONLINE_CLIP_MODE": "clip_300",
+    "SOM_ROWS": "20",
+    "SOM_SCORING_MODE": "ubl_area",
+    "SOM_SIGMA": "4.0",
+    "SOM_SMOOTH_K": "5",
+    "UBL_RANDOM_SEED": "2290006343"
+  },
+  "learner_recreated": true,
+  "load_profile": {
+    "enabled": true,
+    "profile": "mixed",
+    "rps": 5.0,
+    "work_ms": 18
+  },
+  "loadgen_seed": 2290006343,
+  "matrix_seed": 42,
+  "pending_level": "base",
+  "pending_window_s": 90,
+  "repeat_idx": 8,
+  "run_id": "20260329T052721Z-screen_training_topology-mem_leak-ibase-dbase-wbase-s01-r08",
+  "run_seed": 2290006343,
+  "run_status": "completed",
+  "seed_idx": 1,
+  "started_at": 1774779617.895273,
+  "study_scope": "extended",
+  "train_mode": "fresh_bootstrap",
+  "variant": "screen_training_topology"
+}

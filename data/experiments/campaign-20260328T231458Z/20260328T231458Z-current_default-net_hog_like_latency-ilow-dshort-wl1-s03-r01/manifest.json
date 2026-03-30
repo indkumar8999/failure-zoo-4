@@ -1,0 +1,67 @@
+{
+  "ablation_block": "decision",
+  "campaign_id": "20260328T231458Z",
+  "duration_level": "short",
+  "durations_s": {
+    "bootstrap": 15,
+    "cooldown": 10,
+    "fault_window_on_delay": 0,
+    "inject": 60,
+    "warmup": 10
+  },
+  "failed_phase": "execution",
+  "failure_reason": "Command '['docker', 'compose', 'up', '-d', '--build', 'learner']' returned non-zero exit status 1.",
+  "faithfulness_label": "extended-beyond-paper",
+  "fault_family": "paper_aligned",
+  "fault_id": "net_hog_like_latency",
+  "fault_intensity": 150.0,
+  "fault_off": [
+    "net",
+    "clear"
+  ],
+  "fault_on": [
+    "net",
+    "latency",
+    "150"
+  ],
+  "fault_window_on_delay_s": 0,
+  "hypothesis_id": "H-baseline-comparison",
+  "intensity_level": "low",
+  "interpretation_note": "Current baseline mode for comparative ablations.",
+  "learner_env": {
+    "ANOMALY_QUANTILE": "0.99",
+    "ANOMALY_STREAK": "1",
+    "BOOTSTRAP_SAMPLES": "15",
+    "POLL_SEC": "1.0",
+    "SOM_CAUSE_Q": "5",
+    "SOM_COLS": "20",
+    "SOM_INIT_TRIALS": "1",
+    "SOM_KFOLD": "1",
+    "SOM_NORMALIZATION_MODE": "train_max_100",
+    "SOM_ONLINE_CLIP_MODE": "clip_300",
+    "SOM_ROWS": "20",
+    "SOM_SCORING_MODE": "bmu",
+    "SOM_SMOOTH_K": "1",
+    "UBL_RANDOM_SEED": "2633602661"
+  },
+  "learner_recreated": true,
+  "load_profile": {
+    "enabled": true,
+    "profile": "mixed",
+    "rps": 6.0,
+    "work_ms": 20
+  },
+  "loadgen_seed": 2633602661,
+  "matrix_seed": 42,
+  "pending_level": "l1",
+  "pending_window_s": 45,
+  "repeat_idx": 1,
+  "run_id": "20260328T231458Z-current_default-net_hog_like_latency-ilow-dshort-wl1-s03-r01",
+  "run_seed": 2633602661,
+  "run_status": "failed",
+  "seed_idx": 3,
+  "started_at": 1774743226.210315,
+  "study_scope": "extended",
+  "train_mode": "warm_start",
+  "variant": "current_default"
+}

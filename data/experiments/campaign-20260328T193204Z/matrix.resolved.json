@@ -1,0 +1,86 @@
+{
+  "faults": [
+    {
+      "command_off": [
+        "memleak",
+        "off"
+      ],
+      "command_on": [
+        "memleak",
+        "on",
+        "50"
+      ],
+      "family": "paper_aligned",
+      "id": "mem_leak",
+      "intensity": 50
+    },
+    {
+      "command_off": [
+        "cpu",
+        "off"
+      ],
+      "command_on": [
+        "cpu",
+        "on",
+        "4"
+      ],
+      "family": "paper_aligned",
+      "id": "cpu_hog_like",
+      "intensity": 4
+    },
+    {
+      "command_off": [
+        "net",
+        "clear"
+      ],
+      "command_on": [
+        "net",
+        "latency",
+        "400"
+      ],
+      "family": "paper_aligned",
+      "id": "net_hog_like_latency",
+      "intensity": 400
+    }
+  ],
+  "learner": {
+    "baseline_env": {
+      "ANOMALY_QUANTILE": 0.85,
+      "ANOMALY_STREAK": 3,
+      "SOM_SCORING_MODE": "ubl_area",
+      "SOM_SMOOTH_K": 5
+    },
+    "variants": [
+      {
+        "env": {
+          "ANOMALY_QUANTILE": 0.85,
+          "ANOMALY_STREAK": 3,
+          "SOM_SCORING_MODE": "ubl_area",
+          "SOM_SMOOTH_K": 5
+        },
+        "name": "paper_fidelity"
+      },
+      {
+        "env": {
+          "ANOMALY_QUANTILE": 0.99,
+          "ANOMALY_STREAK": 1,
+          "SOM_SCORING_MODE": "bmu",
+          "SOM_SMOOTH_K": 1
+        },
+        "name": "current_default"
+      }
+    ]
+  },
+  "meta": {
+    "baseline_slo_window_s": 30,
+    "bootstrap_s": 30,
+    "cooldown_s": 20,
+    "description": "Paper-aligned and extended fault campaigns for UBL-style evaluation.",
+    "inject_s": 20,
+    "name": "ubl_fault_matrix_v1",
+    "pending_window_s": 60,
+    "repeats": 1,
+    "seed": 42,
+    "warmup_s": 20
+  }
+}

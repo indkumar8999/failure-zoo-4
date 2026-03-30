@@ -1,0 +1,147 @@
+# Bounded Stage-1 ablation entry point (see experiments/ablation_design.md).
+# Same variant hypotheses as fault_matrix_screening.yaml, but:
+#   - two paper-aligned faults only (mem_leak, cpu_hog_like)
+#   - no intensity/duration ladders (single operating point each)
+#   - one seed, 10 repeats for meaningful rollups (paired tests / CIs)
+# Tuning vs bare screening: longer bootstrap+inject, wider pending window W, balanced
+# smooth/streak + stricter quantile for screen_smooth_streak, alarm log dedupe, slightly
+# looser quantile for screen_training_topology (extended only; paper anchor stays 0.85).
+# Run full protocol (no extra smoke trimming):
+#   python3 experiments/run_experiments.py --mode full --matrix experiments/fault_matrix_ablation_start.yaml
+# Quick dry-run plan count:
+#   python3 experiments/run_experiments.py --dry-run --mode full --matrix experiments/fault_matrix_ablation_start.yaml | head
+
+meta:
+  name: "ubl_ablation_start_v1"
+  description: "Bounded screening-style ablations: 4 learner variants x 2 faults x 10 repeats."
+  comparator_scope: "pca_knn_not_included"
+  seed: 42
+  seeds: [42]
+  warmup_s: 20
+  bootstrap_s: 120
+  inject_s: 60
+  cooldown_s: 25
+  repeats: 10
+  pending_window_s: 90
+  study_scope: "extended"
+  ablation_block: "fault"
+  hypothesis_id: "H-ablation-start"
+  interpretation_note: "Entry ablation before full screening/focused matrices."
+  loadgen_enabled: true
+  loadgen_profile: "mixed"
+  loadgen_rps: 5
+  loadgen_ms: 18
+  train_mode: "warm_start"
+  use_ladders: false
+  baseline_slo_window_s: 30
+  prediction_target_mode: "slo_violation_proxy"
+  slo_violation_proxy_delay_s: 0
+
+learner:
+  baseline_env:
+    POLL_SEC: "1.0"
+    BOOTSTRAP_SAMPLES: "80"
+  variants:
+    - name: "paper_fidelity_anchor"
+      study_scope: "paper_faithful"
+      ablation_block: "decision"
+      hypothesis_id: "H-anchor"
+      interpretation_note: "Reference paper-faithful-with-proxy anchor."
+      train_mode: "fresh_bootstrap"
+      env:
+        SOM_SCORING_MODE: "ubl_area"
+        SOM_SMOOTH_K: "5"
+        ANOMALY_STREAK: "3"
+        ANOMALY_QUANTILE: "0.85"
+        POLL_SEC: "1.0"
+        BOOTSTRAP_SAMPLES: "80"
+        SOM_ROWS: "32"
+        SOM_COLS: "32"
+        SOM_LR: "0.7"
+        SOM_SIGMA: "4.0"
+        SOM_KFOLD: "3"
+        SOM_INIT_TRIALS: "3"
+        SOM_NORMALIZATION_MODE: "train_max_100"
+        SOM_ONLINE_CLIP_MODE: "none"
+    - name: "screen_smooth_streak"
+      study_scope: "extended"
+      ablation_block: "decision"
+      hypothesis_id: "H-smooth-streak"
+      interpretation_note: "Balanced smooth/streak, stricter quantile, 20s alarm log dedupe vs old aggressive 1/1."
+      train_mode: "warm_start"
+      env:
+        SOM_SCORING_MODE: "ubl_area"
+        SOM_SMOOTH_K: "3"
+        ANOMALY_STREAK: "2"
+        ANOMALY_QUANTILE: "0.88"
+        ALARM_LOG_MIN_INTERVAL_S: "20"
+        POLL_SEC: "1.0"
+        BOOTSTRAP_SAMPLES: "80"
+        SOM_ROWS: "32"
+        SOM_COLS: "32"
+        SOM_LR: "0.7"
+        SOM_SIGMA: "4.0"
+        SOM_KFOLD: "3"
+        SOM_INIT_TRIALS: "3"
+        SOM_NORMALIZATION_MODE: "train_max_100"
+        SOM_ONLINE_CLIP_MODE: "none"
+    - name: "screen_threshold"
+      study_scope: "extended"
+      ablation_block: "decision"
+      hypothesis_id: "H-quantile"
+      interpretation_note: "Stricter quantile vs anchor."
+      train_mode: "warm_start"
+      env:
+        SOM_SCORING_MODE: "ubl_area"
+        SOM_SMOOTH_K: "5"
+        ANOMALY_STREAK: "3"
+        ANOMALY_QUANTILE: "0.95"
+        POLL_SEC: "1.0"
+        BOOTSTRAP_SAMPLES: "80"
+        SOM_ROWS: "32"
+        SOM_COLS: "32"
+        SOM_LR: "0.7"
+        SOM_SIGMA: "4.0"
+        SOM_KFOLD: "3"
+        SOM_INIT_TRIALS: "3"
+        SOM_NORMALIZATION_MODE: "train_max_100"
+        SOM_ONLINE_CLIP_MODE: "none"
+    - name: "screen_training_topology"
+      study_scope: "extended"
+      ablation_block: "training"
+      hypothesis_id: "H-kfold-geometry"
+      interpretation_note: "Reduced K-fold, smaller map, clip; quantile 0.80 to improve pre-fault alarm rate in lab."
+      train_mode: "fresh_bootstrap"
+      env:
+        SOM_SCORING_MODE: "ubl_area"
+        SOM_SMOOTH_K: "5"
+        ANOMALY_STREAK: "3"
+        ANOMALY_QUANTILE: "0.80"
+        POLL_SEC: "1.0"
+        BOOTSTRAP_SAMPLES: "80"
+        SOM_ROWS: "20"
+        SOM_COLS: "20"
+        SOM_LR: "0.7"
+        SOM_SIGMA: "4.0"
+        SOM_KFOLD: "1"
+        SOM_INIT_TRIALS: "1"
+        SOM_NORMALIZATION_MODE: "train_max_100"
+        SOM_ONLINE_CLIP_MODE: "clip_300"
+
+faults:
+  - id: "mem_leak"
+    family: "paper_aligned"
+    proxy_mapping: true
+    ablation_block: "fault"
+    command_on: ["memleak", "on", "{intensity}"]
+    command_off: ["memleak", "off"]
+    intensity: 50
+  - id: "cpu_hog_like"
+    family: "paper_aligned"
+    proxy_mapping: true
+    ablation_block: "fault"
+    learner_env:
+      SOM_SMOOTH_K: "1"
+    command_on: ["cpu", "on", "{intensity}"]
+    command_off: ["cpu", "off"]
+    intensity: 4

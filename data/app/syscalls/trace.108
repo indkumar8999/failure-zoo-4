@@ -1,0 +1,29 @@
+1774892056.510246 rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0 <0.000057>
+1774892056.511526 mmap(NULL, 16384, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xffffb6da4000 <0.000086>
+1774892056.513847 newfstatat(AT_FDCWD</srv>, "/data", {st_mode=S_IFDIR|0755, st_size=224, ...}, 0) = 0 <0.000085>
+1774892056.514194 mkdirat(AT_FDCWD</srv>, "/data/events", 0777) = -1 EEXIST (File exists) <0.000169>
+1774892056.514586 newfstatat(AT_FDCWD</srv>, "/data/events", {st_mode=S_IFDIR|0755, st_size=96, ...}, 0) = 0 <0.000039>
+1774892056.514829 openat(AT_FDCWD</srv>, "/data/events/chaos_events.jsonl", O_WRONLY|O_CREAT|O_APPEND|O_CLOEXEC, 0666) = 18</data/events/chaos_events.jsonl> <0.000200>
+1774892056.515252 fstat(18</data/events/chaos_events.jsonl>, {st_mode=S_IFREG|0644, st_size=922305, ...}) = 0 <0.000047>
+1774892056.515484 lseek(18</data/events/chaos_events.jsonl>, 0, SEEK_END) = 922305 <0.000036>
+1774892056.515671 ioctl(18</data/events/chaos_events.jsonl>, TCGETS, 0xffff257ae0b0) = -1 ENOTTY (Inappropriate ioctl for device) <0.000035>
+1774892056.515885 lseek(18</data/events/chaos_events.jsonl>, 0, SEEK_CUR) = 922305 <0.000042>
+1774892056.516093 lseek(18</data/events/chaos_events.jsonl>, 0, SEEK_CUR) = 922305 <0.000056>
+1774892056.516371 write(18</data/events/chaos_events.jsonl>, "{\"type\":\"chaos\",\"mode\":\"net_reset_peer\",\"enabled\":false,\"ts\":1774892056.5147948}\n", 81) = 81 <0.000151>
+1774892056.516684 close(18</data/events/chaos_events.jsonl>) = 0 <0.000058>
+1774892056.516979 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000148>
+1774892056.527610 newfstatat(AT_FDCWD</srv>, "/data", {st_mode=S_IFDIR|0755, st_size=224, ...}, 0) = 0 <0.000041>
+1774892056.527848 mkdirat(AT_FDCWD</srv>, "/data/events", 0777) = -1 EEXIST (File exists) <0.000141>
+1774892056.528195 newfstatat(AT_FDCWD</srv>, "/data/events", {st_mode=S_IFDIR|0755, st_size=96, ...}, 0) = 0 <0.000039>
+1774892056.528429 openat(AT_FDCWD</srv>, "/data/events/chaos_events.jsonl", O_WRONLY|O_CREAT|O_APPEND|O_CLOEXEC, 0666) = 18</data/events/chaos_events.jsonl> <0.000259>
+1774892056.528927 fstat(18</data/events/chaos_events.jsonl>, {st_mode=S_IFREG|0644, st_size=922386, ...}) = 0 <0.000043>
+1774892056.529125 lseek(18</data/events/chaos_events.jsonl>, 0, SEEK_END) = 922386 <0.000034>
+1774892056.529304 ioctl(18</data/events/chaos_events.jsonl>, TCGETS, 0xffff257ae0b0) = -1 ENOTTY (Inappropriate ioctl for device) <0.000050>
+1774892056.529534 lseek(18</data/events/chaos_events.jsonl>, 0, SEEK_CUR) = 922386 <0.000034>
+1774892056.529712 lseek(18</data/events/chaos_events.jsonl>, 0, SEEK_CUR) = 922386 <0.000035>
+1774892056.529916 write(18</data/events/chaos_events.jsonl>, "{\"type\":\"chaos\",\"mode\":\"net_bandwidth\",\"enabled\":false,\"ts\":1774892056.5283895}\n", 80) = 80 <0.000130>
+1774892056.530191 close(18</data/events/chaos_events.jsonl>) = 0 <0.000204>
+1774892056.530634 write(10<{eventfd-count=0, eventfd-id=20, eventfd-semaphore=0}>, "\1\0\0\0\0\0\0\0", 8) = 8 <0.000131>
+1774892066.585751 rt_sigprocmask(SIG_BLOCK, ~[RT_1], NULL, 8) = 0 <0.000054>
+1774892066.586158 exit(0)               = ?
+1774892066.586566 +++ exited with 0 +++

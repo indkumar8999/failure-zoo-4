@@ -1,0 +1,71 @@
+{
+  "faults": [
+    {
+      "ablation_block": "fault",
+      "command_off": [
+        "memleak",
+        "off"
+      ],
+      "command_on": [
+        "memleak",
+        "on",
+        "{intensity}"
+      ],
+      "family": "paper_aligned",
+      "id": "mem_leak",
+      "intensity": 50,
+      "proxy_mapping": true
+    }
+  ],
+  "learner": {
+    "variants": [
+      {
+        "ablation_block": "decision",
+        "env": {
+          "ANOMALY_QUANTILE": "0.85",
+          "ANOMALY_STREAK": "2",
+          "BOOTSTRAP_SAMPLES": "30",
+          "POLL_SEC": "2.0",
+          "SOM_COLS": "16",
+          "SOM_INIT_TRIALS": "2",
+          "SOM_KFOLD": "2",
+          "SOM_LR": "0.25",
+          "SOM_NORMALIZATION_MODE": "train_max_100",
+          "SOM_ONLINE_CLIP_MODE": "none",
+          "SOM_ROWS": "16",
+          "SOM_SCORING_MODE": "ubl_area",
+          "SOM_SIGMA": "3.0",
+          "SOM_SMOOTH_K": "3"
+        },
+        "hypothesis_id": "H-minimal",
+        "interpretation_note": "Fast single-run sanity; reduced bootstrap for wall-clock.",
+        "name": "minimal_ubl",
+        "study_scope": "extended",
+        "train_mode": "fresh_bootstrap"
+      }
+    ]
+  },
+  "meta": {
+    "bootstrap_s": 75,
+    "comparator_scope": "pca_knn_not_included",
+    "cooldown_s": 8,
+    "description": "One run only \u2014 sanity check for stack, chaos, learner, and evaluation pipeline.",
+    "fault_window_on_delay_s": 14,
+    "inject_s": 15,
+    "loadgen_enabled": true,
+    "loadgen_ms": 20,
+    "loadgen_profile": "steady",
+    "loadgen_rps": 4,
+    "name": "ubl_minimal_single_run",
+    "pending_window_s": 60,
+    "repeats": 1,
+    "seed": 42,
+    "seeds": [
+      42
+    ],
+    "study_scope": "extended",
+    "train_mode": "fresh_bootstrap",
+    "use_ladders": false,
+    "warmup_s": 5
+  }
+}

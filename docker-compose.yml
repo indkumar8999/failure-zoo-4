@@ -29,15 +29,41 @@ services:
     environment:
       PROM_BASE: "http://prometheus:9090"
       POLL_SEC: "2.0"
-      BOOTSTRAP_SAMPLES: "180"
-      SOM_ROWS: "20"
-      SOM_COLS: "20"
-      ANOMALY_QUANTILE: "0.99"
+      BOOTSTRAP_SAMPLES: "${BOOTSTRAP_SAMPLES:-180}"
+      SOM_ROWS: "${SOM_ROWS:-32}"
+      SOM_COLS: "${SOM_COLS:-32}"
+      SOM_LR: "${SOM_LR:-0.25}"
+      SOM_SIGMA: "${SOM_SIGMA:-3.0}"
+      ANOMALY_QUANTILE: "${ANOMALY_QUANTILE:-0.85}"
+      SOM_SCORING_MODE: "${SOM_SCORING_MODE:-ubl_area}"
+      SOM_SMOOTH_K: "${SOM_SMOOTH_K:-5}"
+      ANOMALY_STREAK: "${ANOMALY_STREAK:-3}"
+      ALARM_LOG_MIN_INTERVAL_S: "${ALARM_LOG_MIN_INTERVAL_S:-0}"
+      SOM_KFOLD: "${SOM_KFOLD:-3}"
+      SOM_INIT_TRIALS: "${SOM_INIT_TRIALS:-3}"
+      SOM_NORMALIZATION_MODE: "${SOM_NORMALIZATION_MODE:-train_max_100}"
+      SOM_ONLINE_CLIP_MODE: "${SOM_ONLINE_CLIP_MODE:-none}"
+      SOM_CAUSE_Q: "${SOM_CAUSE_Q:-5}"
     volumes:
       - ./data/learner:/data
     depends_on:
       - app
       - prometheus
+    restart: unless-stopped
+
+  loadgen:
+    build: ./loadgen
+    environment:
+      LOADGEN_APP_URL: "http://app:8000"
+      LOADGEN_PROFILE: "${LOADGEN_PROFILE:-steady}"
+      LOADGEN_RPS: "${LOADGEN_RPS:-5.0}"
+      LOADGEN_WORK_MS: "${LOADGEN_WORK_MS:-20}"
+      LOADGEN_JITTER: "${LOADGEN_JITTER:-0.1}"
+      LOADGEN_TIMEOUT_S: "${LOADGEN_TIMEOUT_S:-1.5}"
+      LOADGEN_PATHS: "${LOADGEN_PATHS:-/work}"
+      LOADGEN_SEED: "${LOADGEN_SEED:-42}"
+    depends_on:
+      - app
     restart: unless-stopped
 
   downstream:

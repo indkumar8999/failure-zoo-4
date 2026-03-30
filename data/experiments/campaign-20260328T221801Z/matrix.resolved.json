@@ -1,0 +1,196 @@
+{
+  "faults": [
+    {
+      "ablation_block": "fault",
+      "command_off": [
+        "memleak",
+        "off"
+      ],
+      "command_on": [
+        "memleak",
+        "on",
+        "{intensity}"
+      ],
+      "duration_ladder_s": [
+        {
+          "level": "short",
+          "value": 45
+        }
+      ],
+      "family": "paper_aligned",
+      "id": "mem_leak",
+      "intensity": 50,
+      "intensity_ladder": [
+        {
+          "level": "low",
+          "value": 20
+        }
+      ],
+      "proxy_mapping": true
+    },
+    {
+      "ablation_block": "fault",
+      "command_off": [
+        "cpu",
+        "off"
+      ],
+      "command_on": [
+        "cpu",
+        "on",
+        "{intensity}"
+      ],
+      "duration_ladder_s": [
+        {
+          "level": "short",
+          "value": 45
+        }
+      ],
+      "family": "paper_aligned",
+      "id": "cpu_hog_like",
+      "intensity": 4,
+      "intensity_ladder": [
+        {
+          "level": "low",
+          "value": 2
+        }
+      ],
+      "proxy_mapping": true
+    },
+    {
+      "ablation_block": "fault",
+      "command_off": [
+        "net",
+        "clear"
+      ],
+      "command_on": [
+        "net",
+        "latency",
+        "{intensity}"
+      ],
+      "duration_ladder_s": [
+        {
+          "level": "short",
+          "value": 45
+        }
+      ],
+      "family": "paper_aligned",
+      "id": "net_hog_like_latency",
+      "intensity": 400,
+      "intensity_ladder": [
+        {
+          "level": "low",
+          "value": 150
+        }
+      ],
+      "proxy_mapping": true
+    }
+  ],
+  "learner": {
+    "variants": [
+      {
+        "ablation_block": "decision",
+        "env": {
+          "ANOMALY_QUANTILE": 0.85,
+          "ANOMALY_STREAK": 3,
+          "SOM_COLS": 32,
+          "SOM_INIT_TRIALS": 3,
+          "SOM_KFOLD": 3,
+          "SOM_NORMALIZATION_MODE": "train_max_100",
+          "SOM_ONLINE_CLIP_MODE": "none",
+          "SOM_ROWS": 32,
+          "SOM_SCORING_MODE": "ubl_area",
+          "SOM_SMOOTH_K": 5
+        },
+        "hypothesis_id": "H-anchor",
+        "interpretation_note": "Reference paper-faithful-with-proxy anchor.",
+        "name": "paper_fidelity_anchor",
+        "study_scope": "paper_faithful",
+        "train_mode": "fresh_bootstrap"
+      },
+      {
+        "ablation_block": "decision",
+        "env": {
+          "ANOMALY_QUANTILE": 0.85,
+          "ANOMALY_STREAK": 1,
+          "SOM_COLS": 32,
+          "SOM_INIT_TRIALS": 3,
+          "SOM_KFOLD": 3,
+          "SOM_NORMALIZATION_MODE": "train_max_100",
+          "SOM_ONLINE_CLIP_MODE": "none",
+          "SOM_ROWS": 32,
+          "SOM_SCORING_MODE": "ubl_area",
+          "SOM_SMOOTH_K": 1
+        },
+        "hypothesis_id": "H-smooth-streak",
+        "interpretation_note": "Smoothing and streak trade recall vs false positives.",
+        "name": "screen_smooth_streak",
+        "study_scope": "extended",
+        "train_mode": "warm_start"
+      },
+      {
+        "ablation_block": "decision",
+        "env": {
+          "ANOMALY_QUANTILE": 0.95,
+          "ANOMALY_STREAK": 3,
+          "SOM_COLS": 32,
+          "SOM_INIT_TRIALS": 3,
+          "SOM_KFOLD": 3,
+          "SOM_NORMALIZATION_MODE": "train_max_100",
+          "SOM_ONLINE_CLIP_MODE": "none",
+          "SOM_ROWS": 32,
+          "SOM_SCORING_MODE": "ubl_area",
+          "SOM_SMOOTH_K": 5
+        },
+        "hypothesis_id": "H-quantile",
+        "interpretation_note": "Higher quantile should reduce alarms and lower TPR.",
+        "name": "screen_threshold",
+        "study_scope": "extended",
+        "train_mode": "warm_start"
+      },
+      {
+        "ablation_block": "training",
+        "env": {
+          "ANOMALY_QUANTILE": 0.85,
+          "ANOMALY_STREAK": 3,
+          "SOM_COLS": 20,
+          "SOM_INIT_TRIALS": 1,
+          "SOM_KFOLD": 1,
+          "SOM_NORMALIZATION_MODE": "train_max_100",
+          "SOM_ONLINE_CLIP_MODE": "clip_300",
+          "SOM_ROWS": 20,
+          "SOM_SCORING_MODE": "ubl_area",
+          "SOM_SMOOTH_K": 5
+        },
+        "hypothesis_id": "H-kfold-geometry",
+        "interpretation_note": "Reduced K-fold and smaller map can degrade stability.",
+        "name": "screen_training_topology",
+        "study_scope": "extended",
+        "train_mode": "fresh_bootstrap"
+      }
+    ]
+  },
+  "meta": {
+    "ablation_block": "fault",
+    "bootstrap_s": 30,
+    "cooldown_s": 20,
+    "description": "Stage-1 screening matrix to detect sensitive UBL factors with bounded runtime.",
+    "hypothesis_id": "H-screen",
+    "inject_s": 20,
+    "interpretation_note": "Screen broad factor influence before focused sweeps.",
+    "loadgen_enabled": true,
+    "loadgen_ms": 15,
+    "loadgen_profile": "mixed",
+    "loadgen_rps": 6,
+    "name": "ubl_ablation_screening_v1",
+    "pending_window_s": 60,
+    "pending_window_s_ladder": [
+      60
+    ],
+    "repeats": 1,
+    "seed": 42,
+    "study_scope": "extended",
+    "train_mode": "warm_start",
+    "use_ladders": true,
+    "warmup_s": 20
+  }
+}

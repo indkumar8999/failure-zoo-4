@@ -1,0 +1,64 @@
+meta:
+  name: ubl_fault_matrix_v1
+  description: Paper-aligned and extended fault campaigns for UBL-style evaluation.
+  comparator_scope: pca_knn_not_included
+  seed: 42
+  seeds: [42]
+  warmup_s: 5
+  bootstrap_s: 10
+  inject_s: 8
+  cooldown_s: 8
+  repeats: 2
+  pending_window_s: 60
+  baseline_slo_window_s: 30
+  loadgen_enabled: true
+  loadgen_profile: "steady"
+  loadgen_rps: 3
+  loadgen_ms: 20
+  study_scope: "extended"
+  ablation_block: "decision"
+  hypothesis_id: "H-current-quick"
+  interpretation_note: "Quick current_default-only checks."
+learner:
+  baseline_env:
+    SOM_SCORING_MODE: ubl_area
+    SOM_SMOOTH_K: 5
+    ANOMALY_STREAK: 3
+    ANOMALY_QUANTILE: 0.85
+  variants:
+  - name: current_default
+    study_scope: "extended"
+    ablation_block: "decision"
+    hypothesis_id: "H-current-default"
+    interpretation_note: "Current default baseline only."
+    train_mode: "warm_start"
+    env:
+      SOM_SCORING_MODE: bmu
+      SOM_SMOOTH_K: 1
+      ANOMALY_STREAK: 1
+      ANOMALY_QUANTILE: 0.99
+faults:
+- id: mem_leak
+  family: paper_aligned
+  proxy_mapping: true
+  ablation_block: "fault"
+  command_on:
+  - memleak
+  - 'on'
+  - '{intensity}'
+  command_off:
+  - memleak
+  - 'off'
+  intensity: 50
+- id: cpu_hog_like
+  family: paper_aligned
+  proxy_mapping: true
+  ablation_block: "fault"
+  command_on:
+  - cpu
+  - 'on'
+  - '{intensity}'
+  command_off:
+  - cpu
+  - 'off'
+  intensity: 4
