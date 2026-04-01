@@ -78,16 +78,16 @@ This prevents degenerate idle behavior during warmup/bootstrap and provides cons
 
 Faults are injected via `chaos` command mappings in stage matrices and `chaosctl`.
 
-- **`mem_leak`**: `memleak on {intensity}` / `memleak off`  
-  Injects memory pressure with leak rate proportional to intensity.
-- **`cpu_hog_like`**: `cpu on {intensity}` / `cpu off`  
-  Increases CPU contention via worker load.
-- **`net_hog_like_latency`**: `net latency {intensity}` / `net clear`  
-  Adds proxy latency with Toxiproxy; intensity maps to latency magnitude.
-- **`lock_convoy`**: `lock on {intensity}` / `lock off`  
-  Creates contention/convoy behavior via lock pressure.
-- **`disk_fill`**: `disk fill {intensity}` / `disk clear`  
-  Writes to disk-fill target; higher intensity means larger write volume.
+- `**mem_leak`**: `memleak on {intensity}` / `memleak off`  
+Injects memory pressure with leak rate proportional to intensity.
+- `**cpu_hog_like**`: `cpu on {intensity}` / `cpu off`  
+Increases CPU contention via worker load.
+- `**net_hog_like_latency**`: `net latency {intensity}` / `net clear`  
+Adds proxy latency with Toxiproxy; intensity maps to latency magnitude.
+- `**lock_convoy**`: `lock on {intensity}` / `lock off`  
+Creates contention/convoy behavior via lock pressure.
+- `**disk_fill**`: `disk fill {intensity}` / `disk clear`  
+Writes to disk-fill target; higher intensity means larger write volume.
 
 Observed operational behavior during campaigns:
 
