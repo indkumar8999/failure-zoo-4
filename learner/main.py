@@ -219,12 +219,10 @@ def _train_model(train_norm: np.ndarray, init_seed: int, epochs: int = 8) -> SOM
 
 
 def _threshold_for_model(model: SOMModel, train_norm: np.ndarray) -> float:
-    if SCORING_MODE == "ubl_area":
-        area_map = _compute_area_map(model.weights)
-        area_scores = np.array([area_map[model.bmu_index(v)] for v in train_norm], dtype=np.float64)
-        return float(np.quantile(area_scores, THRESHOLD_Q))
-    dists = np.array([model.score(v) for v in train_norm], dtype=np.float64)
-    return float(np.quantile(dists, THRESHOLD_Q))
+    # Use quantile of all neuron area values for threshold calculation
+    area_map = _compute_area_map(model.weights)
+    area_values = area_map.flatten()
+    return float(np.quantile(area_values, THRESHOLD_Q))
 
 
 def _validation_accuracy(model: SOMModel, threshold: float, val_norm: np.ndarray) -> float:
@@ -281,14 +279,11 @@ def _train_bootstrap(normal_samples: List[np.ndarray]) -> tuple[SOMModel, float,
     assert best_model is not None
     if best_train_norm is None or best_train_norm.shape[0] == 0:
         best_train_norm = np.array(norm, dtype=np.float64, copy=True)
-    if SCORING_MODE == "ubl_area":
-        area_map = _compute_area_map(best_model.weights)
-        ubl_train_scores = np.array(
-            [float(area_map[best_model.bmu_index(v)]) for v in best_train_norm],
-            dtype=np.float64,
-        )
-    else:
-        ubl_train_scores = np.array([float(best_model.score(v)) for v in best_train_norm], dtype=np.float64)
+    area_map = _compute_area_map(best_model.weights)
+    ubl_train_scores = np.array(
+        [float(area_map[best_model.bmu_index(v)]) for v in best_train_norm],
+        dtype=np.float64,
+    )
     meta = {
         "random_seed": RANDOM_SEED,
         "kfold": max(1, min(SOM_KFOLD, norm.shape[0])),
@@ -299,7 +294,7 @@ def _train_bootstrap(normal_samples: List[np.ndarray]) -> tuple[SOMModel, float,
         "normalization_mode": SOM_NORMALIZATION_MODE,
         "online_clip_mode": SOM_ONLINE_CLIP_MODE,
     }
-    return best_model, best_threshold, scale, meta, ubl_train_scores
+    return best_model, best_threshold, scale, meta, ubl_train_scores, area_map
 
 
 def _infer_anomaly_causes(
@@ -390,6 +385,8 @@ def _persist_model(
     }
     if ubl_train_scores is not None and ubl_train_scores.size > 0:
         payload["ubl_train_scores"] = np.asarray(ubl_train_scores, dtype=np.float64)
+    if "area_map" in locals() and area_map is not None:
+        payload["area_map"] = np.asarray(area_map, dtype=np.float64)
     np.savez_compressed(MODEL_PATH, **payload)
 
 
